@@ -7,7 +7,7 @@ import java.util.Optional;
 import com.sun.glass.events.KeyEvent;
 
 import mirrg.almandine2.layer2.core.GameAlmandine2;
-import mirrg.almandine2.layer2.tool.ToolAbstract;
+import mirrg.almandine2.layer2.tool.Tool;
 import mirrg.almandine2.layer3.entities.ICardCart;
 import mirrg.almandine2.layer3.entities.IWire;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventKey;
@@ -15,7 +15,7 @@ import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouseMotion;
 import mirrg.struct.hydrogen.Tuple3;
 
-public class ToolPutCart extends ToolAbstract
+public class ToolPutCart extends Tool
 {
 
 	private ICardCart cardCart;

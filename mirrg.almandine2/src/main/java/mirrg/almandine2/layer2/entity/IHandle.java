@@ -1,18 +1,18 @@
 package mirrg.almandine2.layer2.entity;
 
-import java.awt.Shape;
-
-import mirrg.almandine2.layer2.tool.IPoint;
+import java.util.HashSet;
 
 public interface IHandle
 {
 
-	public IEntity getEntity();
+	public Entity getOwner();
 
-	public Shape getShape();
+	public View<IHandle> getView();
 
-	public boolean isSettable(IPoint point);
+	public HashSet<TypeConnection> getConnectionTypes();
 
-	public void set(IPoint point);
+	public boolean isConnectable(Connection connection);
+
+	public void set(Connection connection);
 
 }

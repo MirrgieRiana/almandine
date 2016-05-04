@@ -11,13 +11,13 @@ import mirrg.almandine2.layer2.core.GameAlmandine2;
 import mirrg.almandine2.layer2.entity.IHandle;
 import mirrg.almandine2.layer2.tool.IPoint;
 import mirrg.almandine2.layer2.tool.Point;
-import mirrg.almandine2.layer2.tool.ToolAbstract;
+import mirrg.almandine2.layer2.tool.Tool;
 import mirrg.almandine2.layer3.entities.IFurniture;
 import mirrg.almandine2.layer3.entities.IWire;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouseMotion;
 
-public class ToolMove extends ToolAbstract
+public class ToolMove extends Tool
 {
 
 	private IHandle handle = null;
@@ -109,14 +109,14 @@ public class ToolMove extends ToolAbstract
 
 	private IPoint getPoint(int x, int y)
 	{
-		Optional<IFurniture> furniture = getEntityNearest(getCursor(), IFurniture.class, handle::isSettable);
+		Optional<IFurniture> furniture = getEntityNearest(getCursor(), IFurniture.class, handle::isConnectable);
 
 		IPoint point;
 		if (furniture.isPresent()) {
 			point = furniture.get();
 		} else {
 			point = new Point(x, y);
-			if (!handle.isSettable(point)) point = null;
+			if (!handle.isConnectable(point)) point = null;
 		}
 
 		return point;
@@ -134,7 +134,7 @@ public class ToolMove extends ToolAbstract
 	@Override
 	public void render(Graphics2D graphics)
 	{
-		if (handle != null) handle.getEntity().renderAura(graphics, 2, 3, Color.decode("#FF7F00"));
+		if (handle != null) handle.getOwner().renderAura(graphics, 2, 3, Color.decode("#FF7F00"));
 
 		graphics.setColor(Color.red);
 		game.data.getEntities()

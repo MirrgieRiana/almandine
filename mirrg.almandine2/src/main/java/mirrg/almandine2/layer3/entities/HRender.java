@@ -5,9 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
-import mirrg.almandine2.layer2.tool.IPoint;
-import mirrg.almandine2.layer2.tool.Point;
-
 public class HRender
 {
 
@@ -30,13 +27,13 @@ public class HRender
 		graphics.drawString(text, (int) (x - width * alignX / 2), (int) (y + height * (2 - alignY) / 2));
 	}
 
-	public static Point[] getPointsMargined(IPoint begin, IPoint end, double marginBegin, double marginEnd)
+	public static Point2D.Double[] getPointsMargined(Point2D.Double begin, Point2D.Double end, double marginBegin, double marginEnd)
 	{
 		double distance = Point2D.distance(begin.getX(), begin.getY(), end.getX(), end.getY());
 		if (distance == 0) {
-			return new Point[] {
-				begin.copyAsPoint(),
-				end.copyAsPoint(),
+			return new Point2D.Double[] {
+				begin,
+				end,
 			};
 		}
 
@@ -46,17 +43,17 @@ public class HRender
 		double rateBegin = marginBegin / distance;
 		double rateEnd = 1 - marginEnd / distance;
 
-		return new Point[] {
-			new Point(
+		return new Point2D.Double[] {
+			new Point2D.Double(
 				begin.getX() + rateBegin * x,
 				begin.getY() + rateBegin * y),
-			new Point(
+			new Point2D.Double(
 				begin.getX() + rateEnd * x,
 				begin.getY() + rateEnd * y),
 		};
 	}
 
-	public static void drawArrow(Graphics2D graphics, IPoint begin, IPoint end, double lengthHead, double angleHead)
+	public static void drawArrow(Graphics2D graphics, Point2D.Double begin, Point2D.Double end, double lengthHead, double angleHead)
 	{
 		graphics.draw(new Line2D.Double(begin.getX(), begin.getY(), end.getX(), end.getY()));
 

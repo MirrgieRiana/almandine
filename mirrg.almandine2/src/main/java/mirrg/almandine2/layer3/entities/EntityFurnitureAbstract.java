@@ -45,7 +45,7 @@ public abstract class EntityFurnitureAbstract extends EntityAbstract implements 
 		return Stream.of(new IHandle() {
 
 			@Override
-			public IEntity getEntity()
+			public IEntity getOwner()
 			{
 				return EntityFurnitureAbstract.this;
 			}
@@ -57,7 +57,7 @@ public abstract class EntityFurnitureAbstract extends EntityAbstract implements 
 			}
 
 			@Override
-			public boolean isSettable(IPoint point)
+			public boolean isConnectable(IPoint point)
 			{
 				return point instanceof Point;
 			}

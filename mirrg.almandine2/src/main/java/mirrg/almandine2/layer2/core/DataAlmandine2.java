@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
-import mirrg.almandine2.layer2.entity.IEntity;
+import mirrg.almandine2.layer2.entity.Entity;
 
 public class DataAlmandine2
 {
@@ -13,7 +13,7 @@ public class DataAlmandine2
 	@XStreamOmitField
 	private GameAlmandine2 game;
 
-	private ArrayList<IEntity> entities;
+	private ArrayList<Entity> entities;
 
 	public void reset()
 	{
@@ -24,19 +24,20 @@ public class DataAlmandine2
 	{
 		for (int i = 0; i < entities.size(); i++) {
 			if (entities.get(i).isDead()) {
+				entities.get(i).disable();
 				entities.remove(i);
 				i--;
 			}
 		}
 	}
 
-	public void addEntity(IEntity entity)
+	public void addEntity(Entity entity)
 	{
 		entities.add(entity);
-		entity.onLoad(game);
+		entity.enable(game);
 	}
 
-	public Stream<IEntity> getEntities()
+	public Stream<Entity> getEntities()
 	{
 		return entities.stream();
 	}
@@ -44,7 +45,8 @@ public class DataAlmandine2
 	public void onLoad(GameAlmandine2 game)
 	{
 		this.game = game;
-		entities.forEach(entity -> entity.onLoad(game));
+		entities.forEach(entity -> entity.reset());
+		entities.forEach(entity -> entity.enable(game));
 	}
 
 }

@@ -10,7 +10,7 @@ import com.sun.glass.events.KeyEvent;
 import mirrg.almandine2.layer2.core.GameAlmandine2;
 import mirrg.almandine2.layer2.tool.IPoint;
 import mirrg.almandine2.layer2.tool.Point;
-import mirrg.almandine2.layer2.tool.ToolAbstract;
+import mirrg.almandine2.layer2.tool.Tool;
 import mirrg.almandine2.layer3.entities.ICardWire;
 import mirrg.almandine2.layer3.entities.IFurniture;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventKey;
@@ -18,7 +18,7 @@ import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouseMotion;
 import mirrg.struct.hydrogen.Tuple;
 
-public class ToolPutWire extends ToolAbstract
+public class ToolPutWire extends Tool
 {
 
 	private ICardWire cardWire;

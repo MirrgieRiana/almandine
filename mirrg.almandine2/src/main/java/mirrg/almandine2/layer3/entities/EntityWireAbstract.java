@@ -89,7 +89,7 @@ public abstract class EntityWireAbstract extends EntityAbstract implements IWire
 		return Stream.of(new IHandle() {
 
 			@Override
-			public IEntity getEntity()
+			public IEntity getOwner()
 			{
 				return EntityWireAbstract.this;
 			}
@@ -105,7 +105,7 @@ public abstract class EntityWireAbstract extends EntityAbstract implements IWire
 			}
 
 			@Override
-			public boolean isSettable(IPoint point)
+			public boolean isConnectable(IPoint point)
 			{
 				return isSettableBegin(point);
 			}
@@ -119,7 +119,7 @@ public abstract class EntityWireAbstract extends EntityAbstract implements IWire
 		}, new IHandle() {
 
 			@Override
-			public IEntity getEntity()
+			public IEntity getOwner()
 			{
 				return EntityWireAbstract.this;
 			}
@@ -135,7 +135,7 @@ public abstract class EntityWireAbstract extends EntityAbstract implements IWire
 			}
 
 			@Override
-			public boolean isSettable(IPoint point)
+			public boolean isConnectable(IPoint point)
 			{
 				return isSettableEnd(point);
 			}

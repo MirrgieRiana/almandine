@@ -9,7 +9,7 @@ public interface ICart extends IEntity
 
 	public boolean isSettable(IWire wire, double position, boolean reverse);
 
-	public boolean isSettable(IPoint point);
+	public boolean isConnectable(IPoint point);
 
 	public IPosition getPosition();
 

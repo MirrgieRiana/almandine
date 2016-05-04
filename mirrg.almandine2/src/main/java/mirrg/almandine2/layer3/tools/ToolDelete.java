@@ -2,41 +2,46 @@ package mirrg.almandine2.layer3.tools;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 
 import com.sun.glass.events.KeyEvent;
 
-import mirrg.almandine2.layer2.core.GameAlmandine2;
-import mirrg.almandine2.layer2.entity.IEntity;
-import mirrg.almandine2.layer2.tool.ToolAbstract;
-import mirrg.almandine2.layer3.entities.IFurniture;
-import mirrg.almandine2.layer3.entities.IWire;
+import mirrg.almandine2.layer2.entity.Entity;
+import mirrg.almandine2.layer2.entity.EntityBlock;
+import mirrg.almandine2.layer2.entity.EntityCart;
+import mirrg.almandine2.layer2.entity.EntityWire;
+import mirrg.almandine2.layer2.tool.Tool;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventKey;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouseMotion;
 
-public class ToolDelete extends ToolAbstract
+public class ToolDelete extends Tool
 {
 
-	private IEntity entity = null;
+	private Entity entity = null;
 
 	@Override
-	public void init(GameAlmandine2 game)
+	protected void initEvents()
 	{
-		super.init(game);
-
-		updateCursor();
-
 		hook(NitrogenEventKey.Pressed.class, event -> {
-			updateCursor();
+			if (event.keyEvent.getKeyCode() == KeyEvent.VK_ALT) {
+				event.keyEvent.consume();
+			}
+		});
+		hook(NitrogenEventKey.Pressed.class, event -> {
+			update(getCursor());
 		});
 		hook(NitrogenEventKey.Released.class, event -> {
-			updateCursor();
+			update(getCursor());
 		});
 		hook(NitrogenEventMouseMotion.Moved.class, event -> {
-			updateCursor();
+			update(getCursor(event));
+		});
+		hook(NitrogenEventMouseMotion.Dragged.class, event -> {
+			update(getCursor(event));
 		});
 		hook(NitrogenEventMouse.Pressed.class, event -> {
-			updateCursor();
+			update(getCursor(event));
 			if (entity != null) {
 				entity.markDie();
 				entity = null;
@@ -44,14 +49,23 @@ public class ToolDelete extends ToolAbstract
 		});
 	}
 
-	private void updateCursor()
+	@Override
+	protected void reset()
 	{
-		entity = getEntityNearest(getCursor(), IEntity.class, e -> {
+		update(getCursor());
+	}
+
+	private void update(Point2D.Double cursor)
+	{
+		entity = getEntity(cursor, Entity.class, e -> {
 			if (game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(KeyEvent.VK_SHIFT) > 0) {
-				if (!(e instanceof IWire)) return false;
+				if (!(e instanceof EntityWire)) return false;
 			}
 			if (game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(KeyEvent.VK_CONTROL) > 0) {
-				if (!(e instanceof IFurniture)) return false;
+				if (!(e instanceof EntityBlock)) return false;
+			}
+			if (game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(KeyEvent.VK_ALT) > 0) {
+				if (!(e instanceof EntityCart)) return false;
 			}
 			return true;
 		}).orElse(null);
@@ -60,7 +74,9 @@ public class ToolDelete extends ToolAbstract
 	@Override
 	public void render(Graphics2D graphics)
 	{
-		if (entity != null) entity.renderAura(graphics, 2, 3, Color.decode("#FF7F00"));
+		if (entity != null) {
+			Entity.getCardEntity(entity).getView().renderAura(entity, graphics, 2, 3, Color.decode("#FF7F00"));
+		}
 	}
 
 }

@@ -11,8 +11,9 @@ import com.thoughtworks.xstream.XStream;
 
 import mirrg.almandine2.layer1.IGameAlmandine2;
 import mirrg.almandine2.layer1.PanelAlmandine2;
-import mirrg.almandine2.layer2.tool.ICardTool;
-import mirrg.almandine2.layer2.tool.ITool;
+import mirrg.almandine2.layer2.command.Command;
+import mirrg.almandine2.layer2.entity.Entity;
+import mirrg.almandine2.layer2.tool.Tool;
 import mirrg.event.nitrogen.HNitrogenEvent;
 import mirrg.event.nitrogen.api.INitrogenEventManager;
 
@@ -23,11 +24,11 @@ public class GameAlmandine2 implements IGameAlmandine2
 	private double width;
 	private double height;
 
-	private ArrayList<ICardTool> cardTools = new ArrayList<>();
+	private ArrayList<Command> commands = new ArrayList<>();
 	public INitrogenEventManager nitrogen = HNitrogenEvent.createInstance();
 
 	public DataAlmandine2 data;
-	private Optional<ITool> oTool = Optional.empty();
+	private Optional<Tool> oTool = Optional.empty();
 
 	public GameAlmandine2()
 	{
@@ -58,10 +59,10 @@ public class GameAlmandine2 implements IGameAlmandine2
 		synchronized (this) {
 
 			// select tool
-			cardTools.forEach(cardTool -> {
-				cardTool.getShortcutKey().ifPresent(key -> {
+			commands.forEach(command -> {
+				command.getShortcutKey().ifPresent(key -> {
 					if (panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(key) == 1) {
-						setTool(cardTool.createTool());
+						command.action(this);
 					}
 				});
 			});
@@ -79,7 +80,7 @@ public class GameAlmandine2 implements IGameAlmandine2
 
 	}
 
-	public void setTool(Optional<ITool> oTool)
+	public void setTool(Optional<Tool> oTool)
 	{
 		this.oTool.ifPresent(tool -> tool.dispose());
 		this.oTool = oTool;
@@ -106,7 +107,7 @@ public class GameAlmandine2 implements IGameAlmandine2
 		synchronized (this) {
 
 			// render entities
-			data.getEntities().forEach(entity -> entity.render(graphics));
+			data.getEntities().forEach(entity -> Entity.getCardEntity(entity).getView().render(entity, graphics));
 
 			// render tool
 			oTool.ifPresent(tool -> tool.render(graphics));
@@ -127,9 +128,9 @@ public class GameAlmandine2 implements IGameAlmandine2
 		return 30;
 	}
 
-	public void registerCardTool(ICardTool cardTool)
+	public void registerCommand(Command command)
 	{
-		cardTools.add(cardTool);
+		commands.add(command);
 	}
 
 	public XStream createXStream()
