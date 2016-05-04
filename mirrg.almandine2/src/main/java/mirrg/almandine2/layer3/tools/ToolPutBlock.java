@@ -2,11 +2,14 @@ package mirrg.almandine2.layer3.tools;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
 import mirrg.almandine2.layer2.entity.Connection;
 import mirrg.almandine2.layer2.entity.Entity;
 import mirrg.almandine2.layer2.entity.EntityBlock;
+import mirrg.almandine2.layer2.entity.TypeConnection;
 import mirrg.almandine2.layer2.tool.Tool;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouseMotion;
@@ -51,15 +54,28 @@ public class ToolPutBlock extends Tool
 
 	private void update(Point2D.Double cursor)
 	{
-		Connection connection = getConnectionPoint(cursor, card::isConnectable).orElse(null);
+		Set<TypeConnection> set = card.getConnectionTypes()
+			.collect(Collectors.toSet());
 
-		// TODO card.getConnectionTypes();
+		if (set.contains(TypeConnection.block)) {
+			Connection connection = getConnectionBlock(cursor, EntityBlock.class, card::isConnectable).orElse(null);
 
-		if (connection != null) {
-			entity = card.create(connection);
-		} else {
-			entity = null;
+			if (connection != null) {
+				entity = card.create(connection);
+				return;
+			}
 		}
+
+		if (set.contains(TypeConnection.point)) {
+			Connection connection = getConnectionPoint(cursor, card::isConnectable).orElse(null);
+
+			if (connection != null) {
+				entity = card.create(connection);
+				return;
+			}
+		}
+
+		entity = null;
 	}
 
 	@Override

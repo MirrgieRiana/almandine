@@ -8,9 +8,11 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.core.GameAlmandine2;
+import mirrg.almandine2.layer2.entity.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.ConnectionPoint;
 import mirrg.almandine2.layer2.entity.ConnectionTraffic;
 import mirrg.almandine2.layer2.entity.Entity;
+import mirrg.almandine2.layer2.entity.EntityBlock;
 import mirrg.almandine2.layer2.entity.EntityWire;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouseMotion;
@@ -85,8 +87,8 @@ public abstract class Tool
 	{
 		return getEntities(clazz)
 			.filter(predicate)
-			.map(e -> new Tuple<>(e, Entity.getCardEntity(e).getView().getDistanceEdge(e, point.x, point.y)))
-			.filter(t -> t.getY() <= 0)
+			.filter(e -> Entity.getCardEntity(e).getView().getDistanceEdge(e, point.x, point.y) <= 0)
+			.map(e -> new Tuple<>(e, Entity.getCardEntity(e).getView().getDistanceCenterSq(e, point.x, point.y)))
 			.min((a, b) -> (int) Math.signum(a.getY() - b.getY()))
 			.map(t -> t.getX());
 	}
@@ -101,6 +103,12 @@ public abstract class Tool
 			.map(w -> new ConnectionTraffic(w, HMath.trim(w.getPosition(point.x, point.y), 0, 1), reverse))
 			.filter(t -> predicate.test(t))
 			.min((a, b) -> (int) Math.signum(a.entity.getDistanceSq(point.x, point.y) - b.entity.getDistanceSq(point.x, point.y)));
+	}
+
+	protected <T extends EntityBlock> Optional<ConnectionBlock> getConnectionBlock(Point2D.Double point, Class<T> clazz, Predicate<ConnectionBlock> predicate)
+	{
+		return getEntity(point, clazz, e -> predicate.test(new ConnectionBlock(e)))
+			.map(e -> new ConnectionBlock(e));
 	}
 
 	protected Optional<ConnectionPoint> getConnectionPoint(Point2D.Double point, Predicate<ConnectionPoint> predicate)
