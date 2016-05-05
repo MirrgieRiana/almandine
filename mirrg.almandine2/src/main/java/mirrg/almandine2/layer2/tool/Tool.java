@@ -3,10 +3,8 @@ package mirrg.almandine2.layer2.tool;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.sun.glass.events.KeyEvent;
@@ -116,25 +114,9 @@ public abstract class Tool
 			.map(t -> t.getX());
 	}
 
-	protected <T extends EntityWire> Optional<ConnectionTraffic> getConnectionTraffic(
+	protected Optional<ConnectionPoint> getConnectionPoint(
 		Point2D.Double point,
-		Class<T> clazz,
-		Predicate<ConnectionTraffic> predicate,
-		boolean reverse)
-	{
-		return getEntities(clazz)
-			.map(w -> new ConnectionTraffic(w, HMath.trim(w.getPosition(point.x, point.y), 0, 1), reverse))
-			.filter(t -> predicate.test(t))
-			.min((a, b) -> (int) Math.signum(a.entity.getDistanceSq(point.x, point.y) - b.entity.getDistanceSq(point.x, point.y)));
-	}
-
-	protected <T extends EntityBlock> Optional<ConnectionBlock> getConnectionBlock(Point2D.Double point, double margin, Class<T> clazz, Predicate<ConnectionBlock> predicate)
-	{
-		return getEntity(point, margin, clazz, e -> predicate.test(new ConnectionBlock(e)))
-			.map(e -> new ConnectionBlock(e));
-	}
-
-	protected Optional<ConnectionPoint> getConnectionPoint(Point2D.Double point, Predicate<ConnectionPoint> predicate)
+		Predicate<ConnectionPoint> predicate)
 	{
 		ConnectionPoint connection = new ConnectionPoint(point);
 		if (predicate.test(connection)) {
@@ -144,23 +126,53 @@ public abstract class Tool
 		}
 	}
 
+	protected <T extends EntityBlock> Optional<ConnectionBlock> getConnectionBlock(
+		Point2D.Double point,
+		double margin,
+		Class<T> clazz,
+		Predicate<ConnectionBlock> predicate)
+	{
+		return getEntity(point, margin, clazz, e -> predicate.test(new ConnectionBlock(e)))
+			.map(e -> new ConnectionBlock(e));
+	}
+
+	protected <T extends EntityWire> Optional<ConnectionTraffic> getConnectionTraffic(
+		Point2D.Double point,
+		double margin,
+		Class<T> clazz,
+		Predicate<ConnectionTraffic> predicate,
+		boolean reverse)
+	{
+		return getEntity(point, margin, clazz, e -> predicate.test(new ConnectionTraffic(e, HMath.trim(e.getPosition(point.x, point.y), 0, 1), reverse)))
+			.map(e -> new ConnectionTraffic(e, HMath.trim(e.getPosition(point.x, point.y), 0, 1), reverse));
+	}
+
 	protected Optional<Connection> getConnection(Point2D.Double cursor, Stream<TypeConnection> connectionTypes, Predicate<Connection> predicate)
 	{
-		Set<TypeConnection> set = connectionTypes
-			.collect(Collectors.toSet());
+		for (TypeConnection connectionType : connectionTypes.toArray(TypeConnection[]::new)) {
 
-		if (!isAlt()) {
-			if (set.contains(TypeConnection.block)) {
-				Connection connection = getConnectionBlock(cursor, isControl() ? 200 : 0, EntityBlock.class, c -> predicate.test(c)).orElse(null);
+			if (connectionType == TypeConnection.point) {
+				Connection connection = getConnectionPoint(cursor, c -> predicate.test(c)).orElse(null);
 
 				if (connection != null) return Optional.of(connection);
 			}
-		}
 
-		if (set.contains(TypeConnection.point)) {
-			Connection connection = getConnectionPoint(cursor, c -> predicate.test(c)).orElse(null);
+			if (!isAlt()) {
+				if (connectionType == TypeConnection.block) {
+					Connection connection = getConnectionBlock(cursor, isControl() ? 200 : 0, EntityBlock.class, c -> predicate.test(c)).orElse(null);
 
-			if (connection != null) return Optional.of(connection);
+					if (connection != null) return Optional.of(connection);
+				}
+			}
+
+			if (!isAlt()) {
+				if (connectionType == TypeConnection.traffic) {
+					Connection connection = getConnectionTraffic(cursor, isControl() ? 200 : 0, EntityWire.class, c -> predicate.test(c), isShift()).orElse(null);
+
+					if (connection != null) return Optional.of(connection);
+				}
+			}
+
 		}
 
 		return Optional.empty();
