@@ -80,19 +80,24 @@ public abstract class Tool
 		return new Point2D.Double(event.mouseEvent.getX(), event.mouseEvent.getY());
 	}
 
+	protected boolean isKeyDown(int key)
+	{
+		return game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(key) > 0;
+	}
+
 	protected boolean isShift()
 	{
-		return game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(KeyEvent.VK_SHIFT) > 0;
+		return isKeyDown(KeyEvent.VK_SHIFT);
 	}
 
 	protected boolean isControl()
 	{
-		return game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(KeyEvent.VK_CONTROL) > 0;
+		return isKeyDown(KeyEvent.VK_CONTROL);
 	}
 
 	protected boolean isAlt()
 	{
-		return game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(KeyEvent.VK_ALT) > 0;
+		return isKeyDown(KeyEvent.VK_ALT);
 	}
 
 	///////////////////////////////////// Entity ///////////////////////////////////////
@@ -192,12 +197,14 @@ public abstract class Tool
 			if (!isControl()) {
 				if (!isAlt()) {
 					if (connectionType == TypeConnection.traffic) {
-						Connection connection = getConnectionTraffic(cursor, margin, EntityWire.class, c -> predicate.test(c), isShift()).orElse(null); // TODO shift
+						Connection connection = getConnectionTraffic(cursor, margin, EntityWire.class, c -> predicate.test(c), isKeyDown(KeyEvent.VK_SPACE)).orElse(null);
 
 						if (connection != null) return Optional.of(connection);
 					}
 				}
 			}
+
+			// TODO anchor
 
 		}
 
