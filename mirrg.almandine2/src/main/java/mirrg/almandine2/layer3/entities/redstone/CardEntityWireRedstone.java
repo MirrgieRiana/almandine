@@ -37,7 +37,7 @@ public class CardEntityWireRedstone extends CardEntityWire<EntityWireRedstone>
 	@Override
 	public Stream<TypeConnection> getConnectionTypesEnd()
 	{
-		return Stream.of(TypeConnection.block, TypeConnection.traffic, TypeConnection.point);
+		return Stream.of(TypeConnection.block, TypeConnection.point);
 	}
 
 	@Override
