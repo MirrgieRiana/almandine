@@ -5,11 +5,7 @@ import java.awt.geom.Ellipse2D;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.core.GameAlmandine2;
-import mirrg.almandine2.layer2.entity.EntityAbstract;
-import mirrg.almandine2.layer2.entity.IEntity;
 import mirrg.almandine2.layer2.entity.IHandle;
-import mirrg.almandine2.layer2.tool.IPoint;
-import mirrg.almandine2.layer2.tool.Point;
 
 public abstract class EntityWireAbstract extends EntityAbstract implements IWire
 {

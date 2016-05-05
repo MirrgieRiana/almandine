@@ -17,6 +17,7 @@ import mirrg.almandine2.layer2.entity.ConnectionTraffic;
 import mirrg.almandine2.layer2.entity.Entity;
 import mirrg.almandine2.layer2.entity.EntityBlock;
 import mirrg.almandine2.layer2.entity.EntityWire;
+import mirrg.almandine2.layer2.entity.IHandle;
 import mirrg.almandine2.layer2.entity.TypeConnection;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouseMotion;
@@ -110,6 +111,23 @@ public abstract class Tool
 			.filter(predicate)
 			.filter(e -> Entity.getCardEntity(e).getView().getDistanceEdge(e, point.x, point.y) <= margin)
 			.map(e -> new Tuple<>(e, Entity.getCardEntity(e).getView().getDistanceCenterSq(e, point.x, point.y)))
+			.min((a, b) -> (int) Math.signum(a.getY() - b.getY()))
+			.map(t -> t.getX());
+	}
+
+	protected <T extends Entity> Stream<IHandle> getHandles(Class<T> clazz, Predicate<T> predicateEntity)
+	{
+		return getEntities(clazz)
+			.filter(predicateEntity)
+			.flatMap(e -> e.getHandles());
+	}
+
+	protected <T extends Entity> Optional<IHandle> getHandle(Point2D.Double point, double margin, Class<T> clazz, Predicate<T> predicateEntity, Predicate<IHandle> predicateHandle)
+	{
+		return getHandles(clazz, predicateEntity)
+			.filter(predicateHandle)
+			.filter(h -> h.getView().getDistanceEdge(h, point.x, point.y) <= margin)
+			.map(h -> new Tuple<>(h, h.getView().getDistanceCenterSq(h, point.x, point.y)))
 			.min((a, b) -> (int) Math.signum(a.getY() - b.getY()))
 			.map(t -> t.getX());
 	}

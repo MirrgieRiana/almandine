@@ -1,6 +1,6 @@
 package mirrg.almandine2.layer2.entity;
 
-import java.util.HashSet;
+import java.util.stream.Stream;
 
 public interface IHandle
 {
@@ -9,7 +9,7 @@ public interface IHandle
 
 	public View<IHandle> getView();
 
-	public HashSet<TypeConnection> getConnectionTypes();
+	public Stream<TypeConnection> getConnectionTypes();
 
 	public boolean isConnectable(Connection connection);
 

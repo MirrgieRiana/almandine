@@ -6,8 +6,6 @@ import com.sun.glass.events.KeyEvent;
 
 import mirrg.applet.nitrogen.modules.input.NitrogenEventKey;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse;
-import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse.Pressed;
-import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse.Released;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouseMotion;
 
 public abstract class ToolBase extends Tool
@@ -36,30 +34,38 @@ public abstract class ToolBase extends Tool
 		});
 		hook(NitrogenEventMouseMotion.Moved.class, event -> {
 			update(getCursor(event));
+			onMouseMoved(event);
 		});
 		hook(NitrogenEventMouseMotion.Dragged.class, event -> {
 			update(getCursor(event));
+			onMouseDragged(event);
 		});
 		hook(NitrogenEventMouse.Pressed.class, event -> {
 			update(getCursor(event));
-
 			onMousePressed(event);
-
 		});
 		hook(NitrogenEventMouse.Released.class, event -> {
 			update(getCursor(event));
-
 			onMouseReleased(event);
-
 		});
 	}
 
-	protected void onMousePressed(Pressed event)
+	protected void onMouseMoved(NitrogenEventMouseMotion.Moved event)
 	{
 
 	}
 
-	protected void onMouseReleased(Released event)
+	protected void onMouseDragged(NitrogenEventMouseMotion.Dragged event)
+	{
+
+	}
+
+	protected void onMousePressed(NitrogenEventMouse.Pressed event)
+	{
+
+	}
+
+	protected void onMouseReleased(NitrogenEventMouse.Released event)
 	{
 
 	}

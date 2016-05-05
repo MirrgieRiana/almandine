@@ -3,12 +3,19 @@ package mirrg.almandine2.layer3.entities2.redstone;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 
 import mirrg.almandine2.layer2.entity.ViewSurfaceCircle;
 import mirrg.almandine2.layer3.entities.HRender;
 
 public class ViewGateRedstone extends ViewSurfaceCircle<EntityGateRedstone>
 {
+
+	@Override
+	public Point2D.Double getPoint(EntityGateRedstone entity)
+	{
+		return entity.getPoint();
+	}
 
 	@Override
 	public double getRadius(EntityGateRedstone entity)

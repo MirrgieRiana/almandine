@@ -3,17 +3,19 @@ package mirrg.almandine2.layer2.entity;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-public abstract class ViewSurfaceRectangle<E extends EntityBlock> extends ViewSurface<E>
+public abstract class ViewSurfaceRectangle<T> extends ViewSurface<T>
 {
 
-	public abstract double getWidth(E entity);
+	public abstract Point2D.Double getPoint(T entity);
 
-	public abstract double getHeight(E entity);
+	public abstract double getWidth(T entity);
+
+	public abstract double getHeight(T entity);
 
 	@Override
-	public Rectangle2D.Double getShape(E entity, double margin)
+	public Rectangle2D.Double getShape(T entity, double margin)
 	{
-		Point2D.Double point = entity.getPoint();
+		Point2D.Double point = getPoint(entity);
 		double width = getWidth(entity);
 		double height = getHeight(entity);
 		return new Rectangle2D.Double(
@@ -24,9 +26,9 @@ public abstract class ViewSurfaceRectangle<E extends EntityBlock> extends ViewSu
 	}
 
 	@Override
-	public double getDistanceCenterSq(E entity, double x, double y)
+	public double getDistanceCenterSq(T entity, double x, double y)
 	{
-		Point2D.Double point = entity.getPoint();
+		Point2D.Double point = getPoint(entity);
 		double a = Math.max(
 			Math.abs(point.x - x),
 			Math.abs(point.y - y));
@@ -34,9 +36,9 @@ public abstract class ViewSurfaceRectangle<E extends EntityBlock> extends ViewSu
 	}
 
 	@Override
-	public double getDistanceEdge(E entity, double x, double y)
+	public double getDistanceEdge(T entity, double x, double y)
 	{
-		Point2D.Double point = entity.getPoint();
+		Point2D.Double point = getPoint(entity);
 		double width = getWidth(entity);
 		double height = getHeight(entity);
 		return Math.max(

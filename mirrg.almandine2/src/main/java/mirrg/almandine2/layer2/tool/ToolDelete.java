@@ -31,12 +31,7 @@ public class ToolDelete extends ToolBase
 	@Override
 	protected void update(Point2D.Double cursor)
 	{
-		double margin = 0;
-		if (isShift()) margin = 200;
-		if (isControl()) margin = 200;
-		if (isAlt()) margin = 200;
-
-		entity = getEntity(cursor, margin, Entity.class, e -> {
+		entity = getEntity(cursor, isShift() || isControl() || isAlt() ? 200 : 0, Entity.class, e -> {
 			if (isShift()) if (!(e instanceof EntityWire)) return false;
 			if (isControl()) if (!(e instanceof EntityBlock)) return false;
 			if (isAlt()) if (!(e instanceof EntityCart)) return false;

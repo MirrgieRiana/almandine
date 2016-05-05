@@ -8,7 +8,6 @@ import mirrg.almandine2.layer2.entity.CardEntityBlock;
 import mirrg.almandine2.layer2.entity.Connection;
 import mirrg.almandine2.layer2.entity.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.EntityBlock;
-import mirrg.almandine2.layer2.entity.IHandle;
 
 public class EntityGateRedstone extends EntityBlock
 {
@@ -83,12 +82,6 @@ public class EntityGateRedstone extends EntityBlock
 			default:
 				throw new RuntimeException("Illegal redstone gate type: " + type);
 		}
-	}
-
-	@Override
-	public Stream<IHandle> getHandles()
-	{
-		return Stream.empty();
 	}
 
 	public int getRadiusRedstone() // TODO interface

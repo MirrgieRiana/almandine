@@ -9,7 +9,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-public abstract class ViewWire<E extends EntityWire> extends View<E>
+public abstract class ViewWire<E extends EntityWire> extends View<E> // TODO E->T
 {
 
 	public abstract double getWidth(E entity);

@@ -23,6 +23,7 @@ import mirrg.almandine2.layer2.entity.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.ConnectionPoint;
 import mirrg.almandine2.layer2.entity.ConnectionTraffic;
 import mirrg.almandine2.layer2.tool.ToolDelete;
+import mirrg.almandine2.layer2.tool.ToolMove;
 import mirrg.almandine2.layer2.tool.ToolPutBlock;
 import mirrg.almandine2.layer2.tool.ToolPutWire;
 import mirrg.almandine2.layer3.entities2.counter.CardEntityCounter;
@@ -49,7 +50,7 @@ public class MainAlmandine2Layer3
 
 				game.registerCommand(new CommandTool(() -> null, KeyEvent.VK_ESCAPE));
 				game.registerCommand(new CommandTool(ToolDelete::new, KeyEvent.VK_B));
-				/* TODO game.registerCommand(new CommandTool(ToolMove::new, KeyEvent.VK_M));*/
+				game.registerCommand(new CommandTool(ToolMove::new, KeyEvent.VK_M));
 
 				game.registerCommand(new CommandTool(() -> new ToolPutBlock(CardEntityCounter.INSTANCE), KeyEvent.VK_Z));
 

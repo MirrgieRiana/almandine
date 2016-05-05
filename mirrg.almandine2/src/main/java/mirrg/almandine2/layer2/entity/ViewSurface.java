@@ -6,13 +6,13 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.Stroke;
 
-public abstract class ViewSurface<E extends EntitySurface> extends View<E>
+public abstract class ViewSurface<T> extends View<T>
 {
 
-	public abstract Shape getShape(E entity, double margin);
+	public abstract Shape getShape(T entity, double margin);
 
 	@Override
-	public void renderAura(E entity, Graphics2D graphics, double width, double margin, Color color)
+	public void renderAura(T entity, Graphics2D graphics, double width, double margin, Color color)
 	{
 		Stroke stroke = graphics.getStroke();
 		{
