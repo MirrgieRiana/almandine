@@ -1,4 +1,4 @@
-package mirrg.almandine2.layer3.entities2.redstone;
+package mirrg.almandine2.layer3.entities.redstone;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -98,6 +98,12 @@ public class EntityGateRedstone extends EntityBlock implements IBlockRedstone
 	public boolean getValueRedstone()
 	{
 		return value;
+	}
+
+	@Override
+	public EntityBlock getEntity()
+	{
+		return this;
 	}
 
 }

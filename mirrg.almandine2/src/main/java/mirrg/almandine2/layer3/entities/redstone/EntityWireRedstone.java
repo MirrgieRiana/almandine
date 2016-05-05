@@ -1,4 +1,4 @@
-package mirrg.almandine2.layer3.entities2.redstone;
+package mirrg.almandine2.layer3.entities.redstone;
 
 import mirrg.almandine2.layer2.core.GameAlmandine2;
 import mirrg.almandine2.layer2.entity.CardEntityWire;
@@ -38,6 +38,12 @@ public class EntityWireRedstone extends EntityWire implements IWireRedstone
 	public boolean getValueRedstone()
 	{
 		return value;
+	}
+
+	@Override
+	public EntityWire getEntity()
+	{
+		return this;
 	}
 
 }

@@ -19,6 +19,7 @@ import mirrg.almandine2.layer2.command.CommandAction;
 import mirrg.almandine2.layer2.command.CommandTool;
 import mirrg.almandine2.layer2.core.DataAlmandine2;
 import mirrg.almandine2.layer2.core.GameAlmandine2;
+import mirrg.almandine2.layer2.entity.connection.ConnectionAnchor;
 import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.connection.ConnectionPoint;
 import mirrg.almandine2.layer2.entity.connection.ConnectionTraffic;
@@ -26,12 +27,18 @@ import mirrg.almandine2.layer2.tool.ToolDelete;
 import mirrg.almandine2.layer2.tool.ToolMove;
 import mirrg.almandine2.layer2.tool.ToolPutBlock;
 import mirrg.almandine2.layer2.tool.ToolPutWire;
-import mirrg.almandine2.layer3.entities2.counter.CardEntityCounter;
-import mirrg.almandine2.layer3.entities2.counter.EntityCounter;
-import mirrg.almandine2.layer3.entities2.redstone.CardEntityGateRedstone;
-import mirrg.almandine2.layer3.entities2.redstone.CardEntityWireRedstone;
-import mirrg.almandine2.layer3.entities2.redstone.EntityGateRedstone;
-import mirrg.almandine2.layer3.entities2.redstone.EntityWireRedstone;
+import mirrg.almandine2.layer3.entities.counter.CardEntityCounter;
+import mirrg.almandine2.layer3.entities.counter.EntityCounter;
+import mirrg.almandine2.layer3.entities.redstone.CardEntityGateRedstone;
+import mirrg.almandine2.layer3.entities.redstone.CardEntityWireRedstone;
+import mirrg.almandine2.layer3.entities.redstone.EntityGateRedstone;
+import mirrg.almandine2.layer3.entities.redstone.EntityWireRedstone;
+import mirrg.almandine2.layer3.entities.station.CardEntityCart;
+import mirrg.almandine2.layer3.entities.station.CardEntityRail;
+import mirrg.almandine2.layer3.entities.station.CardEntityStation;
+import mirrg.almandine2.layer3.entities.station.EntityCart;
+import mirrg.almandine2.layer3.entities.station.EntityRail;
+import mirrg.almandine2.layer3.entities.station.EntityStation;
 
 public class MainAlmandine2Layer3
 {
@@ -61,10 +68,10 @@ public class MainAlmandine2Layer3
 				game.registerCommand(new CommandTool(() -> new ToolPutBlock(CardEntityGateRedstone.XOR), KeyEvent.VK_G));
 				game.registerCommand(new CommandTool(() -> new ToolPutWire(CardEntityWireRedstone.INSTANCE), KeyEvent.VK_H));
 
-				/* TODO				game.registerCommand(new CommandTool(() -> new ToolPutBlock(CardFurnitureStation.INSTANCE), KeyEvent.VK_Q));
-								game.registerCommand(new CommandTool(() -> new ToolPutWire(CardWireRail.INSTANCE), KeyEvent.VK_W));
-								game.registerCommand(new CommandTool(() -> new ToolPutCart(CardCart.INSTANCE), KeyEvent.VK_E));
-				*/
+				game.registerCommand(new CommandTool(() -> new ToolPutBlock(CardEntityStation.INSTANCE), KeyEvent.VK_Q));
+				game.registerCommand(new CommandTool(() -> new ToolPutWire(CardEntityRail.INSTANCE), KeyEvent.VK_W));
+				game.registerCommand(new CommandTool(() -> new ToolPutBlock(CardEntityCart.INSTANCE), KeyEvent.VK_E));
+
 				game.registerCommand(new CommandAction(game2 -> {
 
 					openDialogXML();
@@ -138,9 +145,13 @@ public class MainAlmandine2Layer3
 		xStream.alias("connection::point", ConnectionPoint.class);
 		xStream.alias("connection::block", ConnectionBlock.class);
 		xStream.alias("connection::traffic", ConnectionTraffic.class);
+		xStream.alias("connection::anchor", ConnectionAnchor.class);
 		xStream.alias("entity::counter", EntityCounter.class);
 		xStream.alias("entity::resdtone::gate", EntityGateRedstone.class);
 		xStream.alias("entity::resdtone::wire", EntityWireRedstone.class);
+		xStream.alias("entity::station::station", EntityStation.class);
+		xStream.alias("entity::station::rail", EntityRail.class);
+		xStream.alias("entity::station::cart", EntityCart.class);
 
 		/*
 		xStream.alias("entity::counter", CardFurnitureCounter.Entity.class);

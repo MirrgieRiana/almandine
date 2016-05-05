@@ -32,4 +32,9 @@ public abstract class Connection
 
 	public abstract Stream<Entity> getEntities();
 
+	public Entity getParent()
+	{
+		return parent;
+	}
+
 }

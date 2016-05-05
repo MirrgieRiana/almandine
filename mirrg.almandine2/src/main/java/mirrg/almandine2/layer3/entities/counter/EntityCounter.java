@@ -1,4 +1,4 @@
-package mirrg.almandine2.layer3.entities2.counter;
+package mirrg.almandine2.layer3.entities.counter;
 
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
 import mirrg.almandine2.layer2.entity.EntityBlock;

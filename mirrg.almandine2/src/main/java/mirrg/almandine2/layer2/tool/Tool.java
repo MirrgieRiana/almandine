@@ -34,7 +34,7 @@ public abstract class Tool
 
 	public abstract void render(Graphics2D graphics);
 
-	public final void enable(GameAlmandine2 game) // TODO remove final
+	public void enable(GameAlmandine2 game)
 	{
 		this.game = game;
 		initEvents();
@@ -45,7 +45,7 @@ public abstract class Tool
 
 	protected abstract void initEvents();
 
-	public final void disable() // TODO remove final
+	public void disable()
 	{
 		disabled = true;
 	}
@@ -192,7 +192,7 @@ public abstract class Tool
 			if (!isControl()) {
 				if (!isAlt()) {
 					if (connectionType == TypeConnection.traffic) {
-						Connection connection = getConnectionTraffic(cursor, margin, EntityWire.class, c -> predicate.test(c), isShift()).orElse(null);
+						Connection connection = getConnectionTraffic(cursor, margin, EntityWire.class, c -> predicate.test(c), isShift()).orElse(null); // TODO shift
 
 						if (connection != null) return Optional.of(connection);
 					}
