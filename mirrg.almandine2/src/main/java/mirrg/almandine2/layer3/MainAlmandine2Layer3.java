@@ -142,27 +142,18 @@ public class MainAlmandine2Layer3
 	{
 		XStream xStream = game.createXStream();
 		xStream.alias("point", Point2D.Double.class);
+
 		xStream.alias("connection::point", ConnectionPoint.class);
 		xStream.alias("connection::block", ConnectionBlock.class);
 		xStream.alias("connection::traffic", ConnectionTraffic.class);
 		xStream.alias("connection::anchor", ConnectionAnchor.class);
+
 		xStream.alias("entity::counter", EntityCounter.class);
 		xStream.alias("entity::resdtone::gate", EntityGateRedstone.class);
 		xStream.alias("entity::resdtone::wire", EntityWireRedstone.class);
 		xStream.alias("entity::station::station", EntityStation.class);
 		xStream.alias("entity::station::rail", EntityRail.class);
 		xStream.alias("entity::station::cart", EntityCart.class);
-
-		/*
-		xStream.alias("entity::counter", CardFurnitureCounter.Entity.class);
-		
-		xStream.alias("entity::redstone::gate", EntityFurnitureRedstoneGate.class);
-		xStream.alias("entity::redstone::wire", CardWireRedstoneWire.Entity.class);
-		
-		xStream.alias("entity::station", CardFurnitureStation.Entity.class);
-		xStream.alias("entity::rail", CardWireRail.Entity.class);
-		xStream.alias("entity::cart", EntityCartSlab.class);
-		*/
 
 		// TODO
 		return xStream;
