@@ -45,20 +45,7 @@ public abstract class EntityCart extends EntitySurface
 	{
 		super.onConnectionEvent(owner, event);
 
-		if (event instanceof EventDied) {
-			if (connection instanceof ConnectionBlock) {
-				if (((ConnectionBlock) connection).entity == owner) {
-
-					Connection connection2 = new ConnectionPoint(connection.getPoint());
-					if (getCardEntity().isConnectable(connection2)) {
-						setConnection(connection2);
-					} else {
-						markDie();
-					}
-
-				}
-			}
-		}
+		dieIfNotConnectableToPoint(owner, event, connection, getCardEntity()::isConnectable, this::setConnection);
 
 	}
 

@@ -1,6 +1,9 @@
 package mirrg.almandine2.layer2.entity;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -92,6 +95,27 @@ public abstract class Entity
 	public void onConnectionEvent(Entity owner, Event event)
 	{
 
+	}
+
+	protected void dieIfNotConnectableToPoint(Entity owner, Event event, Connection connection, Predicate<Connection> predicate, Consumer<Connection> setter)
+	{
+		if (event instanceof EventDied) {
+
+			if (connection.getEntities()
+				.anyMatch(entity -> entity == owner)) {
+
+				Connection connection2 = new ConnectionPoint(new Point2D.Double(
+					connection.getPoint().x,
+					connection.getPoint().y));
+				if (predicate.test(connection2)) {
+					setter.accept(connection2);
+				} else {
+					markDie();
+				}
+
+			}
+
+		}
 	}
 
 	////////////////////////////// Die

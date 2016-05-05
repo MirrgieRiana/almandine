@@ -4,15 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import mirrg.almandine2.layer2.entity.CardEntityWire;
 import mirrg.almandine2.layer2.entity.Connection;
 import mirrg.almandine2.layer2.entity.Entity;
-import mirrg.almandine2.layer2.entity.EntityBlock;
 import mirrg.almandine2.layer2.entity.EntityWire;
-import mirrg.almandine2.layer2.entity.TypeConnection;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse.Pressed;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse.Released;
 
@@ -60,55 +56,12 @@ public class ToolPutWire extends ToolBase
 	protected void update(Point2D.Double cursor)
 	{
 		if (!holding) {
-			Set<TypeConnection> set = card.getConnectionTypesBegin()
-				.collect(Collectors.toSet());
-
-			if (!isAlt()) {
-				if (set.contains(TypeConnection.block)) {
-					Connection connection = getConnectionBlock(cursor, isControl() ? 200 : 0, EntityBlock.class, card::isConnectableBegin).orElse(null);
-
-					if (connection != null) {
-						begin = connection;
-						return;
-					}
-				}
-			}
-
-			if (set.contains(TypeConnection.point)) {
-				Connection connection = getConnectionPoint(cursor, card::isConnectableBegin).orElse(null);
-
-				if (connection != null) {
-					begin = connection;
-					return;
-				}
-			}
-
-			begin = null;
+			begin = getConnection(cursor, card.getConnectionTypesBegin(), card::isConnectableBegin)
+				.orElse(null);
 		} else {
-			Set<TypeConnection> set = card.getConnectionTypesEnd()
-				.collect(Collectors.toSet());
-
-			if (!isAlt()) {
-				if (set.contains(TypeConnection.block)) {
-					Connection connection = getConnectionBlock(cursor, isControl() ? 200 : 0, EntityBlock.class, card::isConnectableEnd).orElse(null);
-
-					if (connection != null) {
-						entity = card.create(begin, connection);
-						return;
-					}
-				}
-			}
-
-			if (set.contains(TypeConnection.point)) {
-				Connection connection = getConnectionPoint(cursor, card::isConnectableEnd).orElse(null);
-
-				if (connection != null) {
-					entity = card.create(begin, connection);
-					return;
-				}
-			}
-
-			entity = null;
+			entity = getConnection(cursor, card.getConnectionTypesEnd(), card::isConnectableEnd)
+				.map(connection -> card.create(begin, connection))
+				.orElse(null);
 		}
 	}
 
@@ -116,6 +69,11 @@ public class ToolPutWire extends ToolBase
 	public void render(Graphics2D graphics)
 	{
 		if (entity != null) {
+			entity.getConnections().forEach(connection -> {
+				connection.getEntities().forEach(entity2 -> {
+					Entity.getCardEntity(entity2).getView().renderAura(entity2, graphics, 2, 3, Color.decode("#4CDB7C"));
+				});
+			});
 			Entity.getCardEntity(entity).getView().render(entity, graphics);
 		} else if (begin != null) {
 			graphics.setColor(Color.red);

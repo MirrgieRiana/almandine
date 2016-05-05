@@ -114,35 +114,8 @@ public abstract class EntityWire extends Entity
 	{
 		super.onConnectionEvent(owner, event);
 
-		if (event instanceof EventDied) {
-			if (begin instanceof ConnectionBlock) {
-				if (((ConnectionBlock) begin).entity == owner) {
-
-					Connection connection2 = new ConnectionPoint(begin.getPoint());
-					if (getCardEntity().isConnectableBegin(connection2)) {
-						setBegin(connection2);
-					} else {
-						markDie();
-					}
-
-				}
-			}
-		}
-
-		if (event instanceof EventDied) {
-			if (end instanceof ConnectionBlock) {
-				if (((ConnectionBlock) end).entity == owner) {
-
-					Connection connection2 = new ConnectionPoint(end.getPoint());
-					if (getCardEntity().isConnectableEnd(connection2)) {
-						setEnd(connection2);
-					} else {
-						markDie();
-					}
-
-				}
-			}
-		}
+		dieIfNotConnectableToPoint(owner, event, begin, getCardEntity()::isConnectableBegin, this::setBegin);
+		dieIfNotConnectableToPoint(owner, event, end, getCardEntity()::isConnectableEnd, this::setEnd);
 
 	}
 

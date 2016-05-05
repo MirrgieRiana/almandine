@@ -3,19 +3,23 @@ package mirrg.almandine2.layer2.tool;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.sun.glass.events.KeyEvent;
 
 import mirrg.almandine2.layer2.core.GameAlmandine2;
+import mirrg.almandine2.layer2.entity.Connection;
 import mirrg.almandine2.layer2.entity.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.ConnectionPoint;
 import mirrg.almandine2.layer2.entity.ConnectionTraffic;
 import mirrg.almandine2.layer2.entity.Entity;
 import mirrg.almandine2.layer2.entity.EntityBlock;
 import mirrg.almandine2.layer2.entity.EntityWire;
+import mirrg.almandine2.layer2.entity.TypeConnection;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouseMotion;
 import mirrg.struct.hydrogen.Tuple;
@@ -77,6 +81,21 @@ public abstract class Tool
 		return new Point2D.Double(event.mouseEvent.getX(), event.mouseEvent.getY());
 	}
 
+	protected boolean isShift()
+	{
+		return game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(KeyEvent.VK_SHIFT) > 0;
+	}
+
+	protected boolean isControl()
+	{
+		return game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(KeyEvent.VK_CONTROL) > 0;
+	}
+
+	protected boolean isAlt()
+	{
+		return game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(KeyEvent.VK_ALT) > 0;
+	}
+
 	///////////////////////////////////// Entity ///////////////////////////////////////
 
 	@SuppressWarnings("unchecked")
@@ -125,19 +144,26 @@ public abstract class Tool
 		}
 	}
 
-	protected boolean isShift()
+	protected Optional<Connection> getConnection(Point2D.Double cursor, Stream<TypeConnection> connectionTypes, Predicate<Connection> predicate)
 	{
-		return game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(KeyEvent.VK_SHIFT) > 0;
-	}
+		Set<TypeConnection> set = connectionTypes
+			.collect(Collectors.toSet());
 
-	protected boolean isControl()
-	{
-		return game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(KeyEvent.VK_CONTROL) > 0;
-	}
+		if (!isAlt()) {
+			if (set.contains(TypeConnection.block)) {
+				Connection connection = getConnectionBlock(cursor, isControl() ? 200 : 0, EntityBlock.class, c -> predicate.test(c)).orElse(null);
 
-	protected boolean isAlt()
-	{
-		return game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(KeyEvent.VK_ALT) > 0;
+				if (connection != null) return Optional.of(connection);
+			}
+		}
+
+		if (set.contains(TypeConnection.point)) {
+			Connection connection = getConnectionPoint(cursor, c -> predicate.test(c)).orElse(null);
+
+			if (connection != null) return Optional.of(connection);
+		}
+
+		return Optional.empty();
 	}
 
 }

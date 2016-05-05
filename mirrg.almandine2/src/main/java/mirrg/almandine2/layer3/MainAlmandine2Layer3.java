@@ -19,7 +19,9 @@ import mirrg.almandine2.layer2.command.CommandAction;
 import mirrg.almandine2.layer2.command.CommandTool;
 import mirrg.almandine2.layer2.core.DataAlmandine2;
 import mirrg.almandine2.layer2.core.GameAlmandine2;
+import mirrg.almandine2.layer2.entity.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.ConnectionPoint;
+import mirrg.almandine2.layer2.entity.ConnectionTraffic;
 import mirrg.almandine2.layer2.tool.ToolDelete;
 import mirrg.almandine2.layer2.tool.ToolPutBlock;
 import mirrg.almandine2.layer2.tool.ToolPutWire;
@@ -27,6 +29,8 @@ import mirrg.almandine2.layer3.entities2.counter.CardEntityCounter;
 import mirrg.almandine2.layer3.entities2.counter.EntityCounter;
 import mirrg.almandine2.layer3.entities2.redstone.CardEntityGateRedstone;
 import mirrg.almandine2.layer3.entities2.redstone.CardEntityWireRedstone;
+import mirrg.almandine2.layer3.entities2.redstone.EntityGateRedstone;
+import mirrg.almandine2.layer3.entities2.redstone.EntityWireRedstone;
 
 public class MainAlmandine2Layer3
 {
@@ -131,7 +135,11 @@ public class MainAlmandine2Layer3
 		XStream xStream = game.createXStream();
 		xStream.alias("point", Point2D.Double.class);
 		xStream.alias("connection::point", ConnectionPoint.class);
+		xStream.alias("connection::block", ConnectionBlock.class);
+		xStream.alias("connection::traffic", ConnectionTraffic.class);
 		xStream.alias("entity::counter", EntityCounter.class);
+		xStream.alias("entity::resdtone::gate", EntityGateRedstone.class);
+		xStream.alias("entity::resdtone::wire", EntityWireRedstone.class);
 
 		/*
 		xStream.alias("entity::counter", CardFurnitureCounter.Entity.class);
