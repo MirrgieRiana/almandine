@@ -165,29 +165,37 @@ public abstract class Tool
 			.map(e -> new ConnectionTraffic(e, HMath.trim(e.getPosition(point.x, point.y), 0, 1), reverse));
 	}
 
-	protected Optional<Connection> getConnection(Point2D.Double cursor, Stream<TypeConnection> connectionTypes, Predicate<Connection> predicate)
+	protected Optional<Connection> getConnection(Point2D.Double cursor, double margin, Stream<TypeConnection> connectionTypes, Predicate<Connection> predicate)
 	{
 		for (TypeConnection connectionType : connectionTypes.toArray(TypeConnection[]::new)) {
 
-			if (connectionType == TypeConnection.point) {
-				Connection connection = getConnectionPoint(cursor, c -> predicate.test(c)).orElse(null);
+			if (!isControl()) {
+				if (!isShift()) {
+					if (connectionType == TypeConnection.point) {
+						Connection connection = getConnectionPoint(cursor, c -> predicate.test(c)).orElse(null);
 
-				if (connection != null) return Optional.of(connection);
-			}
-
-			if (!isAlt()) {
-				if (connectionType == TypeConnection.block) {
-					Connection connection = getConnectionBlock(cursor, isControl() ? 200 : 0, EntityBlock.class, c -> predicate.test(c)).orElse(null);
-
-					if (connection != null) return Optional.of(connection);
+						if (connection != null) return Optional.of(connection);
+					}
 				}
 			}
 
-			if (!isAlt()) {
-				if (connectionType == TypeConnection.traffic) {
-					Connection connection = getConnectionTraffic(cursor, isControl() ? 200 : 0, EntityWire.class, c -> predicate.test(c), isShift()).orElse(null);
+			if (!isShift()) {
+				if (!isAlt()) {
+					if (connectionType == TypeConnection.block) {
+						Connection connection = getConnectionBlock(cursor, margin, EntityBlock.class, c -> predicate.test(c)).orElse(null);
 
-					if (connection != null) return Optional.of(connection);
+						if (connection != null) return Optional.of(connection);
+					}
+				}
+			}
+
+			if (!isControl()) {
+				if (!isAlt()) {
+					if (connectionType == TypeConnection.traffic) {
+						Connection connection = getConnectionTraffic(cursor, margin, EntityWire.class, c -> predicate.test(c), isShift()).orElse(null);
+
+						if (connection != null) return Optional.of(connection);
+					}
 				}
 			}
 

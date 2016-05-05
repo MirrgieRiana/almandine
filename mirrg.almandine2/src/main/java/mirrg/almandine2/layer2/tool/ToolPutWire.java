@@ -55,11 +55,12 @@ public class ToolPutWire extends ToolBase
 	@Override
 	protected void update(Point2D.Double cursor)
 	{
+		double margin = isShift() || isControl() || isAlt() ? 200 : 0;
 		if (!holding) {
-			begin = getConnection(cursor, card.getConnectionTypesBegin(), card::isConnectableBegin)
+			begin = getConnection(cursor, margin, card.getConnectionTypesBegin(), card::isConnectableBegin)
 				.orElse(null);
 		} else {
-			entity = getConnection(cursor, card.getConnectionTypesEnd(), card::isConnectableEnd)
+			entity = getConnection(cursor, margin, card.getConnectionTypesEnd(), card::isConnectableEnd)
 				.map(connection -> card.create(begin, connection))
 				.orElse(null);
 		}

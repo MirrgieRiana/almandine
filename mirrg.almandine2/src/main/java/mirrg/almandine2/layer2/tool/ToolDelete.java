@@ -6,7 +6,6 @@ import java.awt.geom.Point2D;
 
 import mirrg.almandine2.layer2.entity.Entity;
 import mirrg.almandine2.layer2.entity.EntityBlock;
-import mirrg.almandine2.layer2.entity.EntityCart;
 import mirrg.almandine2.layer2.entity.EntityWire;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse.Pressed;
 
@@ -34,7 +33,6 @@ public class ToolDelete extends ToolBase
 		entity = getEntity(cursor, isShift() || isControl() || isAlt() ? 200 : 0, Entity.class, e -> {
 			if (isShift()) if (!(e instanceof EntityWire)) return false;
 			if (isControl()) if (!(e instanceof EntityBlock)) return false;
-			if (isAlt()) if (!(e instanceof EntityCart)) return false;
 			return true;
 		}).orElse(null);
 	}

@@ -6,7 +6,7 @@ import mirrg.almandine2.layer2.entity.EntityWire;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 
-public class EntityWireRedstone extends EntityWire
+public class EntityWireRedstone extends EntityWire implements IWireRedstone
 {
 
 	public boolean value;
@@ -19,7 +19,7 @@ public class EntityWireRedstone extends EntityWire
 	public void move()
 	{
 		boolean value = getBegin() instanceof ConnectionBlock
-			? ((EntityGateRedstone) ((ConnectionBlock) getBegin()).entity).value
+			? ((IBlockRedstone) ((ConnectionBlock) getBegin()).entity).getValueRedstone()
 			: false;
 
 		game.nitrogen.registerRemovable(GameAlmandine2.NitrogenEventPostMove.class, event -> {
@@ -32,6 +32,12 @@ public class EntityWireRedstone extends EntityWire
 	public CardEntityWire<?> getCardEntity()
 	{
 		return CardEntityWireRedstone.INSTANCE;
+	}
+
+	@Override
+	public boolean getValueRedstone()
+	{
+		return value;
 	}
 
 }

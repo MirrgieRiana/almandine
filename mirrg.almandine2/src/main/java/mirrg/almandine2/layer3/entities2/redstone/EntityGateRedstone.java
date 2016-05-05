@@ -6,10 +6,11 @@ import java.util.stream.Stream;
 import mirrg.almandine2.layer2.core.GameAlmandine2;
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
 import mirrg.almandine2.layer2.entity.EntityBlock;
+import mirrg.almandine2.layer2.entity.EntityWire;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 
-public class EntityGateRedstone extends EntityBlock
+public class EntityGateRedstone extends EntityBlock implements IBlockRedstone
 {
 
 	public boolean value = true;
@@ -26,24 +27,24 @@ public class EntityGateRedstone extends EntityBlock
 		boolean value;
 		switch (type) {
 			case AND:
-				value = getWires()
-					.allMatch(wire -> wire.value);
+				value = getValues()
+					.allMatch(v -> v);
 				break;
 			case OR:
-				value = getWires()
-					.anyMatch(wire -> wire.value);
+				value = getValues()
+					.anyMatch(v -> v);
 				break;
 			case NAND:
-				value = !getWires()
-					.allMatch(wire -> wire.value);
+				value = !getValues()
+					.allMatch(v -> v);
 				break;
 			case NOR:
-				value = !getWires()
-					.anyMatch(wire -> wire.value);
+				value = !getValues()
+					.anyMatch(v -> v);
 				break;
 			case XOR: {
-				value = getWires()
-					.filter(wire -> wire.value)
+				value = getValues()
+					.filter(v -> v)
 					.collect(Collectors.counting()) % 2 == 1;
 				break;
 			}
@@ -58,11 +59,14 @@ public class EntityGateRedstone extends EntityBlock
 		});
 	}
 
-	private Stream<EntityWireRedstone> getWires()
+	private Stream<Boolean> getValues()
 	{
-		return game.data.getEntities(EntityWireRedstone.class)
+		return game.data.getEntities(EntityWire.class)
 			.filter(wire -> wire.getEnd() instanceof ConnectionBlock)
-			.filter(wire -> ((ConnectionBlock) wire.getEnd()).entity == this);
+			.filter(wire -> ((ConnectionBlock) wire.getEnd()).entity == this)
+			.filter(wire -> wire instanceof IWireRedstone)
+			.map(wire -> (IWireRedstone) wire)
+			.map(wire -> wire.getValueRedstone());
 	}
 
 	@Override
@@ -84,9 +88,16 @@ public class EntityGateRedstone extends EntityBlock
 		}
 	}
 
-	public int getRadiusRedstone() // TODO interface
+	@Override
+	public double getRadiusRedstone()
 	{
 		return 5;
+	}
+
+	@Override
+	public boolean getValueRedstone()
+	{
+		return value;
 	}
 
 }

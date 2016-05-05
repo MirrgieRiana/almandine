@@ -11,7 +11,7 @@ import mirrg.almandine2.layer2.entity.connection.TypeConnection;
 import mirrg.almandine2.layer2.entity.view.View;
 import mirrg.almandine2.layer2.entity.view.ViewSurfaceCircle;
 
-public abstract class EntityBlock extends EntitySurface
+public abstract class EntityBlock extends Entity
 {
 
 	private Connection connection;
@@ -39,7 +39,6 @@ public abstract class EntityBlock extends EntitySurface
 		this.connection.enable(this);
 	}
 
-	@Override
 	public Point2D.Double getPoint()
 	{
 		return connection.getPoint();
@@ -47,6 +46,12 @@ public abstract class EntityBlock extends EntitySurface
 
 	@Override
 	public abstract CardEntityBlock<?> getCardEntity();
+
+	public boolean isConnectable(Connection connection)
+	{
+		if (connection.getEntities().anyMatch(e -> e == this)) return false;
+		return getCardEntity().isConnectable(connection);
+	}
 
 	@Override
 	public void onConnectionEvent(Entity owner, Event event)
@@ -107,7 +112,7 @@ public abstract class EntityBlock extends EntitySurface
 			@Override
 			public boolean isConnectable(Connection connection)
 			{
-				return EntityBlock.this.getCardEntity().isConnectable(connection);
+				return EntityBlock.this.isConnectable(connection);
 			}
 
 			@Override

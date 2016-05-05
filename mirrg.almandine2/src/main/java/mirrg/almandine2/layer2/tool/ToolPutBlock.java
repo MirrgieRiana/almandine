@@ -36,7 +36,8 @@ public class ToolPutBlock extends ToolBase
 	@Override
 	protected void update(Point2D.Double cursor)
 	{
-		entity = getConnection(cursor, card.getConnectionTypes(), card::isConnectable)
+		double margin = isShift() || isControl() || isAlt() ? 200 : 0;
+		entity = getConnection(cursor, margin, card.getConnectionTypes(), card::isConnectable)
 			.map(connection -> card.create(connection))
 			.orElse(null);
 	}

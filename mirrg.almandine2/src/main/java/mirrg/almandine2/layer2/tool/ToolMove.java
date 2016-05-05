@@ -6,7 +6,6 @@ import java.awt.geom.Point2D;
 
 import mirrg.almandine2.layer2.entity.Entity;
 import mirrg.almandine2.layer2.entity.EntityBlock;
-import mirrg.almandine2.layer2.entity.EntityCart;
 import mirrg.almandine2.layer2.entity.EntityWire;
 import mirrg.almandine2.layer2.entity.IHandle;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse.Pressed;
@@ -45,13 +44,18 @@ public class ToolMove extends ToolBase
 	@Override
 	protected void update(Point2D.Double cursor)
 	{
+		double margin = isShift() || isControl() || isAlt() ? 200 : 0;
 		if (!holding) {
-			handle = getHandle(cursor, isShift() || isControl() || isAlt() ? 200 : 0,
+			handle = getHandle(cursor, margin,
 				Entity.class, this::testEntity, h -> true)
 					.orElse(null);
 		} else {
-			getConnection(cursor, handle.getConnectionTypes(), handle::isConnectable)
-				.ifPresent(handle::set);
+			getConnection(cursor, margin, handle.getConnectionTypes(), handle::isConnectable)
+				.ifPresent(c -> {
+					synchronized (game) {
+						handle.set(c);
+					}
+				});
 		}
 	}
 
@@ -75,7 +79,6 @@ public class ToolMove extends ToolBase
 	{
 		if (isShift()) if (!(entity instanceof EntityWire)) return false;
 		if (isControl()) if (!(entity instanceof EntityBlock)) return false;
-		if (isAlt()) if (!(entity instanceof EntityCart)) return false;
 		return true;
 	}
 

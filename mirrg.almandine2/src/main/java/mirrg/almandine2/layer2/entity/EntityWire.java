@@ -54,48 +54,60 @@ public abstract class EntityWire extends Entity
 		this.end.enable(this);
 	}
 
-	public Point2D.Double getPoint(double position)
+	public static Point2D.Double getPoint(Point2D.Double begin, Point2D.Double end, double position)
 	{
-		Point2D.Double begin = getBegin().getPoint();
-		Point2D.Double end = getEnd().getPoint();
 		return new Point2D.Double(
 			begin.x + (end.x - begin.x) * position,
 			begin.y + (end.y - begin.y) * position);
 	}
 
+	public Point2D.Double getPoint(double position)
+	{
+		return getPoint(getBegin().getPoint(), getEnd().getPoint(), position);
+	}
+
+	public static double getAngle(Point2D.Double begin, Point2D.Double end)
+	{
+		return Math.atan2(end.y - begin.y, end.x - begin.x);
+	}
+
 	public double getAngle()
 	{
-		Point2D.Double begin = getBegin().getPoint();
-		Point2D.Double end = getEnd().getPoint();
-		return Math.atan2(end.y - begin.y, end.x - begin.x);
+		return getAngle(getBegin().getPoint(), getEnd().getPoint());
+	}
+
+	public static double getDistance(Point2D.Double begin, Point2D.Double end, double x, double y)
+	{
+		return Line2D.ptSegDist(begin.x, begin.y, end.x, end.y, x, y);
 	}
 
 	public double getDistance(double x, double y)
 	{
-		Point2D.Double begin = getBegin().getPoint();
-		Point2D.Double end = getEnd().getPoint();
-		return Line2D.ptSegDist(begin.x, begin.y, end.x, end.y, x, y);
+		return getDistance(getBegin().getPoint(), getEnd().getPoint(), x, y);
+	}
+
+	public static double getDistanceSq(Point2D.Double begin, Point2D.Double end, double x, double y)
+	{
+		return Line2D.ptSegDistSq(begin.x, begin.y, end.x, end.y, x, y);
 	}
 
 	public double getDistanceSq(double x, double y)
 	{
-		Point2D.Double begin = getBegin().getPoint();
-		Point2D.Double end = getEnd().getPoint();
-		return Line2D.ptSegDistSq(begin.x, begin.y, end.x, end.y, x, y);
+		return getDistanceSq(getBegin().getPoint(), getEnd().getPoint(), x, y);
+	}
+
+	public static double getLength(Point2D.Double begin, Point2D.Double end)
+	{
+		return Point2D.distance(begin.x, begin.y, end.x, end.y);
 	}
 
 	public double getLength()
 	{
-		Point2D.Double begin = getBegin().getPoint();
-		Point2D.Double end = getEnd().getPoint();
-		return Point2D.distance(begin.x, begin.y, end.x, end.y);
+		return getLength(getBegin().getPoint(), getEnd().getPoint());
 	}
 
-	public double getPosition(double x, double y)
+	public static double getPosition(Point2D.Double begin, Point2D.Double end, double x, double y)
 	{
-		Point2D.Double begin = getBegin().getPoint();
-		Point2D.Double end = getEnd().getPoint();
-
 		double[] p = complexDiv(
 			x - begin.getX(),
 			y - begin.getY(),
@@ -103,6 +115,11 @@ public abstract class EntityWire extends Entity
 			end.getY() - begin.getY());
 
 		return p[0];
+	}
+
+	public double getPosition(double x, double y)
+	{
+		return getPosition(getBegin().getPoint(), getEnd().getPoint(), x, y);
 	}
 
 	private static double[] complexDiv(double r1, double i1, double r2, double i2)
@@ -116,6 +133,18 @@ public abstract class EntityWire extends Entity
 
 	@Override
 	public abstract CardEntityWire<?> getCardEntity();
+
+	public boolean isConnectableBegin(Connection connection)
+	{
+		if (connection.getEntities().anyMatch(e -> e == this)) return false;
+		return getCardEntity().isConnectableBegin(connection);
+	}
+
+	public boolean isConnectableEnd(Connection connection)
+	{
+		if (connection.getEntities().anyMatch(e -> e == this)) return false;
+		return getCardEntity().isConnectableEnd(connection);
+	}
 
 	@Override
 	public void onConnectionEvent(Entity owner, Event event)
@@ -180,7 +209,7 @@ public abstract class EntityWire extends Entity
 			@Override
 			public boolean isConnectable(Connection connection)
 			{
-				return EntityWire.this.getCardEntity().isConnectableBegin(connection);
+				return EntityWire.this.isConnectableBegin(connection);
 			}
 
 			@Override
@@ -239,7 +268,7 @@ public abstract class EntityWire extends Entity
 			@Override
 			public boolean isConnectable(Connection connection)
 			{
-				return EntityWire.this.getCardEntity().isConnectableEnd(connection);
+				return EntityWire.this.isConnectableEnd(connection);
 			}
 
 			@Override

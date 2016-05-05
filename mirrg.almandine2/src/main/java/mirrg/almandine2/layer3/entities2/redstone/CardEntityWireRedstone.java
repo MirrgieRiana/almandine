@@ -25,13 +25,13 @@ public class CardEntityWireRedstone extends CardEntityWire<EntityWireRedstone>
 	{
 		return connection instanceof ConnectionPoint
 			|| (connection instanceof ConnectionBlock
-				&& ((ConnectionBlock) connection).entity instanceof EntityGateRedstone);
+				&& ((ConnectionBlock) connection).entity instanceof IBlockRedstone);
 	}
 
 	@Override
 	public Stream<TypeConnection> getConnectionTypesEnd()
 	{
-		return Stream.of(TypeConnection.block, TypeConnection.point);
+		return Stream.of(TypeConnection.block, TypeConnection.traffic, TypeConnection.point);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class CardEntityWireRedstone extends CardEntityWire<EntityWireRedstone>
 	{
 		return connection instanceof ConnectionPoint
 			|| (connection instanceof ConnectionBlock
-				&& ((ConnectionBlock) connection).entity instanceof EntityGateRedstone);
+				&& ((ConnectionBlock) connection).entity instanceof IBlockRedstone);
 	}
 
 	@Override
