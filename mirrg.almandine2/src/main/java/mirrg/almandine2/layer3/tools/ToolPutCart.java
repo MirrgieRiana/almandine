@@ -29,9 +29,9 @@ public class ToolPutCart extends Tool
 	}
 
 	@Override
-	public void init(GameAlmandine2 game)
+	public void enable(GameAlmandine2 game)
 	{
-		super.init(game);
+		super.enable(game);
 
 		update();
 

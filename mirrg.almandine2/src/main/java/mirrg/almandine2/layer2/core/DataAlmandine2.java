@@ -42,6 +42,14 @@ public class DataAlmandine2
 		return entities.stream();
 	}
 
+	@SuppressWarnings("unchecked")
+	public <E extends Entity> Stream<E> getEntities(Class<E> clazz)
+	{
+		return entities.stream()
+			.filter(entity -> clazz.isInstance(entity))
+			.map(entity -> (E) entity);
+	}
+
 	public void onLoad(GameAlmandine2 game)
 	{
 		this.game = game;

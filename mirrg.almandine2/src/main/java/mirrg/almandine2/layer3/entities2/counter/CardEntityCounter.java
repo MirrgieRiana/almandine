@@ -4,7 +4,6 @@ import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
 import mirrg.almandine2.layer2.entity.Connection;
-import mirrg.almandine2.layer2.entity.ConnectionPoint;
 import mirrg.almandine2.layer2.entity.TypeConnection;
 import mirrg.almandine2.layer2.entity.View;
 
@@ -16,7 +15,7 @@ public class CardEntityCounter extends CardEntityBlock<EntityCounter>
 	@Override
 	public boolean isConnectable(Connection connection)
 	{
-		return connection instanceof ConnectionPoint;
+		return true;
 	}
 
 	@Override

@@ -37,4 +37,29 @@ public abstract class EntityBlock extends EntitySurface
 		return connection.getPoint();
 	}
 
+	@Override
+	public abstract CardEntityBlock<?> getCardEntity();
+
+	@Override
+	public void onConnectionEvent(Entity owner, Event event)
+	{
+		super.onConnectionEvent(owner, event);
+
+		if (event instanceof EventDied) {
+			if (connection instanceof ConnectionBlock) {
+				if (((ConnectionBlock) connection).entity == owner) {
+
+					Connection connection2 = new ConnectionPoint(connection.getPoint());
+					if (getCardEntity().isConnectable(connection2)) {
+						setConnection(connection2);
+					} else {
+						markDie();
+					}
+
+				}
+			}
+		}
+
+	}
+
 }

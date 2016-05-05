@@ -20,14 +20,14 @@ public class ConnectionTraffic extends Connection
 	public void enable(Entity parent)
 	{
 		super.enable(parent);
-		entity.hook(this);
+		entity.connect(this);
 	}
 
 	@Override
 	public void disable()
 	{
 		super.disable();
-		entity.unhook(this);
+		entity.unconnect(this);
 	}
 
 	@Override

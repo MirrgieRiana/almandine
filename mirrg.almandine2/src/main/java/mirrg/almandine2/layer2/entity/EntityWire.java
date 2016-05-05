@@ -59,7 +59,7 @@ public abstract class EntityWire extends Entity
 	{
 		Point2D.Double begin = getBegin().getPoint();
 		Point2D.Double end = getEnd().getPoint();
-		return Math.atan2(end.x - begin.x, end.y - begin.y);
+		return Math.atan2(end.y - begin.y, end.x - begin.x);
 	}
 
 	public double getDistance(double x, double y)
@@ -104,6 +104,46 @@ public abstract class EntityWire extends Entity
 			(r1 * r2 + i1 * i2) / c,
 			(i1 * r2 - r1 * i2) / c,
 		};
+	}
+
+	@Override
+	public abstract CardEntityWire<?> getCardEntity();
+
+	@Override
+	public void onConnectionEvent(Entity owner, Event event)
+	{
+		super.onConnectionEvent(owner, event);
+
+		if (event instanceof EventDied) {
+			if (begin instanceof ConnectionBlock) {
+				if (((ConnectionBlock) begin).entity == owner) {
+
+					Connection connection2 = new ConnectionPoint(begin.getPoint());
+					if (getCardEntity().isConnectableBegin(connection2)) {
+						setBegin(connection2);
+					} else {
+						markDie();
+					}
+
+				}
+			}
+		}
+
+		if (event instanceof EventDied) {
+			if (end instanceof ConnectionBlock) {
+				if (((ConnectionBlock) end).entity == owner) {
+
+					Connection connection2 = new ConnectionPoint(end.getPoint());
+					if (getCardEntity().isConnectableEnd(connection2)) {
+						setEnd(connection2);
+					} else {
+						markDie();
+					}
+
+				}
+			}
+		}
+
 	}
 
 }

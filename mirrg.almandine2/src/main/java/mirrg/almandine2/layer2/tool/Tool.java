@@ -7,6 +7,8 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import com.sun.glass.events.KeyEvent;
+
 import mirrg.almandine2.layer2.core.GameAlmandine2;
 import mirrg.almandine2.layer2.entity.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.ConnectionPoint;
@@ -23,9 +25,13 @@ public abstract class Tool
 {
 
 	protected GameAlmandine2 game;
-	protected boolean disposed = false;
+	protected boolean disabled = false;
 
-	public final void init(GameAlmandine2 game) // TODO remove final
+	public abstract void move();
+
+	public abstract void render(Graphics2D graphics);
+
+	public final void enable(GameAlmandine2 game) // TODO remove final
 	{
 		this.game = game;
 		initEvents();
@@ -36,23 +42,21 @@ public abstract class Tool
 
 	protected abstract void initEvents();
 
+	public final void disable() // TODO remove final
+	{
+		disabled = true;
+	}
+
 	protected <T> void hook(Class<T> clazz, Consumer<T> consumer)
 	{
 		game.panel.getEventManager().registerRemovable(clazz, event -> {
-			if (disposed) return false;
+			if (disabled) return false;
 
 			consumer.accept(event);
 
 			return true;
 		});
 	}
-
-	public final void dispose() // TODO remove final
-	{
-		disposed = true;
-	}
-
-	public abstract void render(Graphics2D graphics);
 
 	///////////////////////////////////// Cursor ///////////////////////////////////////
 
@@ -83,11 +87,11 @@ public abstract class Tool
 			.map(e -> (T) e);
 	}
 
-	protected <T extends Entity> Optional<T> getEntity(Point2D.Double point, Class<T> clazz, Predicate<T> predicate)
+	protected <T extends Entity> Optional<T> getEntity(Point2D.Double point, double margin, Class<T> clazz, Predicate<T> predicate)
 	{
 		return getEntities(clazz)
 			.filter(predicate)
-			.filter(e -> Entity.getCardEntity(e).getView().getDistanceEdge(e, point.x, point.y) <= 0)
+			.filter(e -> Entity.getCardEntity(e).getView().getDistanceEdge(e, point.x, point.y) <= margin)
 			.map(e -> new Tuple<>(e, Entity.getCardEntity(e).getView().getDistanceCenterSq(e, point.x, point.y)))
 			.min((a, b) -> (int) Math.signum(a.getY() - b.getY()))
 			.map(t -> t.getX());
@@ -105,9 +109,9 @@ public abstract class Tool
 			.min((a, b) -> (int) Math.signum(a.entity.getDistanceSq(point.x, point.y) - b.entity.getDistanceSq(point.x, point.y)));
 	}
 
-	protected <T extends EntityBlock> Optional<ConnectionBlock> getConnectionBlock(Point2D.Double point, Class<T> clazz, Predicate<ConnectionBlock> predicate)
+	protected <T extends EntityBlock> Optional<ConnectionBlock> getConnectionBlock(Point2D.Double point, double margin, Class<T> clazz, Predicate<ConnectionBlock> predicate)
 	{
-		return getEntity(point, clazz, e -> predicate.test(new ConnectionBlock(e)))
+		return getEntity(point, margin, clazz, e -> predicate.test(new ConnectionBlock(e)))
 			.map(e -> new ConnectionBlock(e));
 	}
 
@@ -119,6 +123,21 @@ public abstract class Tool
 		} else {
 			return Optional.empty();
 		}
+	}
+
+	protected boolean isShift()
+	{
+		return game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(KeyEvent.VK_SHIFT) > 0;
+	}
+
+	protected boolean isControl()
+	{
+		return game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(KeyEvent.VK_CONTROL) > 0;
+	}
+
+	protected boolean isAlt()
+	{
+		return game.panel.modulesStandard.moduleInputStatus.getKeyBoard().getState(KeyEvent.VK_ALT) > 0;
 	}
 
 }

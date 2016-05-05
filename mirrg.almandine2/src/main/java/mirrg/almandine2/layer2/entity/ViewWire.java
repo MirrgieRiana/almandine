@@ -24,9 +24,9 @@ public abstract class ViewWire<E extends EntityWire> extends View<E>
 			Point2D.Double end = entity.getEnd().getPoint();
 			Point2D.Double center = new Point2D.Double((begin.x + end.x) / 2, (begin.y + end.y) / 2);
 
-			graphics.translate(-center.x, -center.y);
-			graphics.rotate(entity.getAngle());
 			graphics.translate(center.x, center.y);
+			graphics.rotate(entity.getAngle());
+			graphics.translate(-center.x, -center.y);
 
 			Stroke stroke = graphics.getStroke();
 			{

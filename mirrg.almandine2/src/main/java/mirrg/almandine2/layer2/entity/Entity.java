@@ -24,7 +24,7 @@ public abstract class Entity
 	 */
 	public void reset()
 	{
-		listeners = new ArrayList<>();
+		connectors = new ArrayList<>();
 		isDead = false;
 	}
 
@@ -65,24 +65,34 @@ public abstract class Entity
 	////////////////////////////// Connection Event
 
 	@XStreamOmitField
-	private ArrayList<Connection> listeners;
+	private ArrayList<Connection> connectors;
+
+	public Stream<Connection> getConnectors()
+	{
+		return connectors.stream();
+	}
 
 	public void fire(Event event)
 	{
-		listeners.forEach(listener -> listener.fire(this, event));
+		// リスナがイベント内でリスニングを解除できるように配列に取っておく
+		Stream.of(connectors.stream().toArray(Connection[]::new))
+			.forEach(connector -> connector.fire(this, event));
 	}
 
-	public void hook(Connection connection)
+	public void connect(Connection connection)
 	{
-		listeners.add(connection);
+		connectors.add(connection);
 	}
 
-	public void unhook(Connection connection)
+	public void unconnect(Connection connection)
 	{
-		listeners.remove(connection);
+		connectors.remove(connection);
 	}
 
-	public abstract void onConnectionEvent(Entity owner, Event event);
+	public void onConnectionEvent(Entity owner, Event event)
+	{
+
+	}
 
 	////////////////////////////// Die
 

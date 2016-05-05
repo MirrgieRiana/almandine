@@ -67,6 +67,9 @@ public class GameAlmandine2 implements IGameAlmandine2
 				});
 			});
 
+			// move tool
+			oTool.ifPresent(Tool::move);
+
 			// move entities
 			data.getEntities().forEach(entity -> entity.move());
 
@@ -82,9 +85,9 @@ public class GameAlmandine2 implements IGameAlmandine2
 
 	public void setTool(Optional<Tool> oTool)
 	{
-		this.oTool.ifPresent(tool -> tool.dispose());
+		this.oTool.ifPresent(tool -> tool.disable());
 		this.oTool = oTool;
-		this.oTool.ifPresent(tool -> tool.init(this));
+		this.oTool.ifPresent(tool -> tool.enable(this));
 	}
 
 	@Override

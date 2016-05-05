@@ -2,11 +2,9 @@ package mirrg.almandine2.layer3.entities2.counter;
 
 import java.util.stream.Stream;
 
-import mirrg.almandine2.layer2.entity.CardEntity;
+import mirrg.almandine2.layer2.entity.CardEntityBlock;
 import mirrg.almandine2.layer2.entity.Connection;
-import mirrg.almandine2.layer2.entity.Entity;
 import mirrg.almandine2.layer2.entity.EntityBlock;
-import mirrg.almandine2.layer2.entity.Event;
 import mirrg.almandine2.layer2.entity.IHandle;
 
 public class EntityCounter extends EntityBlock
@@ -26,15 +24,9 @@ public class EntityCounter extends EntityBlock
 	}
 
 	@Override
-	public CardEntity<?> getCardEntity()
+	public CardEntityBlock<?> getCardEntity()
 	{
 		return CardEntityCounter.INSTANCE;
-	}
-
-	@Override
-	public void onConnectionEvent(Entity owner, Event event)
-	{
-
 	}
 
 	@Override

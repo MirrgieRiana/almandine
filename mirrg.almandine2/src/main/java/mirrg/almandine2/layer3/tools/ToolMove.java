@@ -24,9 +24,9 @@ public class ToolMove extends Tool
 	private IPoint end = null;
 
 	@Override
-	public void init(GameAlmandine2 game)
+	public void enable(GameAlmandine2 game)
 	{
-		super.init(game);
+		super.enable(game);
 
 		handle = getHandle();
 		end = null;
