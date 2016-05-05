@@ -3,11 +3,11 @@ package mirrg.almandine2.layer3.entities2.redstone;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityWire;
-import mirrg.almandine2.layer2.entity.Connection;
-import mirrg.almandine2.layer2.entity.ConnectionBlock;
-import mirrg.almandine2.layer2.entity.ConnectionPoint;
-import mirrg.almandine2.layer2.entity.TypeConnection;
-import mirrg.almandine2.layer2.entity.View;
+import mirrg.almandine2.layer2.entity.connection.Connection;
+import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
+import mirrg.almandine2.layer2.entity.connection.ConnectionPoint;
+import mirrg.almandine2.layer2.entity.connection.TypeConnection;
+import mirrg.almandine2.layer2.entity.view.View;
 
 public class CardEntityWireRedstone extends CardEntityWire<EntityWireRedstone>
 {

@@ -5,9 +5,9 @@ import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.core.GameAlmandine2;
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
-import mirrg.almandine2.layer2.entity.Connection;
-import mirrg.almandine2.layer2.entity.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.EntityBlock;
+import mirrg.almandine2.layer2.entity.connection.Connection;
+import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 
 public class EntityGateRedstone extends EntityBlock
 {

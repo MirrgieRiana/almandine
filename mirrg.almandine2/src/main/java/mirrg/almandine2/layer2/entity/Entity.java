@@ -9,6 +9,10 @@ import java.util.stream.Stream;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import mirrg.almandine2.layer2.core.GameAlmandine2;
+import mirrg.almandine2.layer2.entity.connection.Connection;
+import mirrg.almandine2.layer2.entity.connection.ConnectionPoint;
+import mirrg.almandine2.layer2.entity.connection.Event;
+import mirrg.almandine2.layer2.entity.connection.EventDied;
 
 public abstract class Entity
 {

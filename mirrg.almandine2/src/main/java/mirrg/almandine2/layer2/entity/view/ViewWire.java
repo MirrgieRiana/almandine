@@ -1,4 +1,4 @@
-package mirrg.almandine2.layer2.entity;
+package mirrg.almandine2.layer2.entity.view;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -8,6 +8,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+
+import mirrg.almandine2.layer2.entity.EntityWire;
 
 public abstract class ViewWire<E extends EntityWire> extends View<E> // TODO E->T
 {

@@ -1,4 +1,4 @@
-package mirrg.almandine2.layer2.entity;
+package mirrg.almandine2.layer2.entity.view;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

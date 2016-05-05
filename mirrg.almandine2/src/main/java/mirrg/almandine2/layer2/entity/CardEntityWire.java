@@ -2,6 +2,9 @@ package mirrg.almandine2.layer2.entity;
 
 import java.util.stream.Stream;
 
+import mirrg.almandine2.layer2.entity.connection.Connection;
+import mirrg.almandine2.layer2.entity.connection.TypeConnection;
+
 public abstract class CardEntityWire<E extends EntityWire> extends CardEntity<E>
 {
 

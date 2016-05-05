@@ -1,9 +1,11 @@
-package mirrg.almandine2.layer2.entity;
+package mirrg.almandine2.layer2.entity.connection;
 
 import java.awt.geom.Point2D;
 import java.util.stream.Stream;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
+import mirrg.almandine2.layer2.entity.Entity;
 
 public abstract class Connection
 {

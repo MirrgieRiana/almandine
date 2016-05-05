@@ -1,7 +1,10 @@
-package mirrg.almandine2.layer2.entity;
+package mirrg.almandine2.layer2.entity.connection;
 
 import java.awt.geom.Point2D;
 import java.util.stream.Stream;
+
+import mirrg.almandine2.layer2.entity.Entity;
+import mirrg.almandine2.layer2.entity.EntityBlock;
 
 public class ConnectionBlock extends Connection
 {

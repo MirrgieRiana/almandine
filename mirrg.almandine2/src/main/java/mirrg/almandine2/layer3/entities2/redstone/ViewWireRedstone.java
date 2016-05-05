@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 
-import mirrg.almandine2.layer2.entity.ConnectionBlock;
-import mirrg.almandine2.layer2.entity.ViewWire;
+import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
+import mirrg.almandine2.layer2.entity.view.ViewWire;
 import mirrg.almandine2.layer3.entities.HRender;
 
 public class ViewWireRedstone extends ViewWire<EntityWireRedstone>

@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 
-import mirrg.almandine2.layer2.entity.ViewSurfaceRectangle;
+import mirrg.almandine2.layer2.entity.view.ViewSurfaceRectangle;
 import mirrg.almandine2.layer3.entities.HRender;
 
 public class ViewCounter extends ViewSurfaceRectangle<EntityCounter>

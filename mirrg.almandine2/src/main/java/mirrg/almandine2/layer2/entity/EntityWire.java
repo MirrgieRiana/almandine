@@ -6,6 +6,12 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.stream.Stream;
 
+import mirrg.almandine2.layer2.entity.connection.Connection;
+import mirrg.almandine2.layer2.entity.connection.Event;
+import mirrg.almandine2.layer2.entity.connection.TypeConnection;
+import mirrg.almandine2.layer2.entity.view.View;
+import mirrg.almandine2.layer2.entity.view.ViewSurfaceCircle;
+
 public abstract class EntityWire extends Entity
 {
 

@@ -19,9 +19,9 @@ import mirrg.almandine2.layer2.command.CommandAction;
 import mirrg.almandine2.layer2.command.CommandTool;
 import mirrg.almandine2.layer2.core.DataAlmandine2;
 import mirrg.almandine2.layer2.core.GameAlmandine2;
-import mirrg.almandine2.layer2.entity.ConnectionBlock;
-import mirrg.almandine2.layer2.entity.ConnectionPoint;
-import mirrg.almandine2.layer2.entity.ConnectionTraffic;
+import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
+import mirrg.almandine2.layer2.entity.connection.ConnectionPoint;
+import mirrg.almandine2.layer2.entity.connection.ConnectionTraffic;
 import mirrg.almandine2.layer2.tool.ToolDelete;
 import mirrg.almandine2.layer2.tool.ToolMove;
 import mirrg.almandine2.layer2.tool.ToolPutBlock;
@@ -144,10 +144,10 @@ public class MainAlmandine2Layer3
 
 		/*
 		xStream.alias("entity::counter", CardFurnitureCounter.Entity.class);
-
+		
 		xStream.alias("entity::redstone::gate", EntityFurnitureRedstoneGate.class);
 		xStream.alias("entity::redstone::wire", CardWireRedstoneWire.Entity.class);
-
+		
 		xStream.alias("entity::station", CardFurnitureStation.Entity.class);
 		xStream.alias("entity::rail", CardWireRail.Entity.class);
 		xStream.alias("entity::cart", EntityCartSlab.class);

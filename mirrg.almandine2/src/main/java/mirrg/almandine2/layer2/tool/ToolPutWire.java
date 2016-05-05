@@ -6,9 +6,9 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
 import mirrg.almandine2.layer2.entity.CardEntityWire;
-import mirrg.almandine2.layer2.entity.Connection;
 import mirrg.almandine2.layer2.entity.Entity;
 import mirrg.almandine2.layer2.entity.EntityWire;
+import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse.Pressed;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse.Released;
 

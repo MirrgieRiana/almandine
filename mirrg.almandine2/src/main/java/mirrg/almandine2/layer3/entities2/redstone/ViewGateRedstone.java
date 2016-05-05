@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 
-import mirrg.almandine2.layer2.entity.ViewSurfaceCircle;
+import mirrg.almandine2.layer2.entity.view.ViewSurfaceCircle;
 import mirrg.almandine2.layer3.entities.HRender;
 
 public class ViewGateRedstone extends ViewSurfaceCircle<EntityGateRedstone>

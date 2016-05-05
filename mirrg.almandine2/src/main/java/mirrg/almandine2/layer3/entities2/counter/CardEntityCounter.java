@@ -3,9 +3,9 @@ package mirrg.almandine2.layer3.entities2.counter;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
-import mirrg.almandine2.layer2.entity.Connection;
-import mirrg.almandine2.layer2.entity.TypeConnection;
-import mirrg.almandine2.layer2.entity.View;
+import mirrg.almandine2.layer2.entity.connection.Connection;
+import mirrg.almandine2.layer2.entity.connection.TypeConnection;
+import mirrg.almandine2.layer2.entity.view.View;
 
 public class CardEntityCounter extends CardEntityBlock<EntityCounter>
 {

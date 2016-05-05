@@ -3,6 +3,9 @@ package mirrg.almandine2.layer2.entity;
 import java.awt.geom.Point2D;
 import java.util.stream.Stream;
 
+import mirrg.almandine2.layer2.entity.connection.Connection;
+import mirrg.almandine2.layer2.entity.connection.Event;
+
 public abstract class EntityCart extends EntitySurface
 {
 

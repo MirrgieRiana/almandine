@@ -2,9 +2,9 @@ package mirrg.almandine2.layer3.entities2.redstone;
 
 import mirrg.almandine2.layer2.core.GameAlmandine2;
 import mirrg.almandine2.layer2.entity.CardEntityWire;
-import mirrg.almandine2.layer2.entity.Connection;
-import mirrg.almandine2.layer2.entity.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.EntityWire;
+import mirrg.almandine2.layer2.entity.connection.Connection;
+import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 
 public class EntityWireRedstone extends EntityWire
 {
