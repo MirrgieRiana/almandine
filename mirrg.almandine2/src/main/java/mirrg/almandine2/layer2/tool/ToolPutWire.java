@@ -7,19 +7,16 @@ import java.awt.geom.Point2D;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.sun.glass.events.KeyEvent;
-
 import mirrg.almandine2.layer2.entity.CardEntityWire;
 import mirrg.almandine2.layer2.entity.Connection;
 import mirrg.almandine2.layer2.entity.Entity;
 import mirrg.almandine2.layer2.entity.EntityBlock;
 import mirrg.almandine2.layer2.entity.EntityWire;
 import mirrg.almandine2.layer2.entity.TypeConnection;
-import mirrg.applet.nitrogen.modules.input.NitrogenEventKey;
-import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse;
-import mirrg.applet.nitrogen.modules.input.NitrogenEventMouseMotion;
+import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse.Pressed;
+import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse.Released;
 
-public class ToolPutWire extends Tool
+public class ToolPutWire extends ToolBase
 {
 
 	private CardEntityWire<?> card;
@@ -33,67 +30,34 @@ public class ToolPutWire extends Tool
 	}
 
 	@Override
-	public void move()
+	protected void onMousePressed(Pressed event)
 	{
-		update(getCursor());
+		if (begin != null) {
+			holding = true;
+			update(getCursor(event));
+		}
 	}
 
 	@Override
-	protected void initEvents()
+	protected void onMouseReleased(Released event)
 	{
-		hook(NitrogenEventKey.Pressed.class, event -> {
-			if (event.keyEvent.getKeyCode() == KeyEvent.VK_ALT) {
-				event.keyEvent.consume();
-			}
-		});
-		hook(NitrogenEventKey.Pressed.class, event -> {
-			update(getCursor());
-		});
-		hook(NitrogenEventKey.Released.class, event -> {
-			update(getCursor());
-		});
-		hook(NitrogenEventMouseMotion.Moved.class, event -> {
-			update(getCursor(event));
-		});
-		hook(NitrogenEventMouseMotion.Dragged.class, event -> {
-			update(getCursor(event));
-		});
-		hook(NitrogenEventMouse.Pressed.class, event -> {
-			update(getCursor(event));
+		if (holding) {
+			holding = false;
 
-			if (begin != null) {
-				holding = true;
+			if (entity != null) {
+				synchronized (game) {
+					game.data.addEntity(entity);
+				}
+
+				begin = null;
+				entity = null;
 				update(getCursor(event));
 			}
-
-		});
-		hook(NitrogenEventMouse.Released.class, event -> {
-			update(getCursor(event));
-
-			if (holding) {
-				holding = false;
-
-				if (entity != null) {
-					synchronized (game) {
-						game.data.addEntity(entity);
-					}
-
-					begin = null;
-					entity = null;
-					update(getCursor(event));
-				}
-			}
-
-		});
+		}
 	}
 
 	@Override
-	protected void reset()
-	{
-		update(getCursor());
-	}
-
-	private void update(Point2D.Double cursor)
+	protected void update(Point2D.Double cursor)
 	{
 		if (!holding) {
 			Set<TypeConnection> set = card.getConnectionTypesBegin()
