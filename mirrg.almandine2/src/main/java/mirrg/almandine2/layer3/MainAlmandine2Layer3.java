@@ -1,8 +1,10 @@
 package mirrg.almandine2.layer3;
 
+import static java.awt.event.KeyEvent.*;
+
 import java.awt.CardLayout;
-import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
+import java.util.function.Supplier;
 
 import javax.swing.JDialog;
 import javax.swing.JMenu;
@@ -23,6 +25,7 @@ import mirrg.almandine2.layer2.entity.connection.ConnectionAnchor;
 import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.connection.ConnectionPoint;
 import mirrg.almandine2.layer2.entity.connection.ConnectionTraffic;
+import mirrg.almandine2.layer2.tool.Tool;
 import mirrg.almandine2.layer2.tool.ToolDelete;
 import mirrg.almandine2.layer2.tool.ToolMove;
 import mirrg.almandine2.layer2.tool.ToolPutBlock;
@@ -53,28 +56,37 @@ public class MainAlmandine2Layer3
 	{
 		frameMain = new FrameAlmandine2Layer2() {
 
+			GameAlmandine2 game;
+
+			private void r(Supplier<Tool> supplier, Integer shortcutKey)
+			{
+				game.registerCommand(new CommandTool(supplier, shortcutKey));
+			}
+
 			@Override
 			public void registerContents(GameAlmandine2 game)
 			{
+				this.game = game;
 
-				game.registerCommand(new CommandTool(() -> null, KeyEvent.VK_ESCAPE));
-				game.registerCommand(new CommandTool(ToolDelete::new, KeyEvent.VK_B));
-				game.registerCommand(new CommandTool(ToolMove::new, KeyEvent.VK_M));
+				r(() -> null, VK_ESCAPE);
+				r(ToolDelete::new, VK_B);
+				r(ToolMove::new, VK_M);
 
-				game.registerCommand(new CommandTool(() -> new ToolPutBlock(CardEntityCounter.INSTANCE), KeyEvent.VK_Z));
+				r(() -> new ToolPutBlock(CardEntityCounter.INSTANCE), VK_Z);
 
-				game.registerCommand(new CommandTool(() -> new ToolPutBlock(CardEntityGateRedstone.AND), KeyEvent.VK_A));
-				game.registerCommand(new CommandTool(() -> new ToolPutBlock(CardEntityGateRedstone.OR), KeyEvent.VK_S));
-				game.registerCommand(new CommandTool(() -> new ToolPutBlock(CardEntityGateRedstone.NAND), KeyEvent.VK_D));
-				game.registerCommand(new CommandTool(() -> new ToolPutBlock(CardEntityGateRedstone.NOR), KeyEvent.VK_F));
-				game.registerCommand(new CommandTool(() -> new ToolPutBlock(CardEntityGateRedstone.XOR), KeyEvent.VK_G));
-				game.registerCommand(new CommandTool(() -> new ToolPutWire(CardEntityWireRedstone.INSTANCE), KeyEvent.VK_H));
+				r(() -> new ToolPutBlock(CardEntityGateRedstone.AND), VK_A);
+				r(() -> new ToolPutBlock(CardEntityGateRedstone.OR), VK_S);
+				r(() -> new ToolPutBlock(CardEntityGateRedstone.NAND), VK_D);
+				r(() -> new ToolPutBlock(CardEntityGateRedstone.NOR), VK_F);
+				r(() -> new ToolPutBlock(CardEntityGateRedstone.XOR), VK_G);
+				r(() -> new ToolPutWire(CardEntityWireRedstone.INSTANCE), VK_H);
 
-				game.registerCommand(new CommandTool(() -> new ToolPutWire(CardEntityWireRedstoneRail.INSTANCE), KeyEvent.VK_J));
+				r(() -> new ToolPutWire(CardEntityWireRedstoneRail.INSTANCE), VK_J);
 
-				game.registerCommand(new CommandTool(() -> new ToolPutBlock(CardEntityStation.INSTANCE), KeyEvent.VK_Q));
-				game.registerCommand(new CommandTool(() -> new ToolPutWire(CardEntityRail.INSTANCE), KeyEvent.VK_W));
-				game.registerCommand(new CommandTool(() -> new ToolPutBlock(CardEntityCart.INSTANCE), KeyEvent.VK_E));
+				r(() -> new ToolPutBlock(CardEntityStation.INSTANCE), VK_Q);
+				r(() -> new ToolPutWire(CardEntityRail.INSTANCE), VK_W);
+				r(() -> new ToolPutBlock(CardEntityCart.INSTANCE), VK_E);
+
 
 				game.registerCommand(new CommandAction(game2 -> {
 
@@ -83,7 +95,7 @@ public class MainAlmandine2Layer3
 						textAreaXML.setText(createXStream(game2).toXML(game2.data));
 					}
 
-				} , KeyEvent.VK_F1));
+				} , VK_F1));
 				game.registerCommand(new CommandAction(game2 -> {
 
 					DataAlmandine2 data = null;
@@ -100,7 +112,7 @@ public class MainAlmandine2Layer3
 						}
 					}
 
-				} , KeyEvent.VK_F2));
+				} , VK_F2));
 
 			}
 
