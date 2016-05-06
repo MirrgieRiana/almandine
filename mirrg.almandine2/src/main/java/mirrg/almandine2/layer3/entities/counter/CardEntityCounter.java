@@ -3,6 +3,7 @@ package mirrg.almandine2.layer3.entities.counter;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
@@ -65,9 +66,9 @@ public class CardEntityCounter extends CardEntityBlock<EntityCounter>
 	}
 
 	@Override
-	public EntityCounter create(Connection connection)
+	public Optional<EntityCounter> create(Connection connection)
 	{
-		return new EntityCounter(connection);
+		return Optional.of(new EntityCounter(connection));
 	}
 
 }

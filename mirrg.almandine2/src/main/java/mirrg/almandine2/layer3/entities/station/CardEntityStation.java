@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
@@ -64,9 +65,9 @@ public class CardEntityStation extends CardEntityBlock<EntityStation>
 	}
 
 	@Override
-	public EntityStation create(Connection connection)
+	public Optional<EntityStation> create(Connection connection)
 	{
-		return new EntityStation(connection);
+		return Optional.of(new EntityStation(connection));
 	}
 
 }

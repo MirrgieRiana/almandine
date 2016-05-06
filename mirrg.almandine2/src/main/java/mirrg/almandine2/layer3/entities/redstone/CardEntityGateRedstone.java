@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
@@ -82,9 +83,9 @@ public class CardEntityGateRedstone extends CardEntityBlock<EntityGateRedstone>
 	}
 
 	@Override
-	public EntityGateRedstone create(Connection connection)
+	public Optional<EntityGateRedstone> create(Connection connection)
 	{
-		return new EntityGateRedstone(connection, type);
+		return Optional.of(new EntityGateRedstone(connection, type));
 	}
 
 }

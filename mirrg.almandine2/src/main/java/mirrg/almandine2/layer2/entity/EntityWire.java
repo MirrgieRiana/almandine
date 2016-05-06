@@ -137,12 +137,14 @@ public abstract class EntityWire extends Entity
 	public boolean isConnectableBegin(Connection connection)
 	{
 		if (connection.getEntities().anyMatch(e -> e == this)) return false;
+		if (connection.getEntities().anyMatch(e -> end.getEntities().anyMatch(e2 -> e == e2))) return false;
 		return getCardEntity().isConnectableBegin(connection);
 	}
 
 	public boolean isConnectableEnd(Connection connection)
 	{
 		if (connection.getEntities().anyMatch(e -> e == this)) return false;
+		if (connection.getEntities().anyMatch(e -> begin.getEntities().anyMatch(e2 -> e == e2))) return false;
 		return getCardEntity().isConnectableEnd(connection);
 	}
 

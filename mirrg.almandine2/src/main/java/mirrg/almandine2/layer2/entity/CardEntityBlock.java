@@ -1,5 +1,6 @@
 package mirrg.almandine2.layer2.entity;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.connection.Connection;
@@ -19,6 +20,6 @@ public abstract class CardEntityBlock<E extends EntityBlock> extends CardEntity<
 		throw new UnsupportedOperationException();
 	}
 
-	public abstract E create(Connection connection);
+	public abstract Optional<E> create(Connection connection);
 
 }

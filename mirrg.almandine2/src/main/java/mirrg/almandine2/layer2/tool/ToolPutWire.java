@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.util.Optional;
 
 import mirrg.almandine2.layer2.entity.CardEntityWire;
 import mirrg.almandine2.layer2.entity.Entity;
@@ -62,6 +63,7 @@ public class ToolPutWire extends ToolBase
 		} else {
 			entity = getConnection(cursor, margin, card.getConnectionTypesEnd(), card::isConnectableEnd)
 				.map(connection -> card.create(begin, connection))
+				.orElse(Optional.empty())
 				.orElse(null);
 		}
 	}

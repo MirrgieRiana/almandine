@@ -1,5 +1,6 @@
 package mirrg.almandine2.layer2.entity;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.connection.Connection;
@@ -23,6 +24,11 @@ public abstract class CardEntityWire<E extends EntityWire> extends CardEntity<E>
 		throw new UnsupportedOperationException();
 	}
 
-	public abstract E create(Connection begin, Connection end);
+	protected boolean isDuplicated(Connection begin, Connection end)
+	{
+		return begin.getEntities().anyMatch(e -> end.getEntities().anyMatch(e2 -> e == e2));
+	}
+
+	public abstract Optional<E> create(Connection begin, Connection end);
 
 }

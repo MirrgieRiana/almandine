@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityWire;
@@ -51,9 +52,9 @@ public class CardEntityRail extends CardEntityWire<EntityRail>
 	}
 
 	@Override
-	public EntityRail create(Connection begin, Connection end)
+	public Optional<EntityRail> create(Connection begin, Connection end)
 	{
-		return new EntityRail(begin, end);
+		return isDuplicated(begin, end) ? Optional.empty() : Optional.of(new EntityRail(begin, end));
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
@@ -126,9 +127,9 @@ public class CardEntityCart extends CardEntityBlock<EntityCart>
 	}
 
 	@Override
-	public EntityCart create(Connection connection)
+	public Optional<EntityCart> create(Connection connection)
 	{
-		return new EntityCart(connection);
+		return Optional.of(new EntityCart(connection));
 	}
 
 }

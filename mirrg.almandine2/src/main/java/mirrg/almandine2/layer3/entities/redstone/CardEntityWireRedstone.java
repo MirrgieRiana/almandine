@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityWire;
@@ -49,9 +50,9 @@ public class CardEntityWireRedstone extends CardEntityWire<EntityWireRedstone>
 	}
 
 	@Override
-	public EntityWireRedstone create(Connection begin, Connection end)
+	public Optional<EntityWireRedstone> create(Connection begin, Connection end)
 	{
-		return new EntityWireRedstone(begin, end);
+		return isDuplicated(begin, end) ? Optional.empty() : Optional.of(new EntityWireRedstone(begin, end));
 	}
 
 	@Override

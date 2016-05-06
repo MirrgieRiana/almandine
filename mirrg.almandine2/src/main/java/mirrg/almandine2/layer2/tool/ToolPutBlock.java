@@ -3,6 +3,7 @@ package mirrg.almandine2.layer2.tool;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
+import java.util.Optional;
 
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
 import mirrg.almandine2.layer2.entity.Entity;
@@ -39,6 +40,7 @@ public class ToolPutBlock extends ToolBase
 		double margin = isShift() || isControl() || isAlt() ? 200 : 0;
 		entity = getConnection(cursor, margin, card.getConnectionTypes(), card::isConnectable)
 			.map(connection -> card.create(connection))
+			.orElse(Optional.empty())
 			.orElse(null);
 	}
 
