@@ -38,6 +38,9 @@ import mirrg.almandine2.layer3.entities.redstone.EntityGateRedstone;
 import mirrg.almandine2.layer3.entities.redstone.EntityWireRedstone;
 import mirrg.almandine2.layer3.entities.redstone.station.CardEntityWireRedstoneRail;
 import mirrg.almandine2.layer3.entities.redstone.station.EntityWireRedstoneRail;
+import mirrg.almandine2.layer3.entities.slab.CardEntityCartSlot;
+import mirrg.almandine2.layer3.entities.slab.CardEntitySlot;
+import mirrg.almandine2.layer3.entities.slab.EntitySlot;
 import mirrg.almandine2.layer3.entities.station.CardEntityCart;
 import mirrg.almandine2.layer3.entities.station.CardEntityRail;
 import mirrg.almandine2.layer3.entities.station.CardEntityStation;
@@ -87,6 +90,8 @@ public class MainAlmandine2Layer3
 				r(() -> new ToolPutWire(CardEntityRail.INSTANCE), VK_W);
 				r(() -> new ToolPutBlock(CardEntityCart.INSTANCE), VK_E);
 
+				r(() -> new ToolPutBlock(CardEntitySlot.INSTANCE), VK_R);
+				r(() -> new ToolPutBlock(CardEntityCartSlot.INSTANCE), VK_T);
 
 				game.registerCommand(new CommandAction(game2 -> {
 
@@ -171,6 +176,8 @@ public class MainAlmandine2Layer3
 		xStream.alias("entity::station::rail", EntityRail.class);
 		xStream.alias("entity::station::cart", EntityCart.class);
 		xStream.alias("entity::redstone::station::rail", EntityWireRedstoneRail.class);
+
+		xStream.alias("entity::slab::slot", EntitySlot.class);
 
 		// TODO
 		return xStream;

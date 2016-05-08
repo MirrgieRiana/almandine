@@ -54,7 +54,7 @@ public class ViewEntityCart extends ViewSurfaceCircle<EntityCart>
 		graphics.setStroke(stroke);
 	}
 
-	private Point2D.Double getCenter(Connection connection)
+	protected Point2D.Double getCenter(Connection connection)
 	{
 		if (connection instanceof ConnectionTraffic) {
 			ConnectionTraffic connection2 = (ConnectionTraffic) connection;
@@ -80,7 +80,7 @@ public class ViewEntityCart extends ViewSurfaceCircle<EntityCart>
 		}
 	}
 
-	private double getAngle(Connection connection)
+	protected double getAngle(Connection connection)
 	{
 		if (connection instanceof ConnectionTraffic) {
 			ConnectionTraffic connection2 = (ConnectionTraffic) connection;
