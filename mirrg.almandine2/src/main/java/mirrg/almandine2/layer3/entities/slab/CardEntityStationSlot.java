@@ -2,29 +2,30 @@ package mirrg.almandine2.layer3.entities.slab;
 
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
-import mirrg.almandine2.layer2.entity.Entity;
+import mirrg.almandine2.layer2.entity.CardEntityBlock;
 import mirrg.almandine2.layer2.entity.connection.Connection;
-import mirrg.almandine2.layer2.entity.view.View;
 import mirrg.almandine2.layer3.entities.station.CardEntityStation;
 
-public class CardEntityStationSlot<E extends Entity, V extends View<E>> extends CardEntityStation<E, V>
+public class CardEntityStationSlot<E extends EntityStationSlot<E, V>, V extends ViewEntityStationSlot<E, V>> extends CardEntityStation<E, V>
 {
 
-	public static final CardEntityStationSlot<EntityStationSlot, ViewEntityStationSlot<EntityStationSlot>> NORMAL = new CardEntityStationSlot<>(
+	@SuppressWarnings({
+		"unchecked", "rawtypes"
+	})
+	public static CardEntityBlock<?, ?> NORMAL = new CardEntityStationSlot<>(
 		c -> Optional.of(new EntityStationSlot(c, TypeStationSlot.NORMAL)),
-		ViewEntityStationSlot::new);
-	public static final CardEntityStationSlot<EntityStationSlot, ViewEntityStationSlot<EntityStationSlot>> LOAD = new CardEntityStationSlot<>(
-		c -> Optional.of(new EntityStationSlot(c, TypeStationSlot.LOAD)),
-		ViewEntityStationSlot::new);
-	public static final CardEntityStationSlot<EntityStationSlot, ViewEntityStationSlot<EntityStationSlot>> UNLOAD = new CardEntityStationSlot<>(
-		c -> Optional.of(new EntityStationSlot(c, TypeStationSlot.UNLOAD)),
-		ViewEntityStationSlot::new);
+		e -> new ViewEntityStationSlot(e)),
+		LOAD = new CardEntityStationSlot<>(
+			c -> Optional.of(new EntityStationSlot(c, TypeStationSlot.LOAD)),
+			e -> new ViewEntityStationSlot(e)),
+		UNLOAD = new CardEntityStationSlot<>(
+			c -> Optional.of(new EntityStationSlot(c, TypeStationSlot.UNLOAD)),
+			e -> new ViewEntityStationSlot(e));
 
-	public CardEntityStationSlot(Function<Connection, Optional<E>> supplierEntity, Supplier<V> supplierView)
+	public CardEntityStationSlot(Function<Connection, Optional<E>> functionEntity, Function<E, V> functionView)
 	{
-		super(supplierEntity, supplierView);
+		super(functionEntity, functionView);
 	}
 
 }

@@ -12,7 +12,7 @@ import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse.Pressed;
 public class ToolDelete extends ToolBase
 {
 
-	private Entity entity = null;
+	private Entity<?, ?> entity = null;
 
 	@Override
 	protected void onMousePressed(Pressed event)
@@ -41,7 +41,7 @@ public class ToolDelete extends ToolBase
 	public void render(Graphics2D graphics)
 	{
 		if (entity != null) {
-			Entity.getCardEntity(entity).getView().renderAura(entity, graphics, 2, 3, Color.decode("#FF7F00"));
+			entity.getView().renderAura(graphics, 2, 3, Color.decode("#FF7F00"));
 		}
 	}
 

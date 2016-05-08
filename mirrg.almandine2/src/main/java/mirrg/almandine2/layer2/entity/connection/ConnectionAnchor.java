@@ -12,11 +12,11 @@ import mirrg.almandine2.layer2.entity.EntityWire;
 public class ConnectionAnchor extends Connection
 {
 
-	public EntityBlock entity;
+	public EntityBlock<?, ?> entity;
 	public int order;
-	public EntityWire previous;
+	public EntityWire<?, ?> previous;
 
-	public ConnectionAnchor(EntityBlock entity, int order, EntityWire previous)
+	public ConnectionAnchor(EntityBlock<?, ?> entity, int order, EntityWire<?, ?> previous)
 	{
 		this.entity = entity;
 		this.order = order;
@@ -24,7 +24,7 @@ public class ConnectionAnchor extends Connection
 	}
 
 	@Override
-	public void enable(Entity parent)
+	public void enable(Entity<?, ?> parent)
 	{
 		super.enable(parent);
 		entity.connect(this);
@@ -57,7 +57,7 @@ public class ConnectionAnchor extends Connection
 	}
 
 	@Override
-	public Stream<Entity> getEntities()
+	public Stream<Entity<?, ?>> getEntities()
 	{
 		return Stream.of(entity, previous);
 	}

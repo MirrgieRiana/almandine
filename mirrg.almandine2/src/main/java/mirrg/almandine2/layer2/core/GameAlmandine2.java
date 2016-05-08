@@ -12,7 +12,6 @@ import com.thoughtworks.xstream.XStream;
 import mirrg.almandine2.layer1.IGameAlmandine2;
 import mirrg.almandine2.layer1.PanelAlmandine2;
 import mirrg.almandine2.layer2.command.Command;
-import mirrg.almandine2.layer2.entity.Entity;
 import mirrg.almandine2.layer2.tool.Tool;
 import mirrg.event.nitrogen.HNitrogenEvent;
 import mirrg.event.nitrogen.api.INitrogenEventManager;
@@ -110,7 +109,7 @@ public class GameAlmandine2 implements IGameAlmandine2
 		synchronized (this) {
 
 			// render entities
-			data.getEntities().forEach(entity -> Entity.getCardEntity(entity).getView().render(entity, graphics));
+			data.getEntities().forEach(entity -> entity.getView().render(graphics));
 
 			// render tool
 			oTool.ifPresent(tool -> tool.render(graphics));

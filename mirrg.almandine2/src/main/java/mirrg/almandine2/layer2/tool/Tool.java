@@ -103,36 +103,36 @@ public abstract class Tool
 	///////////////////////////////////// Entity ///////////////////////////////////////
 
 	@SuppressWarnings("unchecked")
-	protected <T extends Entity> Stream<T> getEntities(Class<T> clazz)
+	protected <T extends Entity<?, ?>> Stream<T> getEntities(Class<T> clazz)
 	{
 		return game.data.getEntities()
 			.filter(e -> clazz.isInstance(e))
 			.map(e -> (T) e);
 	}
 
-	protected <T extends Entity> Optional<T> getEntity(Point2D.Double point, double margin, Class<T> clazz, Predicate<T> predicate)
+	protected <T extends Entity<?, ?>> Optional<T> getEntity(Point2D.Double point, double margin, Class<T> clazz, Predicate<T> predicate)
 	{
 		return getEntities(clazz)
 			.filter(predicate)
-			.filter(e -> Entity.getCardEntity(e).getView().getDistanceEdge(e, point.x, point.y) <= margin)
-			.map(e -> new Tuple<>(e, Entity.getCardEntity(e).getView().getDistanceCenterSq(e, point.x, point.y)))
+			.filter(e -> e.getView().getDistanceEdge(point.x, point.y) <= margin)
+			.map(e -> new Tuple<>(e, e.getView().getDistanceCenterSq(point.x, point.y)))
 			.min((a, b) -> (int) Math.signum(a.getY() - b.getY()))
 			.map(t -> t.getX());
 	}
 
-	protected <T extends Entity> Stream<IHandle> getHandles(Class<T> clazz, Predicate<T> predicateEntity)
+	protected <T extends Entity<?, ?>> Stream<IHandle> getHandles(Class<T> clazz, Predicate<T> predicateEntity)
 	{
 		return getEntities(clazz)
 			.filter(predicateEntity)
 			.flatMap(e -> e.getHandles());
 	}
 
-	protected <T extends Entity> Optional<IHandle> getHandle(Point2D.Double point, double margin, Class<T> clazz, Predicate<T> predicateEntity, Predicate<IHandle> predicateHandle)
+	protected <T extends Entity<?, ?>> Optional<IHandle> getHandle(Point2D.Double point, double margin, Class<T> clazz, Predicate<T> predicateEntity, Predicate<IHandle> predicateHandle)
 	{
 		return getHandles(clazz, predicateEntity)
 			.filter(predicateHandle)
-			.filter(h -> h.getView().getDistanceEdge(h, point.x, point.y) <= margin)
-			.map(h -> new Tuple<>(h, h.getView().getDistanceCenterSq(h, point.x, point.y)))
+			.filter(h -> h.getView().getDistanceEdge(point.x, point.y) <= margin)
+			.map(h -> new Tuple<>(h, h.getView().getDistanceCenterSq(point.x, point.y)))
 			.min((a, b) -> (int) Math.signum(a.getY() - b.getY()))
 			.map(t -> t.getX());
 	}
@@ -149,7 +149,7 @@ public abstract class Tool
 		}
 	}
 
-	protected <T extends EntityBlock> Optional<ConnectionBlock> getConnectionBlock(
+	protected <T extends EntityBlock<?, ?>> Optional<ConnectionBlock> getConnectionBlock(
 		Point2D.Double point,
 		double margin,
 		Class<T> clazz,
@@ -159,15 +159,15 @@ public abstract class Tool
 			.map(e -> new ConnectionBlock(e));
 	}
 
-	protected <T extends EntityWire> Optional<ConnectionTraffic> getConnectionTraffic(
+	protected <T extends EntityWire<?, ?>> Optional<ConnectionTraffic> getConnectionTraffic(
 		Point2D.Double point,
 		double margin,
 		Class<T> clazz,
 		Predicate<ConnectionTraffic> predicate,
 		boolean reverse)
 	{
-		return getEntity(point, margin, clazz, e -> predicate.test(new ConnectionTraffic(e, HMath.trim(e.getPosition(point.x, point.y), 0, 1), reverse)))
-			.map(e -> new ConnectionTraffic(e, HMath.trim(e.getPosition(point.x, point.y), 0, 1), reverse));
+		return getEntity(point, margin, clazz, e -> predicate.test(new ConnectionTraffic(e, HMath.trim(e.getView().getPosition(point.x, point.y), 0, 1), reverse)))
+			.map(e -> new ConnectionTraffic(e, HMath.trim(e.getView().getPosition(point.x, point.y), 0, 1), reverse));
 	}
 
 	protected Optional<Connection> getConnection(Point2D.Double cursor, double margin, Stream<TypeConnection> connectionTypes, Predicate<Connection> predicate)

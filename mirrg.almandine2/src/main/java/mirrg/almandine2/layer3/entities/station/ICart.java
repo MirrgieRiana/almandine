@@ -5,6 +5,6 @@ import mirrg.almandine2.layer2.entity.EntityBlock;
 public interface ICart
 {
 
-	public EntityBlock getEntity();
+	public EntityBlock<?, ?> getEntity();
 
 }

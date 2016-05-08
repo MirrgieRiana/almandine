@@ -1,70 +1,48 @@
 package mirrg.almandine2.layer3.entities.slab;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.function.Supplier;
 
 import mirrg.almandine2.layer2.entity.view.ViewSurfaceRectangle;
-import mirrg.almandine2.layer3.entities.HRender;
 
-public class ViewEntitySlot<E extends EntitySlot> extends ViewSurfaceRectangle<E>
+public class ViewEntitySlot<E extends EntitySlot<E, V>, V extends ViewEntitySlot<E, V>> extends ViewSurfaceRectangle
 {
 
+	protected E entity;
+	protected ViewSlot<ISlot> viewSlot = new ViewSlot<>(() -> entity, this::getPoint, this::getWidth, this::getHeight);
+
+	public ViewEntitySlot(E entity)
+	{
+		this.entity = entity;
+	}
+
 	@Override
-	public Point2D.Double getPoint(E entity)
+	public Point2D.Double getPoint()
 	{
 		return entity.getPoint();
 	}
 
 	@Override
-	public double getWidth(E entity)
+	public double getWidth()
 	{
 		return 20;
 	}
 
 	@Override
-	public double getHeight(E entity)
+	public double getHeight()
 	{
 		return 20;
 	}
 
 	@Override
-	public void render(E entity, Graphics2D graphics)
+	public void render(Graphics2D graphics)
 	{
-		render(entity, graphics, () -> getShape(entity, 0));
+		viewSlot.render(graphics);
 	}
 
-	public static void render(ISlot entity, Graphics2D graphics, Supplier<Rectangle2D.Double> supplier)
+	public double getRadiusSlot(double angle)
 	{
-		graphics.setColor(Color.white);
-		graphics.fill(supplier.get());
-
-		graphics.setColor(Color.red);
-		{
-			Rectangle2D.Double shape = supplier.get();
-			double ratio = entity.getAmountMax() != 0 ? (double) entity.getAmount() / entity.getAmountMax() : 0;
-			shape.y += shape.height * (1 - ratio);
-			shape.height *= ratio;
-			graphics.fill(shape);
-		}
-
-		graphics.setColor(Color.decode("#1E8484"));
-		graphics.draw(supplier.get());
-
-		graphics.setColor(Color.black);
-		graphics.setFont(HRender.getFontDefault().deriveFont(Font.BOLD));
-		{
-			Rectangle2D.Double shape = supplier.get();
-			HRender.drawString(graphics, "" + entity.getAmount(), shape.getCenterX(), shape.getCenterY(), HRender.ALIGN_CENTER, HRender.ALIGN_MIDDLE);
-		}
-	}
-
-	public double getRadiusSlot(E entity, double angle)
-	{
-		return getRadius(entity, angle, 0);
+		return viewSlot.getRadius(angle, 0);
 	}
 
 }

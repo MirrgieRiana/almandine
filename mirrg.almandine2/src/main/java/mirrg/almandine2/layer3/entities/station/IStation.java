@@ -5,7 +5,7 @@ import mirrg.almandine2.layer2.entity.EntityBlock;
 public interface IStation
 {
 
-	public EntityBlock getEntity();
+	public EntityBlock<?, ?> getEntity();
 
 	public double getRadiusStation(double angle);
 

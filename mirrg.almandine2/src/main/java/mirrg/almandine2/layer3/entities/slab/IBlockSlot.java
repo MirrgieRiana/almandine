@@ -5,7 +5,7 @@ import mirrg.almandine2.layer2.entity.EntityBlock;
 public interface IBlockSlot extends ISlot
 {
 
-	public EntityBlock getEntity();
+	public EntityBlock<?, ?> getEntity();
 
 	public double getRadiusSlot(double angle);
 

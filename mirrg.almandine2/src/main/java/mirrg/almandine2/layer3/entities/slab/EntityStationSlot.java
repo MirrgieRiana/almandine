@@ -2,14 +2,14 @@ package mirrg.almandine2.layer3.entities.slab;
 
 import java.util.Optional;
 
-import mirrg.almandine2.layer2.entity.CardEntityBlock;
+import mirrg.almandine2.layer2.entity.CardEntity;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.ConnectionAnchor;
 import mirrg.almandine2.layer3.entities.station.EntityStation;
 import mirrg.almandine2.layer3.entities.station.ICart;
 import mirrg.struct.hydrogen.Tuple;
 
-public class EntityStationSlot extends EntityStation implements IBlockSlot
+public class EntityStationSlot<E extends EntityStationSlot<E, V>, V extends ViewEntityStationSlot<E, V>> extends EntityStation<E, V> implements IBlockSlot
 {
 
 	public TypeStationSlot type;
@@ -50,12 +50,7 @@ public class EntityStationSlot extends EntityStation implements IBlockSlot
 	}
 
 	@Override
-	public CardEntityBlock<?, ?> getCardEntity()
-	{
-		return getCardEntityImpl();
-	}
-
-	private CardEntityStationSlot<EntityStationSlot, ViewEntityStationSlot<EntityStationSlot>> getCardEntityImpl()
+	public CardEntity<?, ?> getCardEntityImpl()
 	{
 		switch (type) {
 			case NORMAL:
@@ -96,7 +91,7 @@ public class EntityStationSlot extends EntityStation implements IBlockSlot
 	@Override
 	public double getRadiusSlot(double angle)
 	{
-		return getCardEntityImpl().getView().getRadiusSlot(this, angle);
+		return getView().getRadiusSlot(angle);
 	}
 
 	public Optional<ICartSlot> getCartSlot()

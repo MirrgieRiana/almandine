@@ -2,7 +2,6 @@ package mirrg.almandine2.layer2.entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.stream.Stream;
 
@@ -10,9 +9,10 @@ import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.Event;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
 import mirrg.almandine2.layer2.entity.view.View;
+import mirrg.almandine2.layer2.entity.view.ViewLine;
 import mirrg.almandine2.layer2.entity.view.ViewSurfaceCircle;
 
-public abstract class EntityWire extends Entity
+public abstract class EntityWire<E extends EntityWire<E, V>, V extends ViewLine> extends Entity<E, V>
 {
 
 	private Connection begin;
@@ -54,85 +54,14 @@ public abstract class EntityWire extends Entity
 		this.end.enable(this);
 	}
 
-	public static Point2D.Double getPoint(Point2D.Double begin, Point2D.Double end, double position)
-	{
-		return new Point2D.Double(
-			begin.x + (end.x - begin.x) * position,
-			begin.y + (end.y - begin.y) * position);
-	}
-
-	public Point2D.Double getPoint(double position)
-	{
-		return getPoint(getBegin().getPoint(), getEnd().getPoint(), position);
-	}
-
-	public static double getAngle(Point2D.Double begin, Point2D.Double end)
-	{
-		return Math.atan2(end.y - begin.y, end.x - begin.x);
-	}
-
-	public double getAngle()
-	{
-		return getAngle(getBegin().getPoint(), getEnd().getPoint());
-	}
-
-	public static double getDistance(Point2D.Double begin, Point2D.Double end, double x, double y)
-	{
-		return Line2D.ptSegDist(begin.x, begin.y, end.x, end.y, x, y);
-	}
-
-	public double getDistance(double x, double y)
-	{
-		return getDistance(getBegin().getPoint(), getEnd().getPoint(), x, y);
-	}
-
-	public static double getDistanceSq(Point2D.Double begin, Point2D.Double end, double x, double y)
-	{
-		return Line2D.ptSegDistSq(begin.x, begin.y, end.x, end.y, x, y);
-	}
-
-	public double getDistanceSq(double x, double y)
-	{
-		return getDistanceSq(getBegin().getPoint(), getEnd().getPoint(), x, y);
-	}
-
-	public static double getLength(Point2D.Double begin, Point2D.Double end)
-	{
-		return Point2D.distance(begin.x, begin.y, end.x, end.y);
-	}
-
-	public double getLength()
-	{
-		return getLength(getBegin().getPoint(), getEnd().getPoint());
-	}
-
-	public static double getPosition(Point2D.Double begin, Point2D.Double end, double x, double y)
-	{
-		double[] p = complexDiv(
-			x - begin.getX(),
-			y - begin.getY(),
-			end.getX() - begin.getX(),
-			end.getY() - begin.getY());
-
-		return p[0];
-	}
-
-	public double getPosition(double x, double y)
-	{
-		return getPosition(getBegin().getPoint(), getEnd().getPoint(), x, y);
-	}
-
-	private static double[] complexDiv(double r1, double i1, double r2, double i2)
-	{
-		double c = r2 * r2 + i2 * i2;
-		return new double[] {
-			(r1 * r2 + i1 * i2) / c,
-			(i1 * r2 - r1 * i2) / c,
-		};
-	}
-
+	@SuppressWarnings("unchecked")
 	@Override
-	public abstract CardEntityWire<?, ?> getCardEntity();
+	public CardEntityWire<E, V> getCardEntity()
+	{
+		return (CardEntityWire<E, V>) getCardEntityImpl();
+	}
+
+	public abstract CardEntity<?, ?> getCardEntityImpl();
 
 	public boolean isConnectableBegin(Connection connection)
 	{
@@ -149,7 +78,7 @@ public abstract class EntityWire extends Entity
 	}
 
 	@Override
-	public void onConnectionEvent(Entity owner, Event event)
+	public void onConnectionEvent(Entity<?, ?> owner, Event event)
 	{
 		super.onConnectionEvent(owner, event);
 
@@ -164,39 +93,39 @@ public abstract class EntityWire extends Entity
 		return Stream.of(new IHandle() {
 
 			@Override
-			public Entity getOwner()
+			public Entity<?, ?> getOwner()
 			{
 				return EntityWire.this;
 			}
 
 			@Override
-			public View<IHandle> getView()
+			public View getView()
 			{
-				return new ViewSurfaceCircle<IHandle>() {
+				return new ViewSurfaceCircle() {
 
 					@Override
-					public Point2D.Double getPoint(IHandle entity)
+					public Point2D.Double getPoint()
 					{
 						Point2D.Double point = EntityWire.this.getBegin().getPoint();
 						return new Point2D.Double(
-							point.x + 8 * Math.cos(EntityWire.this.getAngle()),
-							point.y + 8 * Math.sin(EntityWire.this.getAngle()));
+							point.x + 8 * Math.cos(EntityWire.this.getView().getAngle()),
+							point.y + 8 * Math.sin(EntityWire.this.getView().getAngle()));
 					}
 
 					@Override
-					public double getRadius(IHandle entity)
+					public double getRadius()
 					{
 						return 3;
 					}
 
 					@Override
-					public void render(IHandle entity, Graphics2D graphics)
+					public void render(Graphics2D graphics)
 					{
 						graphics.setColor(Color.white);
-						graphics.fill(getShape(entity, 0));
+						graphics.fill(getShape(0));
 
 						graphics.setColor(Color.red);
-						graphics.draw(getShape(entity, 0));
+						graphics.draw(getShape(0));
 					}
 
 				};
@@ -223,39 +152,39 @@ public abstract class EntityWire extends Entity
 		}, new IHandle() {
 
 			@Override
-			public Entity getOwner()
+			public Entity<?, ?> getOwner()
 			{
 				return EntityWire.this;
 			}
 
 			@Override
-			public View<IHandle> getView()
+			public View getView()
 			{
-				return new ViewSurfaceCircle<IHandle>() {
+				return new ViewSurfaceCircle() {
 
 					@Override
-					public Point2D.Double getPoint(IHandle entity)
+					public Point2D.Double getPoint()
 					{
 						Point2D.Double point = EntityWire.this.getEnd().getPoint();
 						return new Point2D.Double(
-							point.x - 8 * Math.cos(EntityWire.this.getAngle()),
-							point.y - 8 * Math.sin(EntityWire.this.getAngle()));
+							point.x - 8 * Math.cos(EntityWire.this.getView().getAngle()),
+							point.y - 8 * Math.sin(EntityWire.this.getView().getAngle()));
 					}
 
 					@Override
-					public double getRadius(IHandle entity)
+					public double getRadius()
 					{
 						return 3;
 					}
 
 					@Override
-					public void render(IHandle entity, Graphics2D graphics)
+					public void render(Graphics2D graphics)
 					{
 						graphics.setColor(Color.white);
-						graphics.fill(getShape(entity, 0));
+						graphics.fill(getShape(0));
 
 						graphics.setColor(Color.red);
-						graphics.draw(getShape(entity, 0));
+						graphics.draw(getShape(0));
 					}
 
 				};

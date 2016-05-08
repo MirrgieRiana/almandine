@@ -1,22 +1,22 @@
 package mirrg.almandine2.layer2.entity;
 
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 import mirrg.almandine2.layer2.entity.view.View;
 
-public abstract class CardEntity<E extends Entity, V extends View<E>>
+public abstract class CardEntity<E extends Entity<E, V>, V extends View>
 {
 
-	private Supplier<V> supplierView;
+	private Function<E, V> functionView;
 
-	public CardEntity(Supplier<V> supplierView)
+	public CardEntity(Function<E, V> functionView)
 	{
-		this.supplierView = supplierView;
+		this.functionView = functionView;
 	}
 
-	public V getView()
+	public V getView(E entity)
 	{
-		return supplierView.get();
+		return functionView.apply(entity);
 	}
 
 }

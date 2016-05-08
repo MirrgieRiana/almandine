@@ -23,7 +23,7 @@ public class ConnectionPoint extends Connection
 	}
 
 	@Override
-	public Stream<Entity> getEntities()
+	public Stream<Entity<?, ?>> getEntities()
 	{
 		return Stream.empty();
 	}

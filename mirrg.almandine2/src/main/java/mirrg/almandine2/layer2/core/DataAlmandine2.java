@@ -13,7 +13,7 @@ public class DataAlmandine2
 	@XStreamOmitField
 	private GameAlmandine2 game;
 
-	private ArrayList<Entity> entities;
+	private ArrayList<Entity<?, ?>> entities;
 
 	public void reset()
 	{
@@ -31,19 +31,19 @@ public class DataAlmandine2
 		}
 	}
 
-	public void addEntity(Entity entity)
+	public void addEntity(Entity<?, ?> entity)
 	{
 		entities.add(entity);
 		entity.enable(game);
 	}
 
-	public Stream<Entity> getEntities()
+	public Stream<Entity<?, ?>> getEntities()
 	{
 		return entities.stream();
 	}
 
 	@SuppressWarnings("unchecked")
-	public <E extends Entity> Stream<E> getEntities(Class<E> clazz)
+	public <E extends Entity<?, ?>> Stream<E> getEntities(Class<E> clazz)
 	{
 		return entities.stream()
 			.filter(entity -> clazz.isInstance(entity))

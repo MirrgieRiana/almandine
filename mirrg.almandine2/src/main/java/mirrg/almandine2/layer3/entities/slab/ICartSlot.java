@@ -5,6 +5,6 @@ import mirrg.almandine2.layer3.entities.station.EntityCart;
 public interface ICartSlot extends ISlot
 {
 
-	public EntityCart getEntity();
+	public EntityCart<?, ?> getEntity();
 
 }

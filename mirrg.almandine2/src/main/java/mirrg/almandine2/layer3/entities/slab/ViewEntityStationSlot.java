@@ -2,31 +2,25 @@ package mirrg.almandine2.layer3.entities.slab;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 
 import mirrg.almandine2.layer3.entities.HRender;
 import mirrg.almandine2.layer3.entities.station.ViewEntityStation;
 
-public class ViewEntityStationSlot<E extends EntityStationSlot> extends ViewEntityStation<E>
+public class ViewEntityStationSlot<E extends EntityStationSlot<E, V>, V extends ViewEntityStationSlot<E, V>> extends ViewEntityStation<E, V>
 {
 
-	@Override
-	public void render(E entity, Graphics2D graphics)
+	public ViewEntityStationSlot(E entity)
 	{
-		super.render(entity, graphics);
+		super(entity);
+	}
+
+	@Override
+	public void render(Graphics2D graphics)
+	{
+		super.render(graphics);
 
 		entity.getCartSlot().ifPresent(s -> {
-
-			ViewEntitySlot.render(s, graphics, () -> {
-				Ellipse2D.Double shape = getShape(entity, -8);
-				return new Rectangle2D.Double(
-					shape.x,
-					shape.y,
-					shape.width,
-					shape.height);
-			});
-
+			new ViewSlot<>(() -> entity, () -> getPoint(), () -> 20, () -> 20).render(graphics);
 		});
 
 		graphics.setColor(Color.black);
@@ -39,9 +33,9 @@ public class ViewEntityStationSlot<E extends EntityStationSlot> extends ViewEnti
 			HRender.ALIGN_TOP);
 	}
 
-	public double getRadiusSlot(E entity, double angle)
+	public double getRadiusSlot(double angle)
 	{
-		return getRadius(entity, angle, 0);
+		return new ViewSlot<>(() -> entity, () -> getPoint(), () -> 20, () -> 20).getRadius(angle, 0);
 	}
 
 }

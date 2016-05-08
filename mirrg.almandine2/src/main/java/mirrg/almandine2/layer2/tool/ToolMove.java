@@ -63,19 +63,19 @@ public class ToolMove extends ToolBase
 	public void render(Graphics2D graphics)
 	{
 		getHandles(Entity.class, this::testEntity).forEach(h -> {
-			h.getView().render(h, graphics);
+			h.getView().render(graphics);
 		});
 
 		if (handle != null) {
 			if (holding) {
-				handle.getView().renderAura(handle, graphics, 2, 3, Color.decode("#FF7F00"));
+				handle.getView().renderAura(graphics, 2, 3, Color.decode("#FF7F00"));
 			} else {
-				handle.getView().renderAura(handle, graphics, 2, 3, Color.decode("#4CDB7C"));
+				handle.getView().renderAura(graphics, 2, 3, Color.decode("#4CDB7C"));
 			}
 		}
 	}
 
-	private boolean testEntity(Entity entity)
+	private boolean testEntity(Entity<?, ?> entity)
 	{
 		if (isShift()) if (!(entity instanceof EntityWire)) return false;
 		if (isControl()) if (!(entity instanceof EntityBlock)) return false;

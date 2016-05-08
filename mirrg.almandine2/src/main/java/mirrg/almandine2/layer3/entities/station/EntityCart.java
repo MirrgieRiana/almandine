@@ -1,13 +1,13 @@
 package mirrg.almandine2.layer3.entities.station;
 
-import mirrg.almandine2.layer2.entity.CardEntityBlock;
+import mirrg.almandine2.layer2.entity.CardEntity;
 import mirrg.almandine2.layer2.entity.EntityBlock;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.ConnectionAnchor;
 import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.connection.ConnectionTraffic;
 
-public class EntityCart extends EntityBlock implements ICart
+public class EntityCart<E extends EntityCart<E, V>, V extends ViewEntityCart<E, V>> extends EntityBlock<E, V> implements ICart
 {
 
 	public EntityCart(Connection connection)
@@ -57,18 +57,13 @@ public class EntityCart extends EntityBlock implements ICart
 	}
 
 	@Override
-	public CardEntityBlock<?, ?> getCardEntity()
-	{
-		return getCardEntityImpl();
-	}
-
-	private CardEntityBlock<EntityCart, ViewEntityCart<EntityCart>> getCardEntityImpl()
+	public CardEntity<?, ?> getCardEntityImpl()
 	{
 		return CardEntityCart.INSTANCE;
 	}
 
 	@Override
-	public EntityBlock getEntity()
+	public EntityBlock<?, ?> getEntity()
 	{
 		return this;
 	}

@@ -3,7 +3,7 @@ package mirrg.almandine2.layer3.entities.station;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import mirrg.almandine2.layer2.entity.CardEntityBlock;
+import mirrg.almandine2.layer2.entity.CardEntity;
 import mirrg.almandine2.layer2.entity.EntityBlock;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.ConnectionAnchor;
@@ -11,7 +11,7 @@ import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.connection.ConnectionTraffic;
 import mirrg.struct.hydrogen.Tuple;
 
-public class EntityStation extends EntityBlock implements IStation
+public class EntityStation<E extends EntityStation<E, V>, V extends ViewEntityStation<E, V>> extends EntityBlock<E, V> implements IStation
 {
 
 	public EntityStation(Connection connection)
@@ -26,12 +26,7 @@ public class EntityStation extends EntityBlock implements IStation
 	}
 
 	@Override
-	public CardEntityBlock<?, ?> getCardEntity()
-	{
-		return getCardEntityImpl();
-	}
-
-	private CardEntityBlock<EntityStation, ViewEntityStation<EntityStation>> getCardEntityImpl()
+	public CardEntity<?, ?> getCardEntityImpl()
 	{
 		return CardEntityStation.INSTANCE;
 	}
@@ -39,7 +34,7 @@ public class EntityStation extends EntityBlock implements IStation
 	@Override
 	public double getRadiusStation(double angle)
 	{
-		return getCardEntityImpl().getView().getRadiusStation(this, angle);
+		return getView().getRadiusStation(angle);
 	}
 
 	@Override
@@ -52,7 +47,7 @@ public class EntityStation extends EntityBlock implements IStation
 	}
 
 	@Override
-	public EntityBlock getEntity()
+	public EntityBlock<?, ?> getEntity()
 	{
 		return this;
 	}

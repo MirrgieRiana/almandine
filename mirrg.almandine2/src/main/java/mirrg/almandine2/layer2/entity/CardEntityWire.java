@@ -2,22 +2,22 @@ package mirrg.almandine2.layer2.entity;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
-import java.util.function.Supplier;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
-import mirrg.almandine2.layer2.entity.view.View;
+import mirrg.almandine2.layer2.entity.view.ViewLine;
 
-public abstract class CardEntityWire<E extends Entity, V extends View<E>> extends CardEntity<E, V>
+public abstract class CardEntityWire<E extends EntityWire<E, V>, V extends ViewLine> extends CardEntity<E, V>
 {
 
-	private BiFunction<Connection, Connection, Optional<E>> supplierEntity;
+	private BiFunction<Connection, Connection, Optional<E>> functionEntity;
 
-	public CardEntityWire(BiFunction<Connection, Connection, Optional<E>> supplierEntity, Supplier<V> supplierView)
+	public CardEntityWire(BiFunction<Connection, Connection, Optional<E>> functionEntity, Function<E, V> functionView)
 	{
-		super(supplierView);
-		this.supplierEntity = supplierEntity;
+		super(functionView);
+		this.functionEntity = functionEntity;
 	}
 
 	public abstract Stream<TypeConnection> getConnectionTypesBegin();
@@ -35,7 +35,7 @@ public abstract class CardEntityWire<E extends Entity, V extends View<E>> extend
 
 	public Optional<E> create(Connection begin, Connection end)
 	{
-		return isDuplicated(begin, end) ? Optional.empty() : supplierEntity.apply(begin, end);
+		return isDuplicated(begin, end) ? Optional.empty() : functionEntity.apply(begin, end);
 	}
 
 }

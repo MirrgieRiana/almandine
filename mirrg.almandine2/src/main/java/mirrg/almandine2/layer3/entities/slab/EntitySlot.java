@@ -1,10 +1,10 @@
 package mirrg.almandine2.layer3.entities.slab;
 
-import mirrg.almandine2.layer2.entity.CardEntityBlock;
+import mirrg.almandine2.layer2.entity.CardEntity;
 import mirrg.almandine2.layer2.entity.EntityBlock;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 
-public class EntitySlot extends EntityBlock implements IBlockSlot
+public class EntitySlot<E extends EntitySlot<E, V>, V extends ViewEntitySlot<E, V>> extends EntityBlock<E, V> implements IBlockSlot
 {
 
 	public int amount;
@@ -24,18 +24,13 @@ public class EntitySlot extends EntityBlock implements IBlockSlot
 	}
 
 	@Override
-	public CardEntityBlock<?, ?> getCardEntity()
-	{
-		return getCardEntityImpl();
-	}
-
-	private CardEntityBlock<EntitySlot, ViewEntitySlot<EntitySlot>> getCardEntityImpl()
+	public CardEntity<?, ?> getCardEntityImpl()
 	{
 		return CardEntitySlot.INSTANCE;
 	}
 
 	@Override
-	public EntityBlock getEntity()
+	public EntityBlock<?, ?> getEntity()
 	{
 		return this;
 	}
@@ -67,7 +62,7 @@ public class EntitySlot extends EntityBlock implements IBlockSlot
 	@Override
 	public double getRadiusSlot(double angle)
 	{
-		return getCardEntityImpl().getView().getRadiusSlot(this, angle);
+		return getView().getRadiusSlot(angle);
 	}
 
 }

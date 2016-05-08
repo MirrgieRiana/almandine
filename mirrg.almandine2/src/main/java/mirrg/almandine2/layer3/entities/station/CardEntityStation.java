@@ -2,26 +2,26 @@ package mirrg.almandine2.layer3.entities.station;
 
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
-import mirrg.almandine2.layer2.entity.Entity;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.ConnectionPoint;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
-import mirrg.almandine2.layer2.entity.view.View;
 
-public class CardEntityStation<E extends Entity, V extends View<E>> extends CardEntityBlock<E, V>
+public class CardEntityStation<E extends EntityStation<E, V>, V extends ViewEntityStation<E, V>> extends CardEntityBlock<E, V>
 {
 
-	public static final CardEntityStation<EntityStation, ViewEntityStation<EntityStation>> INSTANCE = new CardEntityStation<>(
+	@SuppressWarnings({
+		"unchecked", "rawtypes"
+	})
+	public static CardEntityBlock<?, ?> INSTANCE = new CardEntityStation<>(
 		c -> Optional.of(new EntityStation(c)),
-		ViewEntityStation::new);
+		e -> new ViewEntityStation(e));
 
-	public CardEntityStation(Function<Connection, Optional<E>> supplierEntity, Supplier<V> supplierView)
+	public CardEntityStation(Function<Connection, Optional<E>> functionEntity, Function<E, V> functionView)
 	{
-		super(supplierEntity, supplierView);
+		super(functionEntity, functionView);
 	}
 
 	@Override

@@ -2,22 +2,21 @@ package mirrg.almandine2.layer2.entity;
 
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
 import mirrg.almandine2.layer2.entity.view.View;
 
-public abstract class CardEntityBlock<E extends Entity, V extends View<E>> extends CardEntity<E, V>
+public abstract class CardEntityBlock<E extends EntityBlock<E, V>, V extends View> extends CardEntity<E, V>
 {
 
-	private Function<Connection, Optional<E>> supplierEntity;
+	private Function<Connection, Optional<E>> functionEntity;
 
-	public CardEntityBlock(Function<Connection, Optional<E>> supplierEntity, Supplier<V> supplierView)
+	public CardEntityBlock(Function<Connection, Optional<E>> functionEntity, Function<E, V> functionView)
 	{
-		super(supplierView);
-		this.supplierEntity = supplierEntity;
+		super(functionView);
+		this.functionEntity = functionEntity;
 	}
 
 	public abstract Stream<TypeConnection> getConnectionTypes();
@@ -26,7 +25,7 @@ public abstract class CardEntityBlock<E extends Entity, V extends View<E>> exten
 
 	public Optional<E> create(Connection connection)
 	{
-		return supplierEntity.apply(connection);
+		return functionEntity.apply(connection);
 	}
 
 }

@@ -15,7 +15,7 @@ import mirrg.almandine2.layer2.entity.connection.Event;
 import mirrg.almandine2.layer2.entity.connection.EventDied;
 import mirrg.almandine2.layer2.entity.view.View;
 
-public abstract class Entity
+public abstract class Entity<E extends Entity<E, V>, V extends View>
 {
 
 	@XStreamOmitField
@@ -24,6 +24,12 @@ public abstract class Entity
 	public Entity()
 	{
 		reset();
+	}
+
+	@SuppressWarnings("unchecked")
+	public E getThis()
+	{
+		return (E) this;
 	}
 
 	/**
@@ -60,12 +66,11 @@ public abstract class Entity
 	/**
 	 * 戻り値の型引数はこのエンティティの実装型と同じでなければならない。
 	 */
-	public abstract CardEntity<?, ?> getCardEntity();
+	public abstract CardEntity<E, V> getCardEntity();
 
-	@SuppressWarnings("unchecked")
-	public static <E extends Entity, V extends View<E>> CardEntity<E, V> getCardEntity(E entity)
+	public V getView()
 	{
-		return (CardEntity<E, V>) entity.getCardEntity();
+		return getCardEntity().getView(getThis());
 	}
 
 	public abstract Stream<Connection> getConnections();
@@ -97,12 +102,12 @@ public abstract class Entity
 		connectors.remove(connection);
 	}
 
-	public void onConnectionEvent(Entity owner, Event event)
+	public void onConnectionEvent(Entity<?, ?> owner, Event event)
 	{
 
 	}
 
-	protected void dieIfNotConnectableToPoint(Entity owner, Event event, Connection connection, Predicate<Connection> predicate, Consumer<Connection> setter)
+	protected void dieIfNotConnectableToPoint(Entity<?, ?> owner, Event event, Connection connection, Predicate<Connection> predicate, Consumer<Connection> setter)
 	{
 		if (event instanceof EventDied) {
 

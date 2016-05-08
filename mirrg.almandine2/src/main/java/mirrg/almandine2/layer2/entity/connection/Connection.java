@@ -11,9 +11,9 @@ public abstract class Connection
 {
 
 	@XStreamOmitField
-	private Entity parent;
+	private Entity<?, ?> parent;
 
-	public void enable(Entity parent)
+	public void enable(Entity<?, ?> parent)
 	{
 		this.parent = parent;
 	}
@@ -23,16 +23,16 @@ public abstract class Connection
 
 	}
 
-	public void fire(Entity owner, Event event)
+	public void fire(Entity<?, ?> owner, Event event)
 	{
 		parent.onConnectionEvent(owner, event);
 	}
 
 	public abstract Point2D.Double getPoint();
 
-	public abstract Stream<Entity> getEntities();
+	public abstract Stream<Entity<?, ?>> getEntities();
 
-	public Entity getParent()
+	public Entity<?, ?> getParent()
 	{
 		return parent;
 	}

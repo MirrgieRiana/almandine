@@ -11,11 +11,11 @@ import mirrg.almandine2.layer2.entity.EntityWire;
 public class ConnectionTraffic extends Connection
 {
 
-	public EntityWire entity;
+	public EntityWire<?, ?> entity;
 	public double position;
 	public boolean reverse;
 
-	public ConnectionTraffic(EntityWire entity, double position, boolean reverse)
+	public ConnectionTraffic(EntityWire<?, ?> entity, double position, boolean reverse)
 	{
 		this.entity = entity;
 		this.position = position;
@@ -23,7 +23,7 @@ public class ConnectionTraffic extends Connection
 	}
 
 	@Override
-	public void enable(Entity parent)
+	public void enable(Entity<?, ?> parent)
 	{
 		super.enable(parent);
 		entity.connect(this);
@@ -46,14 +46,14 @@ public class ConnectionTraffic extends Connection
 			return new Point2D.Double(0, 0);
 		} else {
 			calculating = true;
-			Point2D.Double point = entity.getPoint(position);
+			Point2D.Double point = entity.getView().getPoint(position);
 			calculating = false;
 			return point;
 		}
 	}
 
 	@Override
-	public Stream<Entity> getEntities()
+	public Stream<Entity<?, ?>> getEntities()
 	{
 		return Stream.of(entity);
 	}

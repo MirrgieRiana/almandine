@@ -1,10 +1,10 @@
 package mirrg.almandine2.layer3.entities.station;
 
-import mirrg.almandine2.layer2.entity.CardEntityWire;
+import mirrg.almandine2.layer2.entity.CardEntity;
 import mirrg.almandine2.layer2.entity.EntityWire;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 
-public class EntityRail extends EntityWire implements IRail
+public class EntityRail<E extends EntityRail<E, V>, V extends ViewEntityRail<E, V>> extends EntityWire<E, V> implements IRail
 {
 
 	public EntityRail(Connection begin, Connection end)
@@ -19,18 +19,13 @@ public class EntityRail extends EntityWire implements IRail
 	}
 
 	@Override
-	public CardEntityWire<?, ?> getCardEntity()
-	{
-		return getCardEntityImpl();
-	}
-
-	private CardEntityWire<EntityRail, ViewEntityRail<EntityRail>> getCardEntityImpl()
+	public CardEntity<?, ?> getCardEntityImpl()
 	{
 		return CardEntityRail.INSTANCE;
 	}
 
 	@Override
-	public EntityWire getEntity()
+	public EntityWire<?, ?> getEntity()
 	{
 		return this;
 	}

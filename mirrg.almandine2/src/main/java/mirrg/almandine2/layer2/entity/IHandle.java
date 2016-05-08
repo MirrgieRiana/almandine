@@ -9,9 +9,9 @@ import mirrg.almandine2.layer2.entity.view.View;
 public interface IHandle
 {
 
-	public Entity getOwner();
+	public Entity<?, ?> getOwner();
 
-	public View<IHandle> getView();
+	public View getView();
 
 	public Stream<TypeConnection> getConnectionTypes();
 

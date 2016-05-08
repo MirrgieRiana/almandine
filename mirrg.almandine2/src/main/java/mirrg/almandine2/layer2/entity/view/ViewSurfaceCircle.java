@@ -3,23 +3,23 @@ package mirrg.almandine2.layer2.entity.view;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 
-public abstract class ViewSurfaceCircle<T> extends ViewSurface<T>
+public abstract class ViewSurfaceCircle extends ViewSurface
 {
 
-	public abstract Point2D.Double getPoint(T entity);
+	public abstract Point2D.Double getPoint();
 
-	public abstract double getRadius(T entity);
+	public abstract double getRadius();
 
-	public double getRadius(T entity, double angle, double margin)
+	public double getRadius(double angle, double margin)
 	{
-		return getRadius(entity) + margin;
+		return getRadius() + margin;
 	}
 
 	@Override
-	public Ellipse2D.Double getShape(T entity, double margin)
+	public Ellipse2D.Double getShape(double margin)
 	{
-		Point2D.Double point = getPoint(entity);
-		double radius = getRadius(entity);
+		Point2D.Double point = getPoint();
+		double radius = getRadius();
 		return new Ellipse2D.Double(
 			point.x - radius - margin,
 			point.y - radius - margin,
@@ -28,16 +28,16 @@ public abstract class ViewSurfaceCircle<T> extends ViewSurface<T>
 	}
 
 	@Override
-	public double getDistanceCenterSq(T entity, double x, double y)
+	public double getDistanceCenterSq(double x, double y)
 	{
-		Point2D.Double point = getPoint(entity);
+		Point2D.Double point = getPoint();
 		return Point2D.distanceSq(point.x, point.y, x, y);
 	}
 
 	@Override
-	public double getDistanceEdge(T entity, double x, double y)
+	public double getDistanceEdge(double x, double y)
 	{
-		return Math.sqrt(getDistanceCenterSq(entity, x, y)) - getRadius(entity);
+		return Math.sqrt(getDistanceCenterSq(x, y)) - getRadius();
 	}
 
 }

@@ -1,10 +1,10 @@
 package mirrg.almandine2.layer3.entities.slab;
 
-import mirrg.almandine2.layer2.entity.CardEntityBlock;
+import mirrg.almandine2.layer2.entity.CardEntity;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer3.entities.station.EntityCart;
 
-public class EntityCartSlot extends EntityCart implements ICartSlot
+public class EntityCartSlot<E extends EntityCartSlot<E, V>, V extends ViewEntityCartSlot<E, V>> extends EntityCart<E, V> implements ICartSlot
 {
 
 	public int amount;
@@ -24,18 +24,13 @@ public class EntityCartSlot extends EntityCart implements ICartSlot
 	}
 
 	@Override
-	public CardEntityBlock<?, ?> getCardEntity()
-	{
-		return getCardEntityImpl();
-	}
-
-	private CardEntityBlock<EntityCartSlot, ViewEntityCartSlot<EntityCartSlot>> getCardEntityImpl()
+	public CardEntity<?, ?> getCardEntityImpl()
 	{
 		return CardEntityCartSlot.INSTANCE;
 	}
 
 	@Override
-	public EntityCart getEntity()
+	public EntityCart<?, ?> getEntity()
 	{
 		return this;
 	}

@@ -13,23 +13,30 @@ import mirrg.almandine2.layer2.entity.connection.ConnectionAnchor;
 import mirrg.almandine2.layer2.entity.connection.ConnectionTraffic;
 import mirrg.almandine2.layer2.entity.view.ViewSurfaceCircle;
 
-public class ViewEntityCart<E extends EntityCart> extends ViewSurfaceCircle<E>
+public class ViewEntityCart<E extends EntityCart<E, V>, V extends ViewEntityCart<E, V>> extends ViewSurfaceCircle
 {
 
+	protected E entity;
+
+	public ViewEntityCart(E entity)
+	{
+		this.entity = entity;
+	}
+
 	@Override
-	public Point2D.Double getPoint(E entity)
+	public Point2D.Double getPoint()
 	{
 		return entity.getPoint();
 	}
 
 	@Override
-	public double getRadius(E entity)
+	public double getRadius()
 	{
 		return 10;
 	}
 
 	@Override
-	public void render(E entity, Graphics2D graphics)
+	public void render(Graphics2D graphics)
 	{
 		graphics.setColor(Color.blue);
 		Stroke stroke = graphics.getStroke();
@@ -84,7 +91,7 @@ public class ViewEntityCart<E extends EntityCart> extends ViewSurfaceCircle<E>
 	{
 		if (connection instanceof ConnectionTraffic) {
 			ConnectionTraffic connection2 = (ConnectionTraffic) connection;
-			double angle = connection2.entity.getAngle();
+			double angle = connection2.entity.getView().getAngle();
 			if (connection2.reverse) angle += 180 * Math.PI / 180;
 			return angle;
 		} else if (connection instanceof ConnectionAnchor) {

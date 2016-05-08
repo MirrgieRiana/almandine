@@ -2,7 +2,7 @@ package mirrg.almandine2.layer3.entities.redstone;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
-import java.util.function.Supplier;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityWire;
@@ -11,16 +11,19 @@ import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.connection.ConnectionPoint;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
 
-public class CardEntityWireRedstone<E extends EntityWireRedstone, V extends ViewEntityWireRedstone<E>> extends CardEntityWire<E, V>
+public class CardEntityWireRedstone<E extends EntityWireRedstone<E, V>, V extends ViewEntityWireRedstone<E, V>> extends CardEntityWire<E, V>
 {
 
-	public static final CardEntityWireRedstone<EntityWireRedstone, ViewEntityWireRedstone<EntityWireRedstone>> INSTANCE = new CardEntityWireRedstone<>(
+	@SuppressWarnings({
+		"unchecked", "rawtypes"
+	})
+	public static CardEntityWire<?, ?> INSTANCE = new CardEntityWireRedstone<>(
 		(begin, end) -> Optional.of(new EntityWireRedstone(begin, end)),
-		ViewEntityWireRedstone::new);
+		e -> new ViewEntityWireRedstone(e));
 
-	public CardEntityWireRedstone(BiFunction<Connection, Connection, Optional<E>> supplierEntity, Supplier<V> supplierView)
+	public CardEntityWireRedstone(BiFunction<Connection, Connection, Optional<E>> functionEntity, Function<E, V> functionView)
 	{
-		super(supplierEntity, supplierView);
+		super(functionEntity, functionView);
 	}
 
 	@Override

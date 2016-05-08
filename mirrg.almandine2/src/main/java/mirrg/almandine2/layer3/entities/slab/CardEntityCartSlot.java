@@ -2,23 +2,24 @@ package mirrg.almandine2.layer3.entities.slab;
 
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
-import mirrg.almandine2.layer2.entity.Entity;
+import mirrg.almandine2.layer2.entity.CardEntityBlock;
 import mirrg.almandine2.layer2.entity.connection.Connection;
-import mirrg.almandine2.layer2.entity.view.View;
 import mirrg.almandine2.layer3.entities.station.CardEntityCart;
 
-public class CardEntityCartSlot<E extends Entity, V extends View<E>> extends CardEntityCart<E, V>
+public class CardEntityCartSlot<E extends EntityCartSlot<E, V>, V extends ViewEntityCartSlot<E, V>> extends CardEntityCart<E, V>
 {
 
-	public static final CardEntityCartSlot<EntityCartSlot, ViewEntityCartSlot<EntityCartSlot>> INSTANCE = new CardEntityCartSlot<>(
+	@SuppressWarnings({
+		"unchecked", "rawtypes"
+	})
+	public static CardEntityBlock<?, ?> INSTANCE = new CardEntityCartSlot<>(
 		c -> Optional.of(new EntityCartSlot(c, 10)),
-		ViewEntityCartSlot::new);
+		e -> new ViewEntityCartSlot(e));
 
-	public CardEntityCartSlot(Function<Connection, Optional<E>> supplierEntity, Supplier<V> supplierView)
+	public CardEntityCartSlot(Function<Connection, Optional<E>> functionEntity, Function<E, V> functionView)
 	{
-		super(supplierEntity, supplierView);
+		super(functionEntity, functionView);
 	}
 
 }

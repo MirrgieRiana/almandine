@@ -5,6 +5,6 @@ import mirrg.almandine2.layer2.entity.EntityWire;
 public interface IRail
 {
 
-	public EntityWire getEntity();
+	public EntityWire<?, ?> getEntity();
 
 }

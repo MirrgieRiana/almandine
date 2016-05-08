@@ -8,23 +8,30 @@ import java.awt.geom.Point2D;
 import mirrg.almandine2.layer2.entity.view.ViewSurfaceCircle;
 import mirrg.almandine2.layer3.entities.HRender;
 
-public class ViewEntityGateRedstone<E extends EntityGateRedstone> extends ViewSurfaceCircle<E>
+public class ViewEntityGateRedstone<E extends EntityGateRedstone<E, V>, V extends ViewEntityGateRedstone<E, V>> extends ViewSurfaceCircle
 {
 
+	protected E entity;
+
+	public ViewEntityGateRedstone(E entity)
+	{
+		this.entity = entity;
+	}
+
 	@Override
-	public Point2D.Double getPoint(E entity)
+	public Point2D.Double getPoint()
 	{
 		return entity.getPoint();
 	}
 
 	@Override
-	public double getRadius(E entity)
+	public double getRadius()
 	{
 		return 5;
 	}
 
 	@Override
-	public void render(E entity, Graphics2D graphics)
+	public void render(Graphics2D graphics)
 	{
 		graphics.setColor(entity.value ? Color.decode("#ff0000") : Color.decode("#440000"));
 		graphics.fill(new Ellipse2D.Double(
@@ -43,9 +50,9 @@ public class ViewEntityGateRedstone<E extends EntityGateRedstone> extends ViewSu
 			HRender.ALIGN_TOP);
 	}
 
-	public double getRadiusRedstone(E entity, double angle)
+	public double getRadiusRedstone(double angle)
 	{
-		return getRadius(entity, angle, 0);
+		return getRadius(angle, 0);
 	}
 
 }

@@ -1,10 +1,10 @@
 package mirrg.almandine2.layer3.entities.counter;
 
-import mirrg.almandine2.layer2.entity.CardEntityBlock;
+import mirrg.almandine2.layer2.entity.CardEntity;
 import mirrg.almandine2.layer2.entity.EntityBlock;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 
-public class EntityCounter extends EntityBlock
+public class EntityCounter<E extends EntityCounter<E, V>, V extends ViewEntityCounter<E, V>> extends EntityBlock<E, V>
 {
 
 	public int i;
@@ -21,12 +21,7 @@ public class EntityCounter extends EntityBlock
 	}
 
 	@Override
-	public CardEntityBlock<?, ?> getCardEntity()
-	{
-		return getCardEntityImpl();
-	}
-
-	private CardEntityBlock<EntityCounter, ViewEntityCounter<EntityCounter>> getCardEntityImpl()
+	public CardEntity<?, ?> getCardEntityImpl()
 	{
 		return CardEntityCounter.INSTANCE;
 	}

@@ -11,7 +11,7 @@ import mirrg.almandine2.layer2.entity.connection.TypeConnection;
 import mirrg.almandine2.layer2.entity.view.View;
 import mirrg.almandine2.layer2.entity.view.ViewSurfaceCircle;
 
-public abstract class EntityBlock extends Entity
+public abstract class EntityBlock<E extends EntityBlock<E, V>, V extends View> extends Entity<E, V>
 {
 
 	private Connection connection;
@@ -44,8 +44,14 @@ public abstract class EntityBlock extends Entity
 		return connection.getPoint();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public abstract CardEntityBlock<?, ?> getCardEntity();
+	public CardEntityBlock<E, V> getCardEntity()
+	{
+		return (CardEntityBlock<E, V>) getCardEntityImpl();
+	}
+
+	public abstract CardEntity<?, ?> getCardEntityImpl();
 
 	public boolean isConnectable(Connection connection)
 	{
@@ -54,7 +60,7 @@ public abstract class EntityBlock extends Entity
 	}
 
 	@Override
-	public void onConnectionEvent(Entity owner, Event event)
+	public void onConnectionEvent(Entity<?, ?> owner, Event event)
 	{
 		super.onConnectionEvent(owner, event);
 
@@ -68,36 +74,36 @@ public abstract class EntityBlock extends Entity
 		return Stream.of(new IHandle() {
 
 			@Override
-			public Entity getOwner()
+			public Entity<?, ?> getOwner()
 			{
 				return EntityBlock.this;
 			}
 
 			@Override
-			public View<IHandle> getView()
+			public View getView()
 			{
-				return new ViewSurfaceCircle<IHandle>() {
+				return new ViewSurfaceCircle() {
 
 					@Override
-					public Point2D.Double getPoint(IHandle entity)
+					public Point2D.Double getPoint()
 					{
 						return EntityBlock.this.getConnection().getPoint();
 					}
 
 					@Override
-					public double getRadius(IHandle entity)
+					public double getRadius()
 					{
 						return 3;
 					}
 
 					@Override
-					public void render(IHandle entity, Graphics2D graphics)
+					public void render(Graphics2D graphics)
 					{
 						graphics.setColor(Color.white);
-						graphics.fill(getShape(entity, 0));
+						graphics.fill(getShape(0));
 
 						graphics.setColor(Color.red);
-						graphics.draw(getShape(entity, 0));
+						graphics.draw(getShape(0));
 					}
 
 				};

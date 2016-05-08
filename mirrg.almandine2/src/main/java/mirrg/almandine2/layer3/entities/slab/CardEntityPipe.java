@@ -2,27 +2,28 @@ package mirrg.almandine2.layer3.entities.slab;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
-import java.util.function.Supplier;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityWire;
-import mirrg.almandine2.layer2.entity.Entity;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.connection.ConnectionPoint;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
-import mirrg.almandine2.layer2.entity.view.View;
 
-public class CardEntityPipe<E extends Entity, V extends View<E>> extends CardEntityWire<E, V>
+public class CardEntityPipe<E extends EntityPipe<E, V>, V extends ViewEntityPipe<E, V>> extends CardEntityWire<E, V>
 {
 
-	public static final CardEntityPipe<EntityPipe, ViewEntityPipe<EntityPipe>> INSTANCE = new CardEntityPipe<>(
+	@SuppressWarnings({
+		"unchecked", "rawtypes"
+	})
+	public static CardEntityWire<?, ?> INSTANCE = new CardEntityPipe<>(
 		(begin, end) -> Optional.of(new EntityPipe(begin, end)),
-		ViewEntityPipe::new);
+		e -> new ViewEntityPipe(e));
 
-	public CardEntityPipe(BiFunction<Connection, Connection, Optional<E>> supplierEntity, Supplier<V> supplierView)
+	public CardEntityPipe(BiFunction<Connection, Connection, Optional<E>> functionEntity, Function<E, V> functionView)
 	{
-		super(supplierEntity, supplierView);
+		super(functionEntity, functionView);
 	}
 
 	@Override

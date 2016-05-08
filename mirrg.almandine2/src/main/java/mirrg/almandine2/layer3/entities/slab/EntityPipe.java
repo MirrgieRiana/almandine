@@ -1,11 +1,11 @@
 package mirrg.almandine2.layer3.entities.slab;
 
-import mirrg.almandine2.layer2.entity.CardEntityWire;
+import mirrg.almandine2.layer2.entity.CardEntity;
 import mirrg.almandine2.layer2.entity.EntityWire;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 
-public class EntityPipe extends EntityWire
+public class EntityPipe<E extends EntityPipe<E, V>, V extends ViewEntityPipe<E, V>> extends EntityWire<E, V>
 {
 
 	public double position;
@@ -51,12 +51,7 @@ public class EntityPipe extends EntityWire
 	}
 
 	@Override
-	public CardEntityWire<?, ?> getCardEntity()
-	{
-		return getCardEntityImpl();
-	}
-
-	private CardEntityWire<EntityPipe, ViewEntityPipe<EntityPipe>> getCardEntityImpl()
+	public CardEntity<?, ?> getCardEntityImpl()
 	{
 		return CardEntityPipe.INSTANCE;
 	}

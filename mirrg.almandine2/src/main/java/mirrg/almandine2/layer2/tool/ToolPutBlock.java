@@ -6,17 +6,16 @@ import java.awt.geom.Point2D;
 import java.util.Optional;
 
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
-import mirrg.almandine2.layer2.entity.Entity;
 import mirrg.almandine2.layer2.entity.EntityBlock;
 import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse.Pressed;
 
 public class ToolPutBlock extends ToolBase
 {
 
-	private CardEntityBlock<? extends EntityBlock, ?> card;
-	private EntityBlock entity = null;
+	private CardEntityBlock<? extends EntityBlock<?, ?>, ?> card;
+	private EntityBlock<?, ?> entity = null;
 
-	public ToolPutBlock(CardEntityBlock<? extends EntityBlock, ?> card)
+	public ToolPutBlock(CardEntityBlock<? extends EntityBlock<?, ?>, ?> card)
 	{
 		this.card = card;
 	}
@@ -50,10 +49,10 @@ public class ToolPutBlock extends ToolBase
 		if (entity != null) {
 			entity.getConnections().forEach(connection -> {
 				connection.getEntities().forEach(entity2 -> {
-					Entity.getCardEntity(entity2).getView().renderAura(entity2, graphics, 2, 3, Color.decode("#4CDB7C"));
+					entity2.getView().renderAura(graphics, 2, 3, Color.decode("#4CDB7C"));
 				});
 			});
-			Entity.getCardEntity(entity).getView().render(entity, graphics);
+			entity.getView().render(graphics);
 		}
 	}
 

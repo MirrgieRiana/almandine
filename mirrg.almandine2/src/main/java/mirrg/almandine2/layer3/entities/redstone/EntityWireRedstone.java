@@ -1,12 +1,12 @@
 package mirrg.almandine2.layer3.entities.redstone;
 
 import mirrg.almandine2.layer2.core.GameAlmandine2;
-import mirrg.almandine2.layer2.entity.CardEntityWire;
+import mirrg.almandine2.layer2.entity.CardEntity;
 import mirrg.almandine2.layer2.entity.EntityWire;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 
-public class EntityWireRedstone extends EntityWire implements IWireRedstone
+public class EntityWireRedstone<E extends EntityWireRedstone<E, V>, V extends ViewEntityWireRedstone<E, V>> extends EntityWire<E, V> implements IWireRedstone
 {
 
 	public boolean value;
@@ -29,12 +29,7 @@ public class EntityWireRedstone extends EntityWire implements IWireRedstone
 	}
 
 	@Override
-	public CardEntityWire<?, ?> getCardEntity()
-	{
-		return getCardEntityImpl();
-	}
-
-	private CardEntityWire<EntityWireRedstone, ViewEntityWireRedstone<EntityWireRedstone>> getCardEntityImpl()
+	public CardEntity<?, ?> getCardEntityImpl()
 	{
 		return CardEntityWireRedstone.INSTANCE;
 	}
@@ -46,7 +41,7 @@ public class EntityWireRedstone extends EntityWire implements IWireRedstone
 	}
 
 	@Override
-	public EntityWire getEntity()
+	public EntityWire<?, ?> getEntity()
 	{
 		return this;
 	}

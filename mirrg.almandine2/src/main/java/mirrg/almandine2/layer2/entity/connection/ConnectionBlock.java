@@ -11,15 +11,15 @@ import mirrg.almandine2.layer2.entity.EntityBlock;
 public class ConnectionBlock extends Connection
 {
 
-	public EntityBlock entity;
+	public EntityBlock<?, ?> entity;
 
-	public ConnectionBlock(EntityBlock entity)
+	public ConnectionBlock(EntityBlock<?, ?> entity)
 	{
 		this.entity = entity;
 	}
 
 	@Override
-	public void enable(Entity parent)
+	public void enable(Entity<?, ?> parent)
 	{
 		super.enable(parent);
 		entity.connect(this);
@@ -50,7 +50,7 @@ public class ConnectionBlock extends Connection
 	}
 
 	@Override
-	public Stream<Entity> getEntities()
+	public Stream<Entity<?, ?>> getEntities()
 	{
 		return Stream.of(entity);
 	}

@@ -4,13 +4,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.core.GameAlmandine2;
-import mirrg.almandine2.layer2.entity.CardEntityBlock;
+import mirrg.almandine2.layer2.entity.CardEntity;
 import mirrg.almandine2.layer2.entity.EntityBlock;
 import mirrg.almandine2.layer2.entity.EntityWire;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 
-public class EntityGateRedstone extends EntityBlock implements IBlockRedstone
+public class EntityGateRedstone<E extends EntityGateRedstone<E, V>, V extends ViewEntityGateRedstone<E, V>> extends EntityBlock<E, V> implements IBlockRedstone
 {
 
 	public boolean value = true;
@@ -69,12 +69,7 @@ public class EntityGateRedstone extends EntityBlock implements IBlockRedstone
 	}
 
 	@Override
-	public CardEntityBlock<?, ?> getCardEntity()
-	{
-		return getCardEntityImpl();
-	}
-
-	private CardEntityBlock<EntityGateRedstone, ViewEntityGateRedstone<EntityGateRedstone>> getCardEntityImpl()
+	public CardEntity<?, ?> getCardEntityImpl()
 	{
 		switch (type) {
 			case AND:
@@ -95,7 +90,7 @@ public class EntityGateRedstone extends EntityBlock implements IBlockRedstone
 	@Override
 	public double getRadiusRedstone(double angle)
 	{
-		return getCardEntityImpl().getView().getRadiusRedstone(this, angle);
+		return getView().getRadiusRedstone(angle);
 	}
 
 	@Override
@@ -105,7 +100,7 @@ public class EntityGateRedstone extends EntityBlock implements IBlockRedstone
 	}
 
 	@Override
-	public EntityBlock getEntity()
+	public EntityBlock<?, ?> getEntity()
 	{
 		return this;
 	}
