@@ -7,6 +7,6 @@ public interface IBlockSlot extends ISlot
 
 	public EntityBlock getEntity();
 
-	public double getRadiusSlot();
+	public double getRadiusSlot(double angle);
 
 }

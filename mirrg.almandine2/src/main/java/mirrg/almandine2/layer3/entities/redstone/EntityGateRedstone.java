@@ -69,7 +69,12 @@ public class EntityGateRedstone extends EntityBlock implements IBlockRedstone
 	}
 
 	@Override
-	public CardEntityBlock<?> getCardEntity()
+	public CardEntityBlock<?, ?> getCardEntity()
+	{
+		return getCardEntity();
+	}
+
+	private CardEntityBlock<EntityGateRedstone, ViewEntityGateRedstone<EntityGateRedstone>> getCardEntityImpl()
 	{
 		switch (type) {
 			case AND:
@@ -88,9 +93,9 @@ public class EntityGateRedstone extends EntityBlock implements IBlockRedstone
 	}
 
 	@Override
-	public double getRadiusRedstone()
+	public double getRadiusRedstone(double angle)
 	{
-		return 5;
+		return getCardEntityImpl().getView().getRadiusRedstone(this, angle);
 	}
 
 	@Override

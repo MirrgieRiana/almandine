@@ -4,17 +4,17 @@ import java.util.function.Supplier;
 
 import mirrg.almandine2.layer2.entity.view.View;
 
-public abstract class CardEntity<E extends Entity>
+public abstract class CardEntity<E extends Entity, V extends View<E>>
 {
 
-	private Supplier<View<E>> supplierView;
+	private Supplier<V> supplierView;
 
-	public CardEntity(Supplier<View<E>> supplierView)
+	public CardEntity(Supplier<V> supplierView)
 	{
 		this.supplierView = supplierView;
 	}
 
-	public View<E> getView()
+	public V getView()
 	{
 		return supplierView.get();
 	}

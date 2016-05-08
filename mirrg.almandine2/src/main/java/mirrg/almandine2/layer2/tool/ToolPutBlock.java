@@ -13,10 +13,10 @@ import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse.Pressed;
 public class ToolPutBlock extends ToolBase
 {
 
-	private CardEntityBlock<?> card;
+	private CardEntityBlock<? extends EntityBlock, ?> card;
 	private EntityBlock entity = null;
 
-	public ToolPutBlock(CardEntityBlock<?> card)
+	public ToolPutBlock(CardEntityBlock<? extends EntityBlock, ?> card)
 	{
 		this.card = card;
 	}

@@ -10,16 +10,15 @@ import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.connection.ConnectionPoint;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
-import mirrg.almandine2.layer2.entity.view.View;
 
-public class CardEntityWireRedstone<E extends EntityWireRedstone> extends CardEntityWire<EntityWireRedstone>
+public class CardEntityWireRedstone<E extends EntityWireRedstone, V extends ViewEntityWireRedstone<E>> extends CardEntityWire<E, V>
 {
 
-	public static final CardEntityWireRedstone<EntityWireRedstone> INSTANCE = new CardEntityWireRedstone<>(
+	public static final CardEntityWireRedstone<EntityWireRedstone, ViewEntityWireRedstone<EntityWireRedstone>> INSTANCE = new CardEntityWireRedstone<>(
 		(begin, end) -> Optional.of(new EntityWireRedstone(begin, end)),
 		ViewEntityWireRedstone::new);
 
-	public CardEntityWireRedstone(BiFunction<Connection, Connection, Optional<EntityWireRedstone>> supplierEntity, Supplier<View<EntityWireRedstone>> supplierView)
+	public CardEntityWireRedstone(BiFunction<Connection, Connection, Optional<E>> supplierEntity, Supplier<V> supplierView)
 	{
 		super(supplierEntity, supplierView);
 	}

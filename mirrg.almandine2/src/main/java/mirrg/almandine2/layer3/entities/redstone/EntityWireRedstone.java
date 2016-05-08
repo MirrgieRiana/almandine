@@ -29,7 +29,12 @@ public class EntityWireRedstone extends EntityWire implements IWireRedstone
 	}
 
 	@Override
-	public CardEntityWire<?> getCardEntity()
+	public CardEntityWire<?, ?> getCardEntity()
+	{
+		return getCardEntityImpl();
+	}
+
+	private CardEntityWire<EntityWireRedstone, ViewEntityWireRedstone<EntityWireRedstone>> getCardEntityImpl()
 	{
 		return CardEntityWireRedstone.INSTANCE;
 	}

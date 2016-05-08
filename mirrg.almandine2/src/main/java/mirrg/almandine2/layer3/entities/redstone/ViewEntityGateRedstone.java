@@ -43,4 +43,9 @@ public class ViewEntityGateRedstone<E extends EntityGateRedstone> extends ViewSu
 			HRender.ALIGN_TOP);
 	}
 
+	public double getRadiusRedstone(E entity, double angle)
+	{
+		return getRadius(entity, angle, 0);
+	}
+
 }

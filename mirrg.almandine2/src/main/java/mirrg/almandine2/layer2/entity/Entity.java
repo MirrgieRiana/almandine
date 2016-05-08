@@ -13,6 +13,7 @@ import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.ConnectionPoint;
 import mirrg.almandine2.layer2.entity.connection.Event;
 import mirrg.almandine2.layer2.entity.connection.EventDied;
+import mirrg.almandine2.layer2.entity.view.View;
 
 public abstract class Entity
 {
@@ -59,12 +60,12 @@ public abstract class Entity
 	/**
 	 * 戻り値の型引数はこのエンティティの実装型と同じでなければならない。
 	 */
-	public abstract CardEntity<?> getCardEntity();
+	public abstract CardEntity<?, ?> getCardEntity();
 
 	@SuppressWarnings("unchecked")
-	public static <E extends Entity> CardEntity<E> getCardEntity(E entity)
+	public static <E extends Entity, V extends View<E>> CardEntity<E, V> getCardEntity(E entity)
 	{
-		return (CardEntity<E>) entity.getCardEntity();
+		return (CardEntity<E, V>) entity.getCardEntity();
 	}
 
 	public abstract Stream<Connection> getConnections();

@@ -10,6 +10,11 @@ public abstract class ViewSurfaceCircle<T> extends ViewSurface<T>
 
 	public abstract double getRadius(T entity);
 
+	public double getRadius(T entity, double angle, double margin)
+	{
+		return getRadius(entity) + margin;
+	}
+
 	@Override
 	public Ellipse2D.Double getShape(T entity, double margin)
 	{

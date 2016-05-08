@@ -6,20 +6,21 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityWire;
+import mirrg.almandine2.layer2.entity.Entity;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.connection.ConnectionPoint;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
 import mirrg.almandine2.layer2.entity.view.View;
 
-public class CardEntityPipe<E extends EntityPipe> extends CardEntityWire<EntityPipe>
+public class CardEntityPipe<E extends Entity, V extends View<E>> extends CardEntityWire<E, V>
 {
 
-	public static final CardEntityPipe<EntityPipe> INSTANCE = new CardEntityPipe<>(
+	public static final CardEntityPipe<EntityPipe, ViewEntityPipe<EntityPipe>> INSTANCE = new CardEntityPipe<>(
 		(begin, end) -> Optional.of(new EntityPipe(begin, end)),
 		ViewEntityPipe::new);
 
-	public CardEntityPipe(BiFunction<Connection, Connection, Optional<EntityPipe>> supplierEntity, Supplier<View<EntityPipe>> supplierView)
+	public CardEntityPipe(BiFunction<Connection, Connection, Optional<E>> supplierEntity, Supplier<V> supplierView)
 	{
 		super(supplierEntity, supplierView);
 	}

@@ -45,7 +45,7 @@ public abstract class EntityBlock extends Entity
 	}
 
 	@Override
-	public abstract CardEntityBlock<?> getCardEntity();
+	public abstract CardEntityBlock<?, ?> getCardEntity();
 
 	public boolean isConnectable(Connection connection)
 	{

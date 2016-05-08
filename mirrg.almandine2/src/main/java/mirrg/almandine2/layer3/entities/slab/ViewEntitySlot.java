@@ -62,4 +62,9 @@ public class ViewEntitySlot<E extends EntitySlot> extends ViewSurfaceRectangle<E
 		}
 	}
 
+	public double getRadiusSlot(E entity, double angle)
+	{
+		return getRadius(entity, angle, 0);
+	}
+
 }

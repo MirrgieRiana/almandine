@@ -24,7 +24,12 @@ public class EntitySlot extends EntityBlock implements IBlockSlot
 	}
 
 	@Override
-	public CardEntityBlock<?> getCardEntity()
+	public CardEntityBlock<?, ?> getCardEntity()
+	{
+		return getCardEntityImpl();
+	}
+
+	private CardEntityBlock<EntitySlot, ViewEntitySlot<EntitySlot>> getCardEntityImpl()
 	{
 		return CardEntitySlot.INSTANCE;
 	}
@@ -60,9 +65,9 @@ public class EntitySlot extends EntityBlock implements IBlockSlot
 	}
 
 	@Override
-	public double getRadiusSlot()
+	public double getRadiusSlot(double angle)
 	{
-		return 10;
+		return getCardEntityImpl().getView().getRadiusSlot(this, angle);
 	}
 
 }

@@ -24,7 +24,12 @@ public class EntityCartSlot extends EntityCart implements ICartSlot
 	}
 
 	@Override
-	public CardEntityBlock<?> getCardEntity()
+	public CardEntityBlock<?, ?> getCardEntity()
+	{
+		return getCardEntityImpl();
+	}
+
+	private CardEntityBlock<EntityCartSlot, ViewEntityCartSlot<EntityCartSlot>> getCardEntityImpl()
 	{
 		return CardEntityCartSlot.INSTANCE;
 	}

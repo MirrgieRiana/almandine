@@ -19,7 +19,12 @@ public class EntityRail extends EntityWire implements IRail
 	}
 
 	@Override
-	public CardEntityWire<?> getCardEntity()
+	public CardEntityWire<?, ?> getCardEntity()
+	{
+		return getCardEntityImpl();
+	}
+
+	private CardEntityWire<EntityRail, ViewEntityRail<EntityRail>> getCardEntityImpl()
 	{
 		return CardEntityRail.INSTANCE;
 	}

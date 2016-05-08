@@ -132,7 +132,7 @@ public abstract class EntityWire extends Entity
 	}
 
 	@Override
-	public abstract CardEntityWire<?> getCardEntity();
+	public abstract CardEntityWire<?, ?> getCardEntity();
 
 	public boolean isConnectableBegin(Connection connection)
 	{

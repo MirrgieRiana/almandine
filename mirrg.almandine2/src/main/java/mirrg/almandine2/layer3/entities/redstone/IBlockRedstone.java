@@ -7,7 +7,7 @@ public interface IBlockRedstone
 
 	public EntityBlock getEntity();
 
-	public double getRadiusRedstone();
+	public double getRadiusRedstone(double angle);
 
 	public boolean getValueRedstone();
 

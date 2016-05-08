@@ -35,4 +35,9 @@ public class ViewEntityStation<E extends EntityStation> extends ViewSurfaceCircl
 		graphics.setStroke(stroke);
 	}
 
+	public double getRadiusStation(E entity, double angle)
+	{
+		return getRadius(entity, angle, 0);
+	}
+
 }

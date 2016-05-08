@@ -9,12 +9,12 @@ import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
 import mirrg.almandine2.layer2.entity.view.View;
 
-public abstract class CardEntityWire<E extends EntityWire> extends CardEntity<E>
+public abstract class CardEntityWire<E extends Entity, V extends View<E>> extends CardEntity<E, V>
 {
 
 	private BiFunction<Connection, Connection, Optional<E>> supplierEntity;
 
-	public CardEntityWire(BiFunction<Connection, Connection, Optional<E>> supplierEntity, Supplier<View<E>> supplierView)
+	public CardEntityWire(BiFunction<Connection, Connection, Optional<E>> supplierEntity, Supplier<V> supplierView)
 	{
 		super(supplierView);
 		this.supplierEntity = supplierEntity;

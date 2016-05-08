@@ -51,7 +51,12 @@ public class EntityPipe extends EntityWire
 	}
 
 	@Override
-	public CardEntityWire<?> getCardEntity()
+	public CardEntityWire<?, ?> getCardEntity()
+	{
+		return getCardEntityImpl();
+	}
+
+	private CardEntityWire<EntityPipe, ViewEntityPipe<EntityPipe>> getCardEntityImpl()
 	{
 		return CardEntityPipe.INSTANCE;
 	}

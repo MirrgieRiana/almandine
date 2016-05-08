@@ -12,6 +12,16 @@ public abstract class ViewSurfaceRectangle<T> extends ViewSurface<T>
 
 	public abstract double getHeight(T entity);
 
+	public double getRadius(T entity, double angle, double margin)
+	{
+		// w/2 = x1 * cos(angle)
+		// h/2 = x2 * sin(angle)
+		double x1 = Math.abs((getWidth(entity) + margin) / (2 * Math.cos(angle)));
+		double x2 = Math.abs((getHeight(entity) + margin) / (2 * Math.sin(angle)));
+
+		return Math.min(x1, x2);
+	}
+
 	@Override
 	public Rectangle2D.Double getShape(T entity, double margin)
 	{

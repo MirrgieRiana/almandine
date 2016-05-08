@@ -35,14 +35,16 @@ public class ViewEntityPipe<E extends EntityPipe> extends ViewWire<E>
 	public void render(E entity, Graphics2D graphics)
 	{
 		{
+			double angle = entity.getAngle();
+
 			double marginBegin = 0;
 			if (entity.getBegin() instanceof ConnectionBlock) {
-				marginBegin = ((IBlockSlot) ((ConnectionBlock) entity.getBegin()).entity).getRadiusSlot() + 1;
+				marginBegin = ((IBlockSlot) ((ConnectionBlock) entity.getBegin()).entity).getRadiusSlot(angle) + 1;
 			}
 
 			double marginEnd = 0;
 			if (entity.getEnd() instanceof ConnectionBlock) {
-				marginEnd = ((IBlockSlot) ((ConnectionBlock) entity.getEnd()).entity).getRadiusSlot() + 1;
+				marginEnd = ((IBlockSlot) ((ConnectionBlock) entity.getEnd()).entity).getRadiusSlot(angle + Math.PI) + 1;
 			}
 
 			Point2D.Double[] points = HRender.getPointsMargined(entity.getBegin().getPoint(), entity.getEnd().getPoint(), marginBegin, marginEnd);

@@ -36,14 +36,16 @@ public class ViewEntityWireRedstoneRail<E extends EntityWireRedstoneRail> extend
 	public void render(E entity, Graphics2D graphics)
 	{
 		{
+			double angle = entity.getAngle();
+
 			double marginBegin = 0;
 			if (entity.getBegin() instanceof ConnectionBlock) {
-				marginBegin = ((IBlockRedstone) ((ConnectionBlock) entity.getBegin()).entity).getRadiusRedstone() + 1;
+				marginBegin = ((IBlockRedstone) ((ConnectionBlock) entity.getBegin()).entity).getRadiusRedstone(angle) + 1;
 			}
 
 			double marginEnd = 0;
 			if (entity.getEnd() instanceof ConnectionBlock) {
-				marginEnd = ((IBlockRedstone) ((ConnectionBlock) entity.getEnd()).entity).getRadiusRedstone() + 1;
+				marginEnd = ((IBlockRedstone) ((ConnectionBlock) entity.getEnd()).entity).getRadiusRedstone(angle + Math.PI) + 1;
 			}
 
 			Point2D.Double[] points = HRender.getPointsMargined(entity.getBegin().getPoint(), entity.getEnd().getPoint(), marginBegin, marginEnd);

@@ -26,15 +26,20 @@ public class EntityStation extends EntityBlock implements IStation
 	}
 
 	@Override
-	public CardEntityBlock<?> getCardEntity()
+	public CardEntityBlock<?, ?> getCardEntity()
+	{
+		return getCardEntityImpl();
+	}
+
+	private CardEntityBlock<EntityStation, ViewEntityStation<EntityStation>> getCardEntityImpl()
 	{
 		return CardEntityStation.INSTANCE;
 	}
 
 	@Override
-	public double getRadiusStation()
+	public double getRadiusStation(double angle)
 	{
-		return 20;
+		return getCardEntityImpl().getView().getRadiusStation(this, angle);
 	}
 
 	@Override

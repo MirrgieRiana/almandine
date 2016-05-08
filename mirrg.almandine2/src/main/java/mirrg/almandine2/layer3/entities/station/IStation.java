@@ -7,7 +7,7 @@ public interface IStation
 
 	public EntityBlock getEntity();
 
-	public double getRadiusStation();
+	public double getRadiusStation(double angle);
 
 	public int getFreeOrder();
 

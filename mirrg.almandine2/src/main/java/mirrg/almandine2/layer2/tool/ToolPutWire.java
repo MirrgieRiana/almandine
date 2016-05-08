@@ -16,12 +16,12 @@ import mirrg.applet.nitrogen.modules.input.NitrogenEventMouse.Released;
 public class ToolPutWire extends ToolBase
 {
 
-	private CardEntityWire<?> card;
+	private CardEntityWire<? extends EntityWire, ?> card;
 	private Connection begin = null;
 	private EntityWire entity = null;
 	private boolean holding = false; // true => begin != null
 
-	public ToolPutWire(CardEntityWire<?> card)
+	public ToolPutWire(CardEntityWire<? extends EntityWire, ?> card)
 	{
 		this.card = card;
 	}

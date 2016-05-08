@@ -21,7 +21,12 @@ public class EntityCounter extends EntityBlock
 	}
 
 	@Override
-	public CardEntityBlock<?> getCardEntity()
+	public CardEntityBlock<?, ?> getCardEntity()
+	{
+		return getCardEntityImpl();
+	}
+
+	private CardEntityBlock<EntityCounter, ViewEntityCounter<EntityCounter>> getCardEntityImpl()
 	{
 		return CardEntityCounter.INSTANCE;
 	}
