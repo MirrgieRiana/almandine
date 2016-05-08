@@ -73,7 +73,7 @@ public class ViewEntityCart<E extends EntityCart> extends ViewSurfaceCircle<E>
 			ConnectionAnchor connection2 = (ConnectionAnchor) connection;
 			return new Point2D.Double(
 				connection2.entity.getPoint().x,
-				connection2.entity.getPoint().y - 50 - 30 * 0);
+				connection2.entity.getPoint().y - 35 - 25 * connection2.order);
 
 		} else {
 			return connection.getPoint();
