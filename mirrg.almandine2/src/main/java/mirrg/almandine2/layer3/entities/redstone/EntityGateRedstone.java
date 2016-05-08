@@ -71,7 +71,7 @@ public class EntityGateRedstone extends EntityBlock implements IBlockRedstone
 	@Override
 	public CardEntityBlock<?, ?> getCardEntity()
 	{
-		return getCardEntity();
+		return getCardEntityImpl();
 	}
 
 	private CardEntityBlock<EntityGateRedstone, ViewEntityGateRedstone<EntityGateRedstone>> getCardEntityImpl()
