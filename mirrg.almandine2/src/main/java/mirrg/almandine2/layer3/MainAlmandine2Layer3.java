@@ -40,6 +40,7 @@ import mirrg.almandine2.layer3.entities.redstone.station.CardEntityWireRedstoneR
 import mirrg.almandine2.layer3.entities.redstone.station.EntityWireRedstoneRail;
 import mirrg.almandine2.layer3.entities.slab.CardEntityCartSlot;
 import mirrg.almandine2.layer3.entities.slab.CardEntitySlot;
+import mirrg.almandine2.layer3.entities.slab.CardEntityStationSlot;
 import mirrg.almandine2.layer3.entities.slab.EntitySlot;
 import mirrg.almandine2.layer3.entities.station.CardEntityCart;
 import mirrg.almandine2.layer3.entities.station.CardEntityRail;
@@ -92,6 +93,7 @@ public class MainAlmandine2Layer3
 
 				r(() -> new ToolPutBlock(CardEntitySlot.INSTANCE), VK_R);
 				r(() -> new ToolPutBlock(CardEntityCartSlot.INSTANCE), VK_T);
+				r(() -> new ToolPutBlock(CardEntityStationSlot.INSTANCE), VK_Y);
 
 				game.registerCommand(new CommandAction(game2 -> {
 
