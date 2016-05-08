@@ -49,8 +49,7 @@ public class EntityGateRedstone extends EntityBlock implements IBlockRedstone
 				break;
 			}
 			default:
-				value = false;
-				break;
+				throw new RuntimeException("Illegal redstone gate type: " + type);
 		}
 
 		game.nitrogen.registerRemovable(GameAlmandine2.NitrogenEventPostMove.class, event -> {
