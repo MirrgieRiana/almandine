@@ -12,14 +12,14 @@ import mirrg.almandine2.layer2.entity.connection.ConnectionPoint;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
 import mirrg.almandine2.layer2.entity.view.View;
 
-public class CardEntityPipeSlab<E extends EntityPipeSlab> extends CardEntityWire<EntityPipeSlab>
+public class CardEntityPipe<E extends EntityPipe> extends CardEntityWire<EntityPipe>
 {
 
-	public static final CardEntityPipeSlab<EntityPipeSlab> INSTANCE = new CardEntityPipeSlab<>(
-		(begin, end) -> Optional.of(new EntityPipeSlab(begin, end)),
-		ViewEntityPipeSlab::new);
+	public static final CardEntityPipe<EntityPipe> INSTANCE = new CardEntityPipe<>(
+		(begin, end) -> Optional.of(new EntityPipe(begin, end)),
+		ViewEntityPipe::new);
 
-	public CardEntityPipeSlab(BiFunction<Connection, Connection, Optional<EntityPipeSlab>> supplierEntity, Supplier<View<EntityPipeSlab>> supplierView)
+	public CardEntityPipe(BiFunction<Connection, Connection, Optional<EntityPipe>> supplierEntity, Supplier<View<EntityPipe>> supplierView)
 	{
 		super(supplierEntity, supplierView);
 	}

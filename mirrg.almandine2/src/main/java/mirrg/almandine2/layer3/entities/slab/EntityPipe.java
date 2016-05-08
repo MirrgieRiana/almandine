@@ -5,13 +5,13 @@ import mirrg.almandine2.layer2.entity.EntityWire;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 
-public class EntityPipeSlab extends EntityWire
+public class EntityPipe extends EntityWire
 {
 
 	public double position;
 	public int amount;
 
-	public EntityPipeSlab(Connection begin, Connection end)
+	public EntityPipe(Connection begin, Connection end)
 	{
 		super(begin, end);
 	}
@@ -53,7 +53,7 @@ public class EntityPipeSlab extends EntityWire
 	@Override
 	public CardEntityWire<?> getCardEntity()
 	{
-		return CardEntityPipeSlab.INSTANCE;
+		return CardEntityPipe.INSTANCE;
 	}
 
 }

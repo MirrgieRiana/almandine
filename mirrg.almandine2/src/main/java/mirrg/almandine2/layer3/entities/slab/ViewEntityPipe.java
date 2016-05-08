@@ -10,7 +10,7 @@ import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.view.ViewWire;
 import mirrg.almandine2.layer3.entities.HRender;
 
-public class ViewEntityPipeSlab<E extends EntityPipeSlab> extends ViewWire<E>
+public class ViewEntityPipe<E extends EntityPipe> extends ViewWire<E>
 {
 
 	@Override
