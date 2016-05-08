@@ -4,7 +4,7 @@ import mirrg.almandine2.layer2.entity.CardEntityBlock;
 import mirrg.almandine2.layer2.entity.EntityBlock;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 
-public class EntitySlot extends EntityBlock implements ISlot
+public class EntitySlot extends EntityBlock implements IBlockSlot
 {
 
 	public int amount;
@@ -13,20 +13,26 @@ public class EntitySlot extends EntityBlock implements ISlot
 	public EntitySlot(Connection connection, int amountMax)
 	{
 		super(connection);
-		amount = 0;
+		amount = 3; // TODO
 		this.amountMax = amountMax;
 	}
 
 	@Override
 	public void move()
 	{
-		amount = 3; // TODO
+
 	}
 
 	@Override
 	public CardEntityBlock<?> getCardEntity()
 	{
 		return CardEntitySlot.INSTANCE;
+	}
+
+	@Override
+	public EntityBlock getEntity()
+	{
+		return this;
 	}
 
 	@Override
@@ -39,6 +45,24 @@ public class EntitySlot extends EntityBlock implements ISlot
 	public int getAmountMax()
 	{
 		return amountMax;
+	}
+
+	@Override
+	public void push(int amount)
+	{
+		this.amount += amount;
+	}
+
+	@Override
+	public void pop(int amount)
+	{
+		this.amount -= amount;
+	}
+
+	@Override
+	public double getRadiusSlot()
+	{
+		return 10;
 	}
 
 }

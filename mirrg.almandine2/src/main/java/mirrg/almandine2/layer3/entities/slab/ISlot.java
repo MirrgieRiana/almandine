@@ -5,6 +5,10 @@ public interface ISlot
 
 	public int getAmount();
 
+	public void push(int amount);
+
+	public void pop(int amount);
+
 	public int getAmountMax();
 
 }

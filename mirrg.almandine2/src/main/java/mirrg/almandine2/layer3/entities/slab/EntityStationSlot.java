@@ -9,7 +9,7 @@ import mirrg.almandine2.layer3.entities.station.EntityStation;
 import mirrg.almandine2.layer3.entities.station.ICart;
 import mirrg.struct.hydrogen.Tuple;
 
-public class EntityStationSlot extends EntityStation implements ISlot
+public class EntityStationSlot extends EntityStation implements IBlockSlot
 {
 
 	public EntityStationSlot(Connection connection)
@@ -35,15 +35,33 @@ public class EntityStationSlot extends EntityStation implements ISlot
 		return getCartSlot().map(s -> s.getAmountMax()).orElse(0);
 	}
 
-	public Optional<ISlot> getCartSlot()
+	@Override
+	public void push(int amount)
+	{
+		getCartSlot().ifPresent(s -> s.push(amount));
+	}
+
+	@Override
+	public void pop(int amount)
+	{
+		getCartSlot().ifPresent(s -> s.pop(amount));
+	}
+
+	@Override
+	public double getRadiusSlot()
+	{
+		return 10;
+	}
+
+	public Optional<IBlockSlot> getCartSlot()
 	{
 		Tuple<ICart, ConnectionAnchor> cart = getCarts()
 			.min((a, b) -> a.getY().order - b.getY().order)
 			.orElse(null);
 		if (cart != null) {
-			if (cart.getX() instanceof ISlot) {
+			if (cart.getX() instanceof IBlockSlot) {
 
-				return Optional.of((ISlot) cart.getX());
+				return Optional.of((IBlockSlot) cart.getX());
 
 			}
 		}

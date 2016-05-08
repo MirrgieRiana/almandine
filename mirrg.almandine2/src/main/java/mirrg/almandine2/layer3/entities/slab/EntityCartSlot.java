@@ -4,7 +4,7 @@ import mirrg.almandine2.layer2.entity.CardEntityBlock;
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer3.entities.station.EntityCart;
 
-public class EntityCartSlot extends EntityCart implements ISlot
+public class EntityCartSlot extends EntityCart implements ICartSlot
 {
 
 	public int amount;
@@ -13,7 +13,7 @@ public class EntityCartSlot extends EntityCart implements ISlot
 	public EntityCartSlot(Connection connection, int amountMax)
 	{
 		super(connection);
-		amount = 0;
+		amount = 3; // TODO
 		this.amountMax = amountMax;
 	}
 
@@ -21,13 +21,18 @@ public class EntityCartSlot extends EntityCart implements ISlot
 	public void move()
 	{
 		super.move();
-		amount = 3; // TODO
 	}
 
 	@Override
 	public CardEntityBlock<?> getCardEntity()
 	{
 		return CardEntityCartSlot.INSTANCE;
+	}
+
+	@Override
+	public EntityCart getEntity()
+	{
+		return this;
 	}
 
 	@Override
@@ -40,6 +45,18 @@ public class EntityCartSlot extends EntityCart implements ISlot
 	public int getAmountMax()
 	{
 		return amountMax;
+	}
+
+	@Override
+	public void push(int amount)
+	{
+		this.amount += amount;
+	}
+
+	@Override
+	public void pop(int amount)
+	{
+		this.amount -= amount;
 	}
 
 }
