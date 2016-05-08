@@ -1,13 +1,24 @@
 package mirrg.almandine2.layer2.entity;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
+import mirrg.almandine2.layer2.entity.view.View;
 
 public abstract class CardEntityWire<E extends EntityWire> extends CardEntity<E>
 {
+
+	private BiFunction<Connection, Connection, Optional<E>> supplierEntity;
+
+	public CardEntityWire(BiFunction<Connection, Connection, Optional<E>> supplierEntity, Supplier<View<E>> supplierView)
+	{
+		super(supplierView);
+		this.supplierEntity = supplierEntity;
+	}
 
 	public abstract Stream<TypeConnection> getConnectionTypesBegin();
 
@@ -17,18 +28,14 @@ public abstract class CardEntityWire<E extends EntityWire> extends CardEntity<E>
 
 	public abstract boolean isConnectableEnd(Connection connection);
 
-	@Deprecated
-	@Override
-	public E create()
-	{
-		throw new UnsupportedOperationException();
-	}
-
-	protected boolean isDuplicated(Connection begin, Connection end)
+	public static boolean isDuplicated(Connection begin, Connection end)
 	{
 		return begin.getEntities().anyMatch(e -> end.getEntities().anyMatch(e2 -> e == e2));
 	}
 
-	public abstract Optional<E> create(Connection begin, Connection end);
+	public Optional<E> create(Connection begin, Connection end)
+	{
+		return supplierEntity.apply(begin, end);
+	}
 
 }

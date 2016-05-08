@@ -1,4 +1,4 @@
-package mirrg.almandine2.layer3.entities.station;
+package mirrg.almandine2.layer3.entities.slab;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -11,12 +11,12 @@ import mirrg.almandine2.layer2.entity.connection.ConnectionPoint;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
 import mirrg.almandine2.layer2.entity.view.View;
 
-public class CardEntityStation<E extends EntityStation> extends CardEntityBlock<E>
+public class CardEntitySlot<E extends EntitySlot> extends CardEntityBlock<E>
 {
 
-	public static final CardEntityStation<EntityStation> INSTANCE = new CardEntityStation<>(c -> Optional.of(new EntityStation(c)), ViewEntityStation::new);
+	public static final CardEntitySlot<EntitySlot> INSTANCE = new CardEntitySlot<>(c -> Optional.of(new EntitySlot(c, 10)), ViewEntitySlot::new);
 
-	public CardEntityStation(Function<Connection, Optional<E>> supplierEntity, Supplier<View<E>> supplierView)
+	public CardEntitySlot(Function<Connection, Optional<E>> supplierEntity, Supplier<View<E>> supplierView)
 	{
 		super(supplierEntity, supplierView);
 	}
