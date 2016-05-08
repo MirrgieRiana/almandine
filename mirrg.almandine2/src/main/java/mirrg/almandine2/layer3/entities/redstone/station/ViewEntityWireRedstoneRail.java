@@ -11,29 +11,29 @@ import mirrg.almandine2.layer2.entity.view.ViewWire;
 import mirrg.almandine2.layer3.entities.HRender;
 import mirrg.almandine2.layer3.entities.redstone.IBlockRedstone;
 
-public class ViewEntityWireRedstoneRail extends ViewWire<EntityWireRedstoneRail>
+public class ViewEntityWireRedstoneRail<E extends EntityWireRedstoneRail> extends ViewWire<E>
 {
 
 	@Override
-	public Double getPointBegin(EntityWireRedstoneRail entity)
+	public Double getPointBegin(E entity)
 	{
 		return entity.getBegin().getPoint();
 	}
 
 	@Override
-	public Double getPointEnd(EntityWireRedstoneRail entity)
+	public Double getPointEnd(E entity)
 	{
 		return entity.getEnd().getPoint();
 	}
 
 	@Override
-	public double getWidth(EntityWireRedstoneRail entity)
+	public double getWidth(E entity)
 	{
 		return 3;
 	}
 
 	@Override
-	public void render(EntityWireRedstoneRail entity, Graphics2D graphics)
+	public void render(E entity, Graphics2D graphics)
 	{
 		{
 			double marginBegin = 0;

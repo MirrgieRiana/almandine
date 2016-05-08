@@ -13,23 +13,23 @@ import mirrg.almandine2.layer2.entity.connection.ConnectionAnchor;
 import mirrg.almandine2.layer2.entity.connection.ConnectionTraffic;
 import mirrg.almandine2.layer2.entity.view.ViewSurfaceCircle;
 
-public class ViewEntityCart extends ViewSurfaceCircle<EntityCart>
+public class ViewEntityCart<E extends EntityCart> extends ViewSurfaceCircle<E>
 {
 
 	@Override
-	public Point2D.Double getPoint(EntityCart entity)
+	public Point2D.Double getPoint(E entity)
 	{
 		return entity.getPoint();
 	}
 
 	@Override
-	public double getRadius(EntityCart entity)
+	public double getRadius(E entity)
 	{
 		return 10;
 	}
 
 	@Override
-	public void render(EntityCart entity, Graphics2D graphics)
+	public void render(E entity, Graphics2D graphics)
 	{
 		graphics.setColor(Color.blue);
 		Stroke stroke = graphics.getStroke();

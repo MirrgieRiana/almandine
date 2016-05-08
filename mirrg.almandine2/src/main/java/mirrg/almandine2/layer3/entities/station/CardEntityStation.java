@@ -1,6 +1,8 @@
 package mirrg.almandine2.layer3.entities.station;
 
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
@@ -9,10 +11,15 @@ import mirrg.almandine2.layer2.entity.connection.ConnectionPoint;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
 import mirrg.almandine2.layer2.entity.view.View;
 
-public class CardEntityStation extends CardEntityBlock<EntityStation>
+public class CardEntityStation<E extends EntityStation> extends CardEntityBlock<E>
 {
 
-	public static final CardEntityStation INSTANCE = new CardEntityStation();
+	public static final CardEntityStation<EntityStation> INSTANCE = new CardEntityStation<>(c -> Optional.of(new EntityStation(c)), ViewEntityStation::new);
+
+	public CardEntityStation(Function<Connection, Optional<E>> supplierEntity, Supplier<View<E>> supplierView)
+	{
+		super(supplierEntity, supplierView);
+	}
 
 	@Override
 	public boolean isConnectable(Connection connection)
@@ -21,21 +28,9 @@ public class CardEntityStation extends CardEntityBlock<EntityStation>
 	}
 
 	@Override
-	public View<EntityStation> getView()
-	{
-		return new ViewEntityStation();
-	}
-
-	@Override
 	public Stream<TypeConnection> getConnectionTypes()
 	{
 		return Stream.of(TypeConnection.point);
-	}
-
-	@Override
-	public Optional<EntityStation> create(Connection connection)
-	{
-		return Optional.of(new EntityStation(connection));
 	}
 
 }

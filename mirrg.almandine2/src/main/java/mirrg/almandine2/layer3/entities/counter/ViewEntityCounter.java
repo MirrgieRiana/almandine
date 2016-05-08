@@ -7,29 +7,29 @@ import java.awt.geom.Point2D;
 import mirrg.almandine2.layer2.entity.view.ViewSurfaceRectangle;
 import mirrg.almandine2.layer3.entities.HRender;
 
-public class ViewEntityCounter extends ViewSurfaceRectangle<EntityCounter>
+public class ViewEntityCounter<E extends EntityCounter> extends ViewSurfaceRectangle<E>
 {
 
 	@Override
-	public Point2D.Double getPoint(EntityCounter entity)
+	public Point2D.Double getPoint(E entity)
 	{
 		return entity.getPoint();
 	}
 
 	@Override
-	public double getWidth(EntityCounter entity)
+	public double getWidth(E entity)
 	{
 		return 64;
 	}
 
 	@Override
-	public double getHeight(EntityCounter entity)
+	public double getHeight(E entity)
 	{
 		return 20;
 	}
 
 	@Override
-	public void render(EntityCounter entity, Graphics2D graphics)
+	public void render(E entity, Graphics2D graphics)
 	{
 		graphics.setColor(Color.black);
 		graphics.setFont(HRender.getFontDefault());

@@ -11,29 +11,29 @@ import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.view.ViewWire;
 import mirrg.almandine2.layer3.entities.HRender;
 
-public class ViewEntityRail extends ViewWire<EntityRail>
+public class ViewEntityRail<E extends EntityRail> extends ViewWire<E>
 {
 
 	@Override
-	public Point2D.Double getPointBegin(EntityRail entity)
+	public Point2D.Double getPointBegin(E entity)
 	{
 		return entity.getBegin().getPoint();
 	}
 
 	@Override
-	public Point2D.Double getPointEnd(EntityRail entity)
+	public Point2D.Double getPointEnd(E entity)
 	{
 		return entity.getEnd().getPoint();
 	}
 
 	@Override
-	public double getWidth(EntityRail entity)
+	public double getWidth(E entity)
 	{
 		return 3;
 	}
 
 	@Override
-	public void render(EntityRail entity, Graphics2D graphics)
+	public void render(E entity, Graphics2D graphics)
 	{
 		double marginBegin = 0;
 		if (entity.getBegin() instanceof ConnectionBlock) {

@@ -1,6 +1,8 @@
 package mirrg.almandine2.layer3.entities.redstone.station;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityWire;
@@ -13,10 +15,17 @@ import mirrg.almandine2.layer2.entity.view.View;
 import mirrg.almandine2.layer3.entities.redstone.IBlockRedstone;
 import mirrg.almandine2.layer3.entities.station.IRail;
 
-public class CardEntityWireRedstoneRail extends CardEntityWire<EntityWireRedstoneRail>
+public class CardEntityWireRedstoneRail<E extends EntityWireRedstoneRail> extends CardEntityWire<E>
 {
 
-	public static final CardEntityWireRedstoneRail INSTANCE = new CardEntityWireRedstoneRail();
+	public static final CardEntityWireRedstoneRail<EntityWireRedstoneRail> INSTANCE = new CardEntityWireRedstoneRail<>((begin, end) -> {
+		return CardEntityWire.isDuplicated(begin, end) ? Optional.empty() : Optional.of(new EntityWireRedstoneRail(begin, end));
+	} , ViewEntityWireRedstoneRail::new);
+
+	public CardEntityWireRedstoneRail(BiFunction<Connection, Connection, Optional<E>> supplierEntity, Supplier<View<E>> supplierView)
+	{
+		super(supplierEntity, supplierView);
+	}
 
 	@Override
 	public Stream<TypeConnection> getConnectionTypesBegin()
@@ -44,18 +53,6 @@ public class CardEntityWireRedstoneRail extends CardEntityWire<EntityWireRedston
 		return connection instanceof ConnectionPoint
 			|| (connection instanceof ConnectionBlock
 				&& ((ConnectionBlock) connection).entity instanceof IBlockRedstone);
-	}
-
-	@Override
-	public Optional<EntityWireRedstoneRail> create(Connection begin, Connection end)
-	{
-		return isDuplicated(begin, end) ? Optional.empty() : Optional.of(new EntityWireRedstoneRail(begin, end));
-	}
-
-	@Override
-	public View<EntityWireRedstoneRail> getView()
-	{
-		return new ViewEntityWireRedstoneRail();
 	}
 
 }

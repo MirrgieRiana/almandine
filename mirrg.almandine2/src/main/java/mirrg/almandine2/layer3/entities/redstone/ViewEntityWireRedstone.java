@@ -9,29 +9,29 @@ import mirrg.almandine2.layer2.entity.connection.ConnectionBlock;
 import mirrg.almandine2.layer2.entity.view.ViewWire;
 import mirrg.almandine2.layer3.entities.HRender;
 
-public class ViewEntityWireRedstone extends ViewWire<EntityWireRedstone>
+public class ViewEntityWireRedstone<E extends EntityWireRedstone> extends ViewWire<E>
 {
 
 	@Override
-	public Double getPointBegin(EntityWireRedstone entity)
+	public Double getPointBegin(E entity)
 	{
 		return entity.getBegin().getPoint();
 	}
 
 	@Override
-	public Double getPointEnd(EntityWireRedstone entity)
+	public Double getPointEnd(E entity)
 	{
 		return entity.getEnd().getPoint();
 	}
 
 	@Override
-	public double getWidth(EntityWireRedstone entity)
+	public double getWidth(E entity)
 	{
 		return 3;
 	}
 
 	@Override
-	public void render(EntityWireRedstone entity, Graphics2D graphics)
+	public void render(E entity, Graphics2D graphics)
 	{
 		double marginBegin = 0;
 		if (entity.getBegin() instanceof ConnectionBlock) {

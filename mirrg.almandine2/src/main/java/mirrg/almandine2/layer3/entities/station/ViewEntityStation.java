@@ -8,23 +8,23 @@ import java.awt.geom.Point2D;
 
 import mirrg.almandine2.layer2.entity.view.ViewSurfaceCircle;
 
-public class ViewEntityStation extends ViewSurfaceCircle<EntityStation>
+public class ViewEntityStation<E extends EntityStation> extends ViewSurfaceCircle<E>
 {
 
 	@Override
-	public Point2D.Double getPoint(EntityStation entity)
+	public Point2D.Double getPoint(E entity)
 	{
 		return entity.getPoint();
 	}
 
 	@Override
-	public double getRadius(EntityStation entity)
+	public double getRadius(E entity)
 	{
 		return 20;
 	}
 
 	@Override
-	public void render(EntityStation entity, Graphics2D graphics)
+	public void render(E entity, Graphics2D graphics)
 	{
 		graphics.setColor(Color.decode("#29844D"));
 		Stroke stroke = graphics.getStroke();

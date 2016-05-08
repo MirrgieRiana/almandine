@@ -1,6 +1,8 @@
 package mirrg.almandine2.layer3.entities.station;
 
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
@@ -11,10 +13,15 @@ import mirrg.almandine2.layer2.entity.connection.ConnectionTraffic;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
 import mirrg.almandine2.layer2.entity.view.View;
 
-public class CardEntityCart extends CardEntityBlock<EntityCart>
+public class CardEntityCart<E extends EntityCart> extends CardEntityBlock<E>
 {
 
-	public static final CardEntityCart INSTANCE = new CardEntityCart();
+	public static final CardEntityCart<EntityCart> INSTANCE = new CardEntityCart<>(c -> Optional.of(new EntityCart(c)), ViewEntityCart::new);
+
+	public CardEntityCart(Function<Connection, Optional<E>> supplierEntity, Supplier<View<E>> supplierView)
+	{
+		super(supplierEntity, supplierView);
+	}
 
 	@Override
 	public boolean isConnectable(Connection connection)
@@ -27,21 +34,9 @@ public class CardEntityCart extends CardEntityBlock<EntityCart>
 	}
 
 	@Override
-	public View<EntityCart> getView()
-	{
-		return new ViewEntityCart();
-	}
-
-	@Override
 	public Stream<TypeConnection> getConnectionTypes()
 	{
 		return Stream.of(TypeConnection.traffic, TypeConnection.anchor, TypeConnection.point);
-	}
-
-	@Override
-	public Optional<EntityCart> create(Connection connection)
-	{
-		return Optional.of(new EntityCart(connection));
 	}
 
 }
