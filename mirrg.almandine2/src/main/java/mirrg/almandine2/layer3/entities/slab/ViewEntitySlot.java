@@ -10,29 +10,29 @@ import java.util.function.Supplier;
 import mirrg.almandine2.layer2.entity.view.ViewSurfaceRectangle;
 import mirrg.almandine2.layer3.entities.HRender;
 
-public class ViewEntitySlot extends ViewSurfaceRectangle<EntitySlot>
+public class ViewEntitySlot<E extends EntitySlot> extends ViewSurfaceRectangle<E>
 {
 
 	@Override
-	public Point2D.Double getPoint(EntitySlot entity)
+	public Point2D.Double getPoint(E entity)
 	{
 		return entity.getPoint();
 	}
 
 	@Override
-	public double getWidth(EntitySlot entity)
+	public double getWidth(E entity)
 	{
 		return 20;
 	}
 
 	@Override
-	public double getHeight(EntitySlot entity)
+	public double getHeight(E entity)
 	{
 		return 20;
 	}
 
 	@Override
-	public void render(EntitySlot entity, Graphics2D graphics)
+	public void render(E entity, Graphics2D graphics)
 	{
 		render(entity, graphics, () -> getShape(entity, 0));
 	}
