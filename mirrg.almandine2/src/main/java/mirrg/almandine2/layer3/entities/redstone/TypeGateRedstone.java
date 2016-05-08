@@ -10,7 +10,7 @@ public enum TypeGateRedstone
 
 	;
 
-	private String label;
+	private final String label;
 
 	private TypeGateRedstone(String label)
 	{
