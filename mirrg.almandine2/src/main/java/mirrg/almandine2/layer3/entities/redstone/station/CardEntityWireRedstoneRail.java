@@ -18,9 +18,9 @@ import mirrg.almandine2.layer3.entities.station.IRail;
 public class CardEntityWireRedstoneRail<E extends EntityWireRedstoneRail> extends CardEntityWire<E>
 {
 
-	public static final CardEntityWireRedstoneRail<EntityWireRedstoneRail> INSTANCE = new CardEntityWireRedstoneRail<>((begin, end) -> {
-		return CardEntityWire.isDuplicated(begin, end) ? Optional.empty() : Optional.of(new EntityWireRedstoneRail(begin, end));
-	} , ViewEntityWireRedstoneRail::new);
+	public static final CardEntityWireRedstoneRail<EntityWireRedstoneRail> INSTANCE = new CardEntityWireRedstoneRail<>(
+		(begin, end) -> Optional.of(new EntityWireRedstoneRail(begin, end)),
+		ViewEntityWireRedstoneRail::new);
 
 	public CardEntityWireRedstoneRail(BiFunction<Connection, Connection, Optional<E>> supplierEntity, Supplier<View<E>> supplierView)
 	{

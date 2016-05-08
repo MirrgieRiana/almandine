@@ -28,14 +28,14 @@ public abstract class CardEntityWire<E extends EntityWire> extends CardEntity<E>
 
 	public abstract boolean isConnectableEnd(Connection connection);
 
-	public static boolean isDuplicated(Connection begin, Connection end)
+	protected boolean isDuplicated(Connection begin, Connection end)
 	{
 		return begin.getEntities().anyMatch(e -> end.getEntities().anyMatch(e2 -> e == e2));
 	}
 
 	public Optional<E> create(Connection begin, Connection end)
 	{
-		return supplierEntity.apply(begin, end);
+		return isDuplicated(begin, end) ? Optional.empty() : supplierEntity.apply(begin, end);
 	}
 
 }

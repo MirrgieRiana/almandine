@@ -15,9 +15,9 @@ import mirrg.almandine2.layer2.entity.view.View;
 public class CardEntityRail<E extends EntityRail> extends CardEntityWire<E>
 {
 
-	public static final CardEntityRail<EntityRail> INSTANCE = new CardEntityRail<>((begin, end) -> {
-		return CardEntityWire.isDuplicated(begin, end) ? Optional.empty() : Optional.of(new EntityRail(begin, end));
-	} , ViewEntityRail::new);
+	public static final CardEntityRail<EntityRail> INSTANCE = new CardEntityRail<>(
+		(begin, end) -> Optional.of(new EntityRail(begin, end)),
+		ViewEntityRail::new);
 
 	public CardEntityRail(BiFunction<Connection, Connection, Optional<E>> supplierEntity, Supplier<View<E>> supplierView)
 	{
