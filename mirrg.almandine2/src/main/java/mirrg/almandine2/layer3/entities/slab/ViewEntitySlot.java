@@ -51,7 +51,7 @@ public class ViewEntitySlot<E extends EntitySlot> extends ViewSurfaceRectangle<E
 			graphics.fill(shape);
 		}
 
-		graphics.setColor(Color.black);
+		graphics.setColor(Color.decode("#1E8484"));
 		graphics.draw(supplier.get());
 
 		graphics.setColor(Color.black);
