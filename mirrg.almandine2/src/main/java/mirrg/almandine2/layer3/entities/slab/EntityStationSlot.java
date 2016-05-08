@@ -12,15 +12,56 @@ import mirrg.struct.hydrogen.Tuple;
 public class EntityStationSlot extends EntityStation implements IBlockSlot
 {
 
-	public EntityStationSlot(Connection connection)
+	public TypeStationSlot type;
+
+	public EntityStationSlot(Connection connection, TypeStationSlot type)
 	{
 		super(connection);
+		this.type = type;
+	}
+
+	@Override
+	public void move()
+	{
+		Tuple<ICart, ConnectionAnchor> cart = getCart().orElse(null);
+
+		if (cart != null) {
+			if (cart.getX() instanceof ICartSlot) {
+				ICartSlot cartSlot = (ICartSlot) cart.getX();
+
+				switch (type) {
+					case NORMAL:
+						leaveRandom(cart);
+						break;
+					case LOAD:
+						if (cartSlot.getAmount() == cartSlot.getAmountMax()) leaveRandom(cart);
+						break;
+					case UNLOAD:
+						if (cartSlot.getAmount() == 0) leaveRandom(cart);
+						break;
+					default:
+						throw new RuntimeException("Illegal station slot type: " + type);
+				}
+
+			} else {
+				leaveRandom(cart);
+			}
+		}
 	}
 
 	@Override
 	public CardEntityBlock<?> getCardEntity()
 	{
-		return CardEntityStationSlot.INSTANCE;
+		switch (type) {
+			case NORMAL:
+				return CardEntityStationSlot.NORMAL;
+			case LOAD:
+				return CardEntityStationSlot.LOAD;
+			case UNLOAD:
+				return CardEntityStationSlot.UNLOAD;
+			default:
+				throw new RuntimeException("Illegal station slot type: " + type);
+		}
 	}
 
 	@Override
@@ -53,15 +94,15 @@ public class EntityStationSlot extends EntityStation implements IBlockSlot
 		return 10;
 	}
 
-	public Optional<IBlockSlot> getCartSlot()
+	public Optional<ICartSlot> getCartSlot()
 	{
 		Tuple<ICart, ConnectionAnchor> cart = getCarts()
 			.min((a, b) -> a.getY().order - b.getY().order)
 			.orElse(null);
 		if (cart != null) {
-			if (cart.getX() instanceof IBlockSlot) {
+			if (cart.getX() instanceof ICartSlot) {
 
-				return Optional.of((IBlockSlot) cart.getX());
+				return Optional.of((ICartSlot) cart.getX());
 
 			}
 		}

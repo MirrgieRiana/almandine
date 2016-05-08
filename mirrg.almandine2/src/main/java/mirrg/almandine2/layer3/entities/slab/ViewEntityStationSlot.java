@@ -1,9 +1,11 @@
 package mirrg.almandine2.layer3.entities.slab;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
+import mirrg.almandine2.layer3.entities.HRender;
 import mirrg.almandine2.layer3.entities.station.ViewEntityStation;
 
 public class ViewEntityStationSlot<E extends EntityStationSlot> extends ViewEntityStation<E>
@@ -27,6 +29,14 @@ public class ViewEntityStationSlot<E extends EntityStationSlot> extends ViewEnti
 
 		});
 
+		graphics.setColor(Color.black);
+		graphics.setFont(HRender.getFontDefault());
+		HRender.drawString(graphics,
+			entity.type.toString(),
+			entity.getConnection().getPoint().x,
+			entity.getConnection().getPoint().y + 25 + 3,
+			HRender.ALIGN_CENTER,
+			HRender.ALIGN_TOP);
 	}
 
 }

@@ -45,7 +45,6 @@ import mirrg.almandine2.layer3.entities.slab.CardEntityStationSlot;
 import mirrg.almandine2.layer3.entities.slab.EntitySlot;
 import mirrg.almandine2.layer3.entities.station.CardEntityCart;
 import mirrg.almandine2.layer3.entities.station.CardEntityRail;
-import mirrg.almandine2.layer3.entities.station.CardEntityStation;
 import mirrg.almandine2.layer3.entities.station.EntityCart;
 import mirrg.almandine2.layer3.entities.station.EntityRail;
 import mirrg.almandine2.layer3.entities.station.EntityStation;
@@ -88,14 +87,15 @@ public class MainAlmandine2Layer3
 
 				r(() -> new ToolPutWire(CardEntityWireRedstoneRail.INSTANCE), VK_J);
 
-				r(() -> new ToolPutBlock(CardEntityStation.INSTANCE), VK_Q);
+				r(() -> new ToolPutBlock(CardEntityStationSlot.NORMAL), VK_Q);
 				r(() -> new ToolPutWire(CardEntityRail.INSTANCE), VK_W);
 				r(() -> new ToolPutBlock(CardEntityCart.INSTANCE), VK_E);
 
 				r(() -> new ToolPutBlock(CardEntitySlot.INSTANCE), VK_R);
 				r(() -> new ToolPutBlock(CardEntityCartSlot.INSTANCE), VK_T);
-				r(() -> new ToolPutBlock(CardEntityStationSlot.INSTANCE), VK_Y);
-				r(() -> new ToolPutWire(CardEntityPipe.INSTANCE), VK_U);
+				r(() -> new ToolPutBlock(CardEntityStationSlot.LOAD), VK_Y);
+				r(() -> new ToolPutBlock(CardEntityStationSlot.UNLOAD), VK_U);
+				r(() -> new ToolPutWire(CardEntityPipe.INSTANCE), VK_I);
 
 				game.registerCommand(new CommandAction(game2 -> {
 

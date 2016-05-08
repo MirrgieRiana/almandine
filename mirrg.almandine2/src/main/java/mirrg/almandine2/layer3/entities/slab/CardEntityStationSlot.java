@@ -11,7 +11,9 @@ import mirrg.almandine2.layer3.entities.station.CardEntityStation;
 public class CardEntityStationSlot<E extends EntityStationSlot> extends CardEntityStation<E>
 {
 
-	public static final CardEntityStationSlot<EntityStationSlot> INSTANCE = new CardEntityStationSlot<>(c -> Optional.of(new EntityStationSlot(c)), ViewEntityStationSlot::new);
+	public static final CardEntityStationSlot<EntityStationSlot> NORMAL = new CardEntityStationSlot<>(c -> Optional.of(new EntityStationSlot(c, TypeStationSlot.NORMAL)), ViewEntityStationSlot::new);
+	public static final CardEntityStationSlot<EntityStationSlot> LOAD = new CardEntityStationSlot<>(c -> Optional.of(new EntityStationSlot(c, TypeStationSlot.LOAD)), ViewEntityStationSlot::new);
+	public static final CardEntityStationSlot<EntityStationSlot> UNLOAD = new CardEntityStationSlot<>(c -> Optional.of(new EntityStationSlot(c, TypeStationSlot.UNLOAD)), ViewEntityStationSlot::new);
 
 	public CardEntityStationSlot(Function<Connection, Optional<E>> supplierEntity, Supplier<View<E>> supplierView)
 	{

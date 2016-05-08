@@ -1,6 +1,6 @@
 package mirrg.almandine2.layer3.entities.station;
 
-import java.util.stream.Collectors;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.CardEntityBlock;
@@ -22,20 +22,7 @@ public class EntityStation extends EntityBlock implements IStation
 	@Override
 	public void move()
 	{
-		getCarts()
-			.collect(Collectors.toList())
-			.forEach(t -> {
-				IRail[] rails = getRails()
-					.filter(r -> r != t.getY().previous)
-					.toArray(IRail[]::new);
-
-				if (rails.length > 0) {
-					leaveCart(t.getX(), rails[(int) (Math.random() * rails.length)]);
-				} else if (t.getY().previous instanceof IRail) {
-					leaveCart(t.getX(), (IRail) t.getY().previous);
-				}
-
-			});
+		getCart().ifPresent(c -> leaveRandom(c));
 	}
 
 	@Override
@@ -63,6 +50,11 @@ public class EntityStation extends EntityBlock implements IStation
 	public EntityBlock getEntity()
 	{
 		return this;
+	}
+
+	public Optional<Tuple<ICart, ConnectionAnchor>> getCart()
+	{
+		return getCarts().min((a, b) -> a.getY().order - b.getY().order);
 	}
 
 	public Stream<Tuple<ICart, ConnectionAnchor>> getCarts()
@@ -109,6 +101,19 @@ public class EntityStation extends EntityBlock implements IStation
 			cart.getEntity().setConnection(connection);
 		}
 		updateOrder();
+	}
+
+	public void leaveRandom(Tuple<ICart, ConnectionAnchor> cart)
+	{
+		IRail[] rails = getRails()
+			.filter(r -> r != cart.getY().previous)
+			.toArray(IRail[]::new);
+
+		if (rails.length > 0) {
+			leaveCart(cart.getX(), rails[(int) (Math.random() * rails.length)]);
+		} else if (cart.getY().previous instanceof IRail) {
+			leaveCart(cart.getX(), (IRail) cart.getY().previous);
+		}
 	}
 
 	public void updateOrder()
