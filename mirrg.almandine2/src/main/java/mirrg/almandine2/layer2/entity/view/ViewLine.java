@@ -134,7 +134,7 @@ public abstract class ViewLine extends View
 		Point2D.Double begin = getPointBegin();
 		Point2D.Double end = getPointEnd();
 		double marginBegin = getMarginBegin();
-		double marginEnd = getMarginBegin();
+		double marginEnd = getMarginEnd();
 
 		double distance = Point2D.distance(begin.getX(), begin.getY(), end.getX(), end.getY());
 		if (distance == 0) {
