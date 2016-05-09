@@ -67,6 +67,12 @@ public abstract class ViewLine extends View
 		return Math.sqrt(getDistanceCenterSq(x, y)) - getWidth();
 	}
 
+	@Override
+	public Rectangle2D.Double getBound()
+	{
+		return (Rectangle2D.Double) getShape().getBounds2D();
+	}
+
 	public Line2D.Double getShape()
 	{
 		Point2D.Double[] points = getPointsMargined();

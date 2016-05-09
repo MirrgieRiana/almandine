@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 public abstract class ViewSurface extends View
 {
@@ -25,6 +26,12 @@ public abstract class ViewSurface extends View
 			graphics.draw(getShape(margin));
 		}
 		graphics.setStroke(stroke);
+	}
+
+	@Override
+	public Rectangle2D.Double getBound()
+	{
+		return (Rectangle2D.Double) getShape(0).getBounds2D();
 	}
 
 }

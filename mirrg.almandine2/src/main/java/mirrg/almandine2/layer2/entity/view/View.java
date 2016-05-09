@@ -2,6 +2,7 @@ package mirrg.almandine2.layer2.entity.view;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 
 public abstract class View
 {
@@ -33,5 +34,7 @@ public abstract class View
 	 * 座標が内部にめり込んでいる場合、0以下の何かしらの値を返す。
 	 */
 	public abstract double getDistanceEdge(double x, double y);
+
+	public abstract Rectangle2D.Double getBound();
 
 }
