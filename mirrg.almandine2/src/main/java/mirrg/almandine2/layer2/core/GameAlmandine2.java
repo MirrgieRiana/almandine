@@ -109,7 +109,9 @@ public class GameAlmandine2 implements IGameAlmandine2
 		synchronized (this) {
 
 			// render entities
+			data.getEntities().forEach(entity -> entity.getView().renderBackground(graphics));
 			data.getEntities().forEach(entity -> entity.getView().render(graphics));
+			data.getEntities().forEach(entity -> entity.getView().renderOverlay(graphics));
 
 			// render selection aura
 			data.getSelection().forEach(entity -> entity.getView().renderAura(graphics, 2, 5, Color.decode("#00FF00")));

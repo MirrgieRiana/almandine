@@ -35,9 +35,24 @@ public class ViewEntitySlot<E extends EntitySlot<E, V>, V extends ViewEntitySlot
 	}
 
 	@Override
+	public void renderBackground(Graphics2D graphics)
+	{
+		super.renderBackground(graphics);
+		viewSlot.renderBackground(graphics);
+	}
+
+	@Override
 	public void render(Graphics2D graphics)
 	{
+		super.render(graphics);
 		viewSlot.render(graphics);
+	}
+
+	@Override
+	public void renderOverlay(Graphics2D graphics)
+	{
+		super.renderOverlay(graphics);
+		viewSlot.renderOverlay(graphics);
 	}
 
 	public double getRadiusSlot(double angle)

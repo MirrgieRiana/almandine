@@ -36,7 +36,7 @@ public class ViewEntityCart<E extends EntityCart<E, V>, V extends ViewEntityCart
 	}
 
 	@Override
-	public void render(Graphics2D graphics)
+	public void renderOverlay(Graphics2D graphics)
 	{
 		graphics.setColor(Color.blue);
 		Stroke stroke = graphics.getStroke();

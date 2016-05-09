@@ -46,7 +46,7 @@ public class ViewSlot<E extends ISlot> extends ViewSurfaceRectangle
 	}
 
 	@Override
-	public void render(Graphics2D graphics)
+	public void renderBackground(Graphics2D graphics)
 	{
 		graphics.setColor(Color.white);
 		graphics.fill(getShape(0));

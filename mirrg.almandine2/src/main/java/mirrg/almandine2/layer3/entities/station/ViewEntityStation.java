@@ -31,7 +31,7 @@ public class ViewEntityStation<E extends EntityStation<E, V>, V extends ViewEnti
 	}
 
 	@Override
-	public void render(Graphics2D graphics)
+	public void renderBackground(Graphics2D graphics)
 	{
 		graphics.setColor(Color.decode("#29844D"));
 		Stroke stroke = graphics.getStroke();

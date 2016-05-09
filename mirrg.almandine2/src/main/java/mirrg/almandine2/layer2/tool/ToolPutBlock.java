@@ -52,7 +52,9 @@ public class ToolPutBlock extends ToolBase
 					entity2.getView().renderAura(graphics, 2, 3, Color.decode("#4CDB7C"));
 				});
 			});
+			entity.getView().renderBackground(graphics);
 			entity.getView().render(graphics);
+			entity.getView().renderOverlay(graphics);
 		}
 	}
 

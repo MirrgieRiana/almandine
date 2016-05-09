@@ -63,7 +63,9 @@ public class ToolMove extends ToolBase
 	public void render(Graphics2D graphics)
 	{
 		getHandles(Entity.class, this::testEntity).forEach(h -> {
+			h.getView().renderBackground(graphics);
 			h.getView().render(graphics);
+			h.getView().renderOverlay(graphics);
 		});
 
 		if (handle != null) {

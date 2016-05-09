@@ -116,7 +116,7 @@ public abstract class EntityWire<E extends EntityWire<E, V>, V extends ViewLine>
 					}
 
 					@Override
-					public void render(Graphics2D graphics)
+					public void renderOverlay(Graphics2D graphics)
 					{
 						graphics.setColor(Color.white);
 						graphics.fill(getShape(0));
@@ -172,7 +172,7 @@ public abstract class EntityWire<E extends EntityWire<E, V>, V extends ViewLine>
 					}
 
 					@Override
-					public void render(Graphics2D graphics)
+					public void renderOverlay(Graphics2D graphics)
 					{
 						graphics.setColor(Color.white);
 						graphics.fill(getShape(0));

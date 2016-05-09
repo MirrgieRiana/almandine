@@ -98,7 +98,7 @@ public abstract class EntityBlock<E extends EntityBlock<E, V>, V extends ViewSur
 					}
 
 					@Override
-					public void render(Graphics2D graphics)
+					public void renderOverlay(Graphics2D graphics)
 					{
 						graphics.setColor(Color.white);
 						graphics.fill(getShape(0));

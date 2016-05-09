@@ -31,7 +31,7 @@ public class ViewEntityGateRedstone<E extends EntityGateRedstone<E, V>, V extend
 	}
 
 	@Override
-	public void render(Graphics2D graphics)
+	public void renderBackground(Graphics2D graphics)
 	{
 		graphics.setColor(entity.value ? Color.decode("#ff0000") : Color.decode("#440000"));
 		graphics.fill(new Ellipse2D.Double(

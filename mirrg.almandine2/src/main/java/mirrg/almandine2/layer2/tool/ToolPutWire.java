@@ -76,7 +76,9 @@ public class ToolPutWire extends ToolBase
 					entity2.getView().renderAura(graphics, 2, 3, Color.decode("#4CDB7C"));
 				});
 			});
+			entity.getView().renderBackground(graphics);
 			entity.getView().render(graphics);
+			entity.getView().renderOverlay(graphics);
 		} else if (begin != null) {
 			graphics.setColor(Color.red);
 			graphics.draw(new Line2D.Double(
