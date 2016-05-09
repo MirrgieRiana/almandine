@@ -28,9 +28,7 @@ public abstract class ViewLine extends View
 
 		AffineTransform transform = graphics.getTransform();
 		{
-			Point2D.Double begin = getPointBegin();
-			Point2D.Double end = getPointEnd();
-			Point2D.Double center = new Point2D.Double((begin.x + end.x) / 2, (begin.y + end.y) / 2);
+			Point2D.Double center = getCenter();
 
 			graphics.translate(center.x, center.y);
 			graphics.rotate(getAngle());
@@ -81,6 +79,12 @@ public abstract class ViewLine extends View
 		return new Point2D.Double(
 			points[0].x + (points[1].x - points[0].x) * position,
 			points[0].y + (points[1].y - points[0].y) * position);
+	}
+
+	public Point2D.Double getCenter()
+	{
+		Point2D.Double[] points = getPointsMargined();
+		return new Point2D.Double((points[0].x + points[1].x) / 2, (points[0].y + points[1].y) / 2);
 	}
 
 	public double getAngle()
