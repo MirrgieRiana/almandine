@@ -6,7 +6,20 @@ import java.awt.Graphics2D;
 public abstract class View
 {
 
-	public abstract void render(Graphics2D graphics);
+	public void renderBackground(Graphics2D graphics)
+	{
+
+	}
+
+	public void render(Graphics2D graphics)
+	{
+
+	}
+
+	public void renderOverlay(Graphics2D graphics)
+	{
+
+	}
 
 	public abstract void renderAura(Graphics2D graphics, double width, double margin, Color color);
 
