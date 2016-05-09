@@ -37,7 +37,7 @@ public class ViewEntityStationSlot<E extends EntityStationSlot<E, V>, V extends 
 	{
 		return entity.getCartSlot()
 			.map(s -> new ViewSlot<>(() -> s, () -> getPoint(), () -> 20, () -> 20).getRadius(angle, 0))
-			.orElse(0D);
+			.orElse(getRadiusStation(angle));
 	}
 
 }
