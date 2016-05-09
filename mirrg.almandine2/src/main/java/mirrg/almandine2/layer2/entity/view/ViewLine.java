@@ -85,8 +85,9 @@ public abstract class ViewLine extends View
 
 	public double getAngle()
 	{
-		Point2D.Double[] points = getPointsMargined();
-		return Math.atan2(points[1].y - points[0].y, points[1].x - points[0].x);
+		Point2D.Double begin = getPointBegin();
+		Point2D.Double end = getPointEnd();
+		return Math.atan2(end.y - begin.y, end.x - begin.x);
 	}
 
 	public double getDistance(double x, double y)
