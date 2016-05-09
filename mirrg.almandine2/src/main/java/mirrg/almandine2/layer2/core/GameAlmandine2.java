@@ -111,6 +111,9 @@ public class GameAlmandine2 implements IGameAlmandine2
 			// render entities
 			data.getEntities().forEach(entity -> entity.getView().render(graphics));
 
+			// render selection aura
+			data.getSelection().forEach(entity -> entity.getView().renderAura(graphics, 2, 5, Color.decode("#00FF00")));
+
 			// render tool
 			oTool.ifPresent(tool -> tool.render(graphics));
 

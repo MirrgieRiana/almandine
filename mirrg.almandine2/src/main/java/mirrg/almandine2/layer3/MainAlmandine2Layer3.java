@@ -30,6 +30,7 @@ import mirrg.almandine2.layer2.tool.ToolDelete;
 import mirrg.almandine2.layer2.tool.ToolMove;
 import mirrg.almandine2.layer2.tool.ToolPutBlock;
 import mirrg.almandine2.layer2.tool.ToolPutWire;
+import mirrg.almandine2.layer2.tool.ToolSelect;
 import mirrg.almandine2.layer3.entities.counter.CardEntityCounter;
 import mirrg.almandine2.layer3.entities.counter.EntityCounter;
 import mirrg.almandine2.layer3.entities.redstone.CardEntityGateRedstone;
@@ -77,6 +78,7 @@ public class MainAlmandine2Layer3
 				r(ToolMove::new, VK_M);
 
 				r(() -> new ToolPutBlock(CardEntityCounter.INSTANCE), VK_Z);
+				r(ToolSelect::new, VK_X);
 
 				r(() -> new ToolPutBlock(CardEntityGateRedstone.AND), VK_A);
 				r(() -> new ToolPutBlock(CardEntityGateRedstone.OR), VK_S);

@@ -1,6 +1,7 @@
 package mirrg.almandine2.layer2.core;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.stream.Stream;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -15,9 +16,12 @@ public class DataAlmandine2
 
 	private ArrayList<Entity<?, ?>> entities;
 
+	private HashSet<Entity<?, ?>> selection;
+
 	public void reset()
 	{
 		entities = new ArrayList<>();
+		selection = new HashSet<>();
 	}
 
 	public void cleanEntities()
@@ -42,6 +46,11 @@ public class DataAlmandine2
 		return entities.stream();
 	}
 
+	public Stream<Entity<?, ?>> getSelection()
+	{
+		return selection.stream();
+	}
+
 	@SuppressWarnings("unchecked")
 	public <E extends Entity<?, ?>> Stream<E> getEntities(Class<E> clazz)
 	{
@@ -55,6 +64,21 @@ public class DataAlmandine2
 		this.game = game;
 		entities.forEach(entity -> entity.reset());
 		entities.forEach(entity -> entity.enable(game));
+	}
+
+	public void addSelection(Entity<?, ?> entity)
+	{
+		selection.add(entity);
+	}
+
+	public void removeSelection(Entity<?, ?> entity)
+	{
+		selection.remove(entity);
+	}
+
+	public boolean isSelected(Entity<?, ?> entity)
+	{
+		return selection.contains(entity);
 	}
 
 }
