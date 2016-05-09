@@ -106,10 +106,7 @@ public abstract class EntityWire<E extends EntityWire<E, V>, V extends ViewLine>
 					@Override
 					public Point2D.Double getPoint()
 					{
-						Point2D.Double point = EntityWire.this.getBegin().getPoint();
-						return new Point2D.Double(
-							point.x + 8 * Math.cos(EntityWire.this.getView().getAngle()),
-							point.y + 8 * Math.sin(EntityWire.this.getView().getAngle()));
+						return EntityWire.this.getView().getPointsMargined()[0];
 					}
 
 					@Override
@@ -165,10 +162,7 @@ public abstract class EntityWire<E extends EntityWire<E, V>, V extends ViewLine>
 					@Override
 					public Point2D.Double getPoint()
 					{
-						Point2D.Double point = EntityWire.this.getEnd().getPoint();
-						return new Point2D.Double(
-							point.x - 8 * Math.cos(EntityWire.this.getView().getAngle()),
-							point.y - 8 * Math.sin(EntityWire.this.getView().getAngle()));
+						return EntityWire.this.getView().getPointsMargined()[1];
 					}
 
 					@Override

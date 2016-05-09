@@ -6,8 +6,6 @@ import java.awt.geom.Rectangle2D;
 public abstract class ViewSurfaceRectangle extends ViewSurface
 {
 
-	public abstract Point2D.Double getPoint();
-
 	public abstract double getWidth();
 
 	public abstract double getHeight();

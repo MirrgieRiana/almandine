@@ -42,7 +42,7 @@ public class ViewEntityCart<E extends EntityCart<E, V>, V extends ViewEntityCart
 		Stroke stroke = graphics.getStroke();
 		graphics.setStroke(new BasicStroke(3));
 		{
-			Point2D.Double center = getCenter(entity.getConnection());
+			Point2D.Double center = getPoint();
 			graphics.draw(new Ellipse2D.Double(center.getX() - 10, center.getY() - 10, 20, 20));
 
 			double angle = getAngle(entity.getConnection());
@@ -59,32 +59,6 @@ public class ViewEntityCart<E extends EntityCart<E, V>, V extends ViewEntityCart
 				center.getY() + (double) 10 * Math.sin(angle - 150 * Math.PI / 180)));
 		}
 		graphics.setStroke(stroke);
-	}
-
-	protected Point2D.Double getCenter(Connection connection)
-	{
-		if (connection instanceof ConnectionTraffic) {
-			ConnectionTraffic connection2 = (ConnectionTraffic) connection;
-
-			Point2D.Double begin = connection2.entity.getBegin().getPoint();
-			Point2D.Double end = connection2.entity.getEnd().getPoint();
-
-			double x = end.getX() - begin.getX();
-			double y = end.getY() - begin.getY();
-
-			return new Point2D.Double(
-				begin.getX() + connection2.position * x,
-				begin.getY() + connection2.position * y);
-
-		} else if (connection instanceof ConnectionAnchor) {
-			ConnectionAnchor connection2 = (ConnectionAnchor) connection;
-			return new Point2D.Double(
-				connection2.entity.getPoint().x,
-				connection2.entity.getPoint().y - 35 - 25 * connection2.order);
-
-		} else {
-			return connection.getPoint();
-		}
 	}
 
 	protected double getAngle(Connection connection)

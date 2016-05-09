@@ -9,9 +9,10 @@ import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.Event;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
 import mirrg.almandine2.layer2.entity.view.View;
+import mirrg.almandine2.layer2.entity.view.ViewSurface;
 import mirrg.almandine2.layer2.entity.view.ViewSurfaceCircle;
 
-public abstract class EntityBlock<E extends EntityBlock<E, V>, V extends View> extends Entity<E, V>
+public abstract class EntityBlock<E extends EntityBlock<E, V>, V extends ViewSurface> extends Entity<E, V>
 {
 
 	private Connection connection;
@@ -87,7 +88,7 @@ public abstract class EntityBlock<E extends EntityBlock<E, V>, V extends View> e
 					@Override
 					public Point2D.Double getPoint()
 					{
-						return EntityBlock.this.getConnection().getPoint();
+						return EntityBlock.this.getView().getPoint();
 					}
 
 					@Override

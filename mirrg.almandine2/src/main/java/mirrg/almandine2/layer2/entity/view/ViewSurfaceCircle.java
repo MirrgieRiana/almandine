@@ -6,8 +6,6 @@ import java.awt.geom.Point2D;
 public abstract class ViewSurfaceCircle extends ViewSurface
 {
 
-	public abstract Point2D.Double getPoint();
-
 	public abstract double getRadius();
 
 	public double getRadius(double angle, double margin)

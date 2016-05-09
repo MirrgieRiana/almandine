@@ -6,9 +6,9 @@ import java.util.stream.Stream;
 
 import mirrg.almandine2.layer2.entity.connection.Connection;
 import mirrg.almandine2.layer2.entity.connection.TypeConnection;
-import mirrg.almandine2.layer2.entity.view.View;
+import mirrg.almandine2.layer2.entity.view.ViewSurface;
 
-public abstract class CardEntityBlock<E extends EntityBlock<E, V>, V extends View> extends CardEntity<E, V>
+public abstract class CardEntityBlock<E extends EntityBlock<E, V>, V extends ViewSurface> extends CardEntity<E, V>
 {
 
 	private Function<Connection, Optional<E>> functionEntity;

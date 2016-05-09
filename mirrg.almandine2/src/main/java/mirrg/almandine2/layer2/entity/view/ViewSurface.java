@@ -5,9 +5,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.geom.Point2D;
 
 public abstract class ViewSurface extends View
 {
+
+	public abstract Point2D.Double getPoint();
 
 	public abstract Shape getShape(double margin);
 
